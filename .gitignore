@@ -1,1 +1,28 @@
+# Arquivos com senhas #
+#######################
 settings.conf.php
+
+# Arquivos de backup #
+######################
+**/*~
+
+# Arquivos editores texto #
+###########################
+nbproject
+.~lock.*
+.buildpath
+.idea
+.project
+.settings
+*.sublime-workspace
+
+# Arquivos de sistemas operacionais #
+#####################################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini

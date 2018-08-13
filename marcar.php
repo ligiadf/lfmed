@@ -1,11 +1,6 @@
 <?php
 	require 'config.php';
 	include_once 'header.php';
-?>
-
-<h2>Marcar consulta</h2>
-
-<?php
 
 if(!empty($_POST['medico'])) {
 	$id_medico = addslashes($_POST['medico']);
@@ -17,16 +12,22 @@ if(!empty($_POST['medico'])) {
 	// AAAA-MM-DD HH:MM
 	$dtConsulta_inicio = $dataConsulta[2].'-'.$dataConsulta[1].'-'.$dataConsulta[0].' '.$horaConsulta;
 
-	$dtConsulta_fim = $dtConsulta_inicio + strtotime();
+	// $dtConsulta_inicio + 30 minutos
+	$dtConsulta_fim = date("Y-m-d H:i", strtotime($dtConsulta_inicio. '+30 minutes'));
+	
 
-	if($consultas->verificarAgenda($medico, $dtConsulta, $statusConsulta)) {
-		$consultas->marcar($medico, $dtConsulta, $paciente, $statusConsulta);
+	if($consultas->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
+		$consultas->marcar($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
+		header("Location: index.php");
+		exit;
 	} else {
-		echo "O médico não está disponível nesta data. Favor escolher outra";
+		echo "O médico não está disponível nesta data. Favor escolher outra!";
 	}
 }
 
 ?>
+
+<h2>Marcar consulta</h2>
 
 <form method="POST">
 	<div class="form-group">
@@ -60,7 +61,7 @@ if(!empty($_POST['medico'])) {
 
 	<div class="form-group">
 		<label for="statusConsulta">Status</label>
-		<input type="text" class="form-control" id="statusConsulta" name="statusConsulta" value="Marcada" disabled>
+		<input type="text" class="form-control" id="statusConsulta" name="statusConsulta" value="Marcada" readonly>
 	</div>
 
 	<button type="submit" class="btn btn-primary">Marcar consulta</button>

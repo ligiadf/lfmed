@@ -18,4 +18,4 @@
 <body>
 
 <main class="container-fluid">
-	<h1><a href="/lf-med">Sistema LFMED</a></h1>
+	<h1><a href="/lfmed">Sistema LFMED</a></h1>

@@ -1,6 +1,6 @@
 <?php
 
-class controller {
+class Controller {
 
 	public function loadView($viewName, $viewData = array()) {
 		extract($viewData); // transforma o que está no array em variáveis
@@ -10,10 +10,10 @@ class controller {
 	// nos Controllers
 	public function loadTemplate($viewName, $viewData = array()) {
 		extract($viewData); // transforma o que está no array em variáveis
-		require 'views/template.php';
+		require 'views/_template.php';
 	}
 
-	// no template.php
+	// no _template.php
 	public function loadViewInTemplate($viewName, $viewData = array()) {
 		extract($viewData); // transforma o que está no array em variáveis
 		require 'views/'.$viewName.'.php';

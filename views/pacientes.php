@@ -2,6 +2,8 @@
 	<h1>Lista dos pacientes</h1>
 </header>
 
+<a class="btn btn-success" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a>
+
 <p>Total: <?php echo $quantidade; ?></p>
 
 <table class="table table-bordered">

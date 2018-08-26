@@ -12,6 +12,9 @@ class Usuarios extends model {
 
 	public function __construct($i='') {
 
+		global $pdo;
+		$this->pdo = $pdo;
+
 		if(!empty($i)) {
 			$sql = "SELECT * FROM usuarios WHERE id = ?";
 			$sql = $this->pdo->prepare($sql);
@@ -88,6 +91,35 @@ class Usuarios extends model {
 		return $this->status;
 	}
 
+	public function totalUsuarios() {
+		$sql = "SELECT COUNT(*) as c FROM usuarios";
+		$sql = $this->pdo->query($sql);
+
+		if($sql->rowCount() > 0) {
+			$sql = $sql->fetch();
+			return $sql['c'];
+
+		} else {
+			return 0;
+		}
+	}
+
+	public function listarUsuarios() {
+
+		$array = array();
+
+		$sql = "SELECT * FROM usuarios ORDER BY status DESC";
+		$sql = $this->pdo->query($sql);
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+		else echo "Não há usuários";
+
+		return $array;
+
+	}
+
 	/*
 	* Salvar usuário: adicionar novo ou editar existente.
 	*/
@@ -135,8 +167,6 @@ class Usuarios extends model {
 		$sql->execute(array($this->id));
 	}
 }
-
-
 
 class Recepcionista extends Usuarios {
 

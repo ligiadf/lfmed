@@ -33,17 +33,20 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarText">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item <?php if($_SERVER['REQUEST_URI'] == BASE_URL."/calendario") { echo "active"; } ?>">
+			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
 				<a class="nav-link" href="<?php echo BASE_URL; ?>calendario"><i class="far fa-calendar-alt mr-1"></i> Calendário</a>
 			</li>
-			<li class="nav-item <?php if($_SERVER['REQUEST_URI'] == BASE_URL."/consultas") { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>consultas"><i class="fas fa-list mr-1"></i> Consultas</a>
+			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas')) { echo "active"; } ?>">
+				<a class="nav-link" href="<?php echo BASE_URL; ?>consultas"><i class="far fa-calendar-check ml-2 mr-1"></i> Consultas</a> 
 			</li>
-			<li class="nav-item <?php if($_SERVER['REQUEST_URI'] == BASE_URL."/pacientes") { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>pacientes"><i class="fas fa-users mr-1"></i> Pacientes</a>
+			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'pacientes')) { echo "active"; } ?>">
+				<a class="nav-link" href="<?php echo BASE_URL; ?>pacientes"><i class="fas fa-users ml-2 mr-1"></i> Pacientes</a>
 			</li>
-			<li class="nav-item <?php if($_SERVER['REQUEST_URI'] == BASE_URL."/medicos") { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>medicos"><i class="fas fa-user-md mr-1"></i> Médicos</a>
+			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'medicos')) { echo "active"; } ?>">
+				<a class="nav-link" href="<?php echo BASE_URL; ?>medicos"><i class="fas fa-user-md ml-2 mr-1"></i> Médicos</a>
+			</li>
+			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios')) { echo "active"; } ?>">
+				<a class="nav-link" href="<?php echo BASE_URL; ?>usuarios"><i class="fas fa-users-cog ml-2 mr-1"></i> Usuários</a>
 			</li>
 		</ul>
 		<span class="navbar-text">
@@ -54,12 +57,12 @@
 
 <main class="container-fluid">
 
-<!-- Conteúdo -->
+	<!-- Conteúdo -->
 	<?php $this->loadViewInTemplate($viewName, $viewData) ?>
 
 </main><!-- container-fluid -->
 
-<footer class="pl-2 p-0 text-center">
+<footer class="mt-4 pl-2 p-0 text-center">
 	<small>&copy; <?php echo NAME; ?> &ndash; <?php echo VERSION; ?></small>
 </footer>
 

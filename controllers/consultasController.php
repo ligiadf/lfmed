@@ -31,7 +31,7 @@ class consultasController extends controller {
 		$msgConsultaMarcada = '';
 		$msgIndisponibilidadeMedico = '';
 
-		if(!empty($_POST['medico'])) {
+		if(!empty($_POST['medico']) && !empty($_POST['dataConsulta']) && !empty($_POST['horaConsulta']) && !empty($_POST['paciente'])) {
 			$id_medico = addslashes($_POST['medico']);
 			$dataConsulta = explode('/', addslashes($_POST['dataConsulta']));
 			$horaConsulta = addslashes($_POST['horaConsulta']);
@@ -46,11 +46,11 @@ class consultasController extends controller {
 
 			if($verificacao->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
 				$marcacao->marcarConsulta($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
-				//header('Location:'. BASE_URL );
-				$msgConsultaMarcada = "Consulta marcada com sucesso: em ".$dtConsulta_inicio;
-				
+				$msgMarcarConsultaOK = "Consulta marcada com sucesso: em ".$dtConsulta_inicio;
+				header('Location:'. BASE_URL.'consultas/marcar?msgOK='.urlencode($msgMarcarConsultaOK));
 			} else {
-				$msgIndisponibilidadeMedico = "O médico não está disponível nesta data. Favor escolher outra!";
+				$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
+				header('Location:'. BASE_URL.'consultas/marcar?msgError='.urlencode($msgMarcarConsultaNOTOK));
 			}
 		}
 

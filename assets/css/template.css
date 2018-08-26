@@ -23,3 +23,7 @@ footer {
 #calendario_completo td:last-child {
 	display: none; 
 }
+
+label {
+	font-weight: bold;
+}

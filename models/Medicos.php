@@ -1,6 +1,6 @@
 <?php
 
-class Medicos extends model {
+class Medicos extends Usuarios {
 	private $especialidade;
 	private $crm;
 

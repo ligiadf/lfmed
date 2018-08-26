@@ -9,7 +9,7 @@ class medicosController extends controller {
 
 		$dados = array(
 			// vai para view
-			'medicos' => $medicos->listarMedicos(),
+			'medicos' => $medicos->listarMedicosAtivos(),
 			'quantidade' => $medicos->totalMedicos()
 		);
 

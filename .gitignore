@@ -1,6 +1,11 @@
 # Arquivos com senhas #
 #######################
-settings.conf.php
+db.php
+
+# Arquivos de trabalho #
+########################
+consultas-SQL.txt
+TODO.md
 
 # Arquivos de backup #
 ######################

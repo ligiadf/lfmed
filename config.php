@@ -1,20 +1,11 @@
 <?php
 
-require 'classes/Consultas.php';
-include 'settings.conf.php';
-require 'classes/Medicos.php';
+define("BASE_URL", "http://localhost:8080/lfmed/");
+define("NAME", "Sistema LFMED by LFreitas");
+define("VERSION", "0.3");
 
-// contecta ao db
-try {
-	$pdo = new PDO($dsn, $dbuser, $dbpass);
-} catch(PDOException $e) {
-	echo "Erro de conexão: ".$e->getMessage();
-	exit;
-}
+define("NOME_CLINICA", "Clínica Oftorrino");
 
-// conecta classe ao db
-$consultas = new Consultas($pdo);
-$medicos = new Medicos($pdo);
-
+require 'db.php';
 
 ?>

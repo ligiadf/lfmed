@@ -1,5 +1,5 @@
-<header>
-	<h1>Lista dos médicos</h1>
+<header class="mt-4 mb-4">
+	<h1>Médicos <small>[<?php echo $quantidade; ?>]</small></h1>
 </header>
 
 <p>Total: <?php echo $quantidade; ?></p>

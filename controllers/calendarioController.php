@@ -15,6 +15,8 @@ class calendarioController extends controller {
 
 		$mes_extenso = substr($data, 5);
 
+		$ano_atual = substr($data, 0, 4);
+
 		switch($mes_extenso) {
 			case '01': $mes_extenso = 'Janeiro'; break;
 			case '02': $mes_extenso = 'Fevereiro'; break;
@@ -51,6 +53,7 @@ class calendarioController extends controller {
 			'calendario' => $calendario->mostrarCalendario($data_inicio, $data_fim),
 			'data' => $data,
 			'mes_extenso' => $mes_extenso,
+			'ano_atual' => $ano_atual,
 			'dia1' => $dia1,
 			'dias' => $dias,
 			'linhas' => $linhas,

@@ -55,8 +55,6 @@ class consultasController extends controller {
 		}
 
 		$dados = array(
-//			'marcar' => $marcacao->marcarConsulta($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta),
-//			'verificar' => $verificacao->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim),
 			'medicos' => $medicos->listarMedicosAtivos(),
 			'pacientes' => $pacientes->listarPacientes(),
 			'id_medico' => $id_medico,

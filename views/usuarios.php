@@ -1,34 +1,27 @@
-<header>
-	<h1>Lista dos usuários</h1>
+<header class="mt-4 mb-4">
+	<h1>Usuários <small>[<?php echo $quantidade; ?>]</small></h1>
 </header>
 
-<p>Total: <?php echo $quantidade; ?></p>
+<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>usuarios/adicionar"><i class="fas fa-user-plus mr-1"></i> Adicionar usuário</a></p>
 
 <table class="table table-bordered table-hover">
 	<tr>
 		<th>id</th>
 		<th>Nome</th>
 		<th>E-mail</th>
+		<th>Perfil</th>
 		<th>Especialidade</th>
 		<th>CRM</th>
-		<th>Perfil</th>
-		<th>Status</th>
+		<th>Situação</th>
 		<th>Ações</th>
 	</tr>
 
 <?php foreach($usuarios as $item): ?>
 
-	<tr">
+	<tr>
 		<td><?php echo $item['id']; ?></td>
 		<td><?php echo $item['nome']; ?></td>
 		<td><?php echo $item['email']; ?></td>
-		<td>
-			<?php
-				if($item['especialidade'] == 'Oftalmologista') { echo '<i class="fas fa-deaf mr-1"></i> Oftalmologista'; }
-					else { echo '<i class="far fa-eye mr-1"></i> Otorrinolaringologista'; }
-			?>
-		</td>
-		<td><?php echo $item['crm']; ?></td>
 		<td>
 			<?php
 				switch($item['perfil']) {
@@ -43,8 +36,16 @@
 		</td>
 		<td>
 			<?php
+				if( $item['perfil'] == 'MED' && $item['especialidade'] == 'Oftalmologista') { echo '<i class="fas fa-deaf mr-1"></i> Oftalmologista'; }
+				else if( $item['perfil'] == 'MED' && $item['especialidade'] == 'Otorrinolaringologista') { echo '<i class="far fa-eye mr-1"></i> Otorrinolaringologista'; }
+					else if ($item['perfil'] == 'MED') { echo '<span class="text-danger">Cadastrar especialidade!</span>'; }
+			?>
+		</td>
+		<td><?php echo $item['crm']; ?></td>
+		<td>
+			<?php
 				if($item['status'] == 1) { echo '<span class="text-success"><i class="fas fa-user-check mr-1"></i> Ativo</span>'; }
-					else { echo '<i class="fas fa-user-times mr-1"></i> Inativo'; }
+					else { echo '<span class="text-danger"><i class="fas fa-user-times mr-1"></i> Inativo</span>'; }
 			?>
 		</td>
 		<td>

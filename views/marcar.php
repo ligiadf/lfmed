@@ -1,4 +1,4 @@
-<header>
+<header class="mt-4 mb-4">
 	<h1>Marcar consulta</h1>
 </header>
 

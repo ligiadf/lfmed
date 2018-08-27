@@ -1,4 +1,6 @@
-<h2><?php echo $mes_extenso; ?></h2>
+<header class="mt-4 mb-4">
+	<h1>Calendário <small><?php echo $mes_extenso." ".$ano_atual; ?></small></h1>
+</header>
 
 <div class="mt-3 mb-3">
 	<a class="btn btn-secondary btn-sm" href="?mes=<?php echo date("Y-m", strtotime($data. 'last month')); ?>">Mês anterior</a>

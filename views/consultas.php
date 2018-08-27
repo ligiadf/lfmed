@@ -1,10 +1,8 @@
-<header>
-	<h1>Lista das consultas</h1>
+<header class="mt-4 mb-4">
+	<h1>Consultas <small>[<?php echo $quantidade; ?>]</small></h1>
 </header>
 
-<a class="btn btn-success" href="<?php echo BASE_URL ?>consultas/marcar">Marcar consulta</a>
-
-<p>Total: <?php echo $quantidade; ?></p>
+<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></p>
 
 <table class="table table-bordered">
 	<tr>
@@ -13,7 +11,8 @@
 		<th>Fim da consulta</th>
 		<th>Paciente</th>
 		<th>Médico</th>
-		<th>Status</th>
+		<th>Situação</th>
+		<th>Ações</th>
 	</tr>
 
 <?php foreach($consultas as $item): ?>

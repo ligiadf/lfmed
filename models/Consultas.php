@@ -1,6 +1,6 @@
 <?php
 
-class Consultas extends model {
+class Consultas extends Model {
 
 	public function listarConsultas() {
 		$array = array();
@@ -17,6 +17,28 @@ class Consultas extends model {
 			$array = $sql->fetchAll();
 		}
 		else echo "Não há consultas";
+
+		return $array;
+	}
+
+	public function listarConsultasPaciente($id) {
+		$array = array();
+
+		$sql = "SELECT pacientes.nome, pacientes.id, usuarios.nome as med_nome, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
+				FROM consultas
+				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
+				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
+				WHERE pacientes.id = :id
+				ORDER BY con_inicio";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		} else {
+			echo "Não há consultas";
+		}
 
 		return $array;
 	}

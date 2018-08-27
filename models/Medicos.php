@@ -4,28 +4,6 @@ class Medicos extends Usuarios {
 	private $especialidade;
 	private $crm;
 
-	/*
-	* Especialidade
-	*/
-	public function setEspecialidade($especialidade) {
-		$this->especialidade = $especialidade;
-	}
-
-	public function getEspecialidade() {
-		return $this->especialidade;
-	}
-
-	/*
-	* CRM
-	*/
-	public function setCRM($crm) {
-		$this->crm = $crm;
-	}
-
-	public function getCRM() {
-		return $this->crm;
-	}
-
 	public function listarMedicos() {
 
 		$array = array();

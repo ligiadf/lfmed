@@ -53,8 +53,7 @@ class Pacientes extends Model {
 
 	public function verificarPaciente($cpf) {
 		$sql = "SELECT * FROM pacientes
-				WHERE
-				cpf = :cpf";
+				WHERE cpf = :cpf";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":cpf", $cpf);
 		$sql->execute();
@@ -65,6 +64,62 @@ class Pacientes extends Model {
 		else {
 			return true;
 		}
+	}
+
+	public function perfilPaciente($id) {
+
+		$array = array();
+
+		$sql = "SELECT * FROM pacientes
+				WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+		}
+
+		return $array;
+
+	}
+
+	public function editarPaciente($id, $nome_paciente, $data_nasc, $email, $telefone, $cpf, $plano_saude) {
+		$sql = "UPDATE pacientes SET nome = :nome, data_nasc = :data_nasc, email = :email, telefone = :telefone, cpf = :cpf, plano_saude = :plano_saude WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->bindValue(":nome", $nome_paciente);
+		$sql->bindValue(":data_nasc", $data_nasc);
+		$sql->bindValue(":email", $email);
+		$sql->bindValue(":telefone", $telefone);
+		$sql->bindValue(":cpf", $cpf);
+		$sql->bindValue(":plano_saude", $plano_saude);
+		$sql->execute();
+	}
+
+
+	public function getNome() {
+		return $this->nome;
+	}
+
+	public function getDataNasc() {
+		return $this->data_nasc;
+	}
+
+	public function getEmail() {
+		return $this->email;
+	}
+
+	public function getTelefone() {
+		return $this->telefone;
+	}
+
+	public function getCPF() {
+		return $this->cpf;
+	}
+
+	public function getPlanoSaude() {
+		return $this->plano_saude;
 	}
 
 }

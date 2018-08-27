@@ -1,12 +1,22 @@
-<header>
-	<h1>Lista dos pacientes</h1>
+<header class="mt-4 mb-4">
+	<h1>Pacientes <small>[<?php echo $quantidade; ?>]</small></h1>
 </header>
 
-<a class="btn btn-success" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a>
+<?php if(!empty($_GET['msgError'])): ?>
+	<div class="alert alert-danger">
+		<?php echo $_GET['msgError']; ?>
+	</div>
+<?php endif ?>
 
-<p>Total: <?php echo $quantidade; ?></p>
+<?php if(!empty($_GET['msgOK'])): ?>
+	<div class="alert alert-success">
+		<?php echo $_GET['msgOK']; ?>
+	</div>
+<?php endif ?>
 
-<table class="table table-bordered">
+<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a></p>
+
+<table class="table table-bordered table-hover">
 	<tr>
 		<th>id</th>
 		<th>Nome</th>
@@ -28,7 +38,7 @@
 		<td><?php echo $item['telefone']; ?></td>
 		<td><?php echo $item['cpf']; ?></td>
 		<td><?php echo $item['plano_saude']; ?></td>
-		<td></td>
+		<td><a href="<?php echo BASE_URL ?>pacientes/cadastro/<?php echo $item['id']; ?>"><i class="fas fa-id-card mr-1"></i> Ver cadastro</a></td>
 	</tr>
 
 <?php endforeach; ?>

@@ -55,7 +55,7 @@
 	</div>
 </nav>
 
-<main class="container-fluid">
+<main class="container-fluid mb-5">
 
 	<!-- Conteúdo -->
 	<?php $this->loadViewInTemplate($viewName, $viewData) ?>

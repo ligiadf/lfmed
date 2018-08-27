@@ -1,6 +1,6 @@
 <?php
 
-class Usuarios extends model {
+class Usuarios extends Model {
 
 	private $id;
 	private $email;
@@ -9,7 +9,7 @@ class Usuarios extends model {
 	private $perfil;
 	private $status;
 	protected $pdo;
-
+/*
 	public function __construct($i='') {
 
 		global $pdo;
@@ -32,64 +32,7 @@ class Usuarios extends model {
 		}
 
 	}
-
-	/*
-	* Id
-	*/
-	public function getId() {
-		return $this->id;
-	}
-
-	/*
-	* E-mail
-	*/
-	public function setEmail($email) {
-		$this->email = $email;
-	}
-
-	public function getEmail() {
-		return $this->email;
-	}
-
-	/*
-	* Senha
-	*/
-	public function setSenha($senha) {
-		$this->senha = md5($senha);
-	}
-
-	/*
-	* Nome
-	*/
-	public function setNome($nome) {
-		$this->nome = $nome;
-	}
-
-	public function getNome() {
-		return $this->nome;
-	}
-
-	/*
-	* Perfil
-	*/
-	public function setPerfil($perfil) {
-		$this->perfil = $perfil;
-	}
-
-	public function getPerfil() {
-		return $this->perfil;
-	}
-
-	/*
-	* Status
-	*/
-	public function setStatus($status) {
-		$this->status = $status;
-	}
-
-	public function getStatus() {
-		return $this->status;
-	}
+*/
 
 	public function totalUsuarios() {
 		$sql = "SELECT COUNT(*) as c FROM usuarios";
@@ -108,7 +51,7 @@ class Usuarios extends model {
 
 		$array = array();
 
-		$sql = "SELECT * FROM usuarios ORDER BY status DESC";
+		$sql = "SELECT * FROM usuarios ORDER BY status DESC, perfil ASC, nome ASC";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {
@@ -120,45 +63,33 @@ class Usuarios extends model {
 
 	}
 
-	/*
-	* Salvar usuário: adicionar novo ou editar existente.
-	*/
-	public function salvarUsuario() {
+	public function adicionarUsuario($nome_usuario, $email, $senha, $perfil, $status, $especialidade='', $crm='') {
+		$sql = "INSERT INTO usuarios (nome, perfil, senha, email, status, especialidade, crm) VALUES (:nome, :perfil, :senha, :email, :status, :especialidade, :crm)";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":nome", $nome_usuario);
+		$sql->bindValue(":perfil", $perfil);
+		$sql->bindValue(":senha", $senha);
+		$sql->bindValue(":email", $email);
+		$sql->bindValue(":status", $status);
+		$sql->bindValue(":especialidade", $especialidade);
+		$sql->bindValue(":crm", $crm);
+		$sql->execute();
+	}
 
-		if(!empty($this->id)) {
-			// editando usuario
-			$sql = "UPDATE usuarios SET
-				email = ?,
-				senha = ?,
-				nome = ?,
-				perfil = ?,
-				status = ?
+	public function verificarUsuario($email) {
+		$sql = "SELECT * FROM usuarios
 				WHERE
-				id = ?";
-			$sql = $this->pdo->prepare($sql);
-			$sql->execute(array(
-				$this->email,
-				$this->senha,
-				$this->nome,
-				$this->perfil,
-				$this->status,
-				$this->id));
-		} else {
-			// adicionando novo usuario
-			$sql = "INSERT INTO usuarios SET
-				email = ?,
-				senha = ?,
-				nome = ?,
-				perfil = ?,
-				status = ?";
-			$sql = $this->pdo->prepare($sql);
-			$sql->execute(array(
-				$this->email,
-				$this->senha,
-				$this->nome,
-				$this->perfil,
-				$this->status));
-			}
+				email = :email";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":email", $email);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			return false; // email já existe
+		} 
+		else {
+			return true;
+		}
 	}
 
 	public function deletarUsuario() {

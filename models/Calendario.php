@@ -1,6 +1,6 @@
 <?php
 
-class Calendario extends model {
+class Calendario extends Model {
 
 	public function mostrarCalendario($data_inicio, $data_fim) {
 

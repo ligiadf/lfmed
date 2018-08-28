@@ -61,7 +61,7 @@ class calendarioController extends controller {
 			'data_fim' => $data_fim
 		);
 
-		$this->loadTemplate('calendario', $dados);
+		$this->loadTemplate('calendario-mensal', $dados);
 	}
 }
 

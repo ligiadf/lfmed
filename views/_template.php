@@ -75,5 +75,9 @@
 
 	<script src="<?php echo BASE_URL?>assets/js/bootstrap.min.js"></script>
 
+	<?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios/adicionar')): ?>
+		<script src="<?php echo BASE_URL?>assets/js/valida.js"></script>
+	<?php endif; ?>
+
 </body>
 </html>

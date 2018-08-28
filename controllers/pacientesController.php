@@ -13,7 +13,7 @@ class pacientesController extends controller {
 			'quantidade' => $pacientes->totalPacientes()
 		);
 
-		$this->loadTemplate('pacientes', $dados);
+		$this->loadTemplate('paciente-listar', $dados);
 	}
 
 	# URL: /pacientes/cadastrar
@@ -65,7 +65,7 @@ class pacientesController extends controller {
 			'msgCadastrarPacienteNOTOK' => $msgCadastrarPacienteNOTOK
 		);
 
-		$this->loadTemplate('cadastrar', $dados);
+		$this->loadTemplate('paciente-adicionar', $dados);
 
 	}
 
@@ -95,7 +95,7 @@ class pacientesController extends controller {
 			'plano_saude' => $perfil['plano_saude']
 		);
 
-		$this->loadTemplate('cadastro', $dados);
+		$this->loadTemplate('paciente-cadastro', $dados);
 	}
 
 	# URL: /pacientes/editar/[id]
@@ -131,31 +131,10 @@ class pacientesController extends controller {
 			'data_nasc' => $dataNasc
 		);
 
-		$this->loadTemplate('editar_paciente', $dados);
+		$this->loadTemplate('paciente-editar', $dados);
 
 	}
 
-/* OK, mas não consigo tratar a data aqui, só na view
-	# URL: /pacientes/editar/[id]
-	public function editar($id) {
-
-		$dados = array();
-
-		if (!empty($id)) {
-			$pacientes = new Pacientes();
-
-			$dados['info'] = $pacientes->perfilPaciente($id);
-
-			if(isset($dados['info']['id'])) {
-				$this->loadTemplate('editar_paciente', $dados);
-				exit;
-			}
-
-			header('Location:'. BASE_URL.'pacientes/cadastro');
-		}
-	}
-
-*/
 }
 
 ?>

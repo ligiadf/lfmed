@@ -12,7 +12,7 @@ class usuariosController extends controller {
 			'quantidade' => $usuarios->totalUsuarios()
 		);
 
-		$this->loadTemplate('usuarios', $dados);
+		$this->loadTemplate('usuario-listar', $dados);
 	}
 
 	# URL: /usuarios/adicionar
@@ -32,7 +32,7 @@ class usuariosController extends controller {
 		$msgAdicionarUsuarioOK = '';
 		$msgAdicionarUsuarioNOTOK = '';
 
-		if( !empty($_POST['nomeUsuario']) && !empty($_POST['email']) && !empty($_POST['senha']) && !empty($_POST['perfil']) && !empty($_POST['especialidade']) && !empty($_POST['crm']) ) {
+		if( !empty($_POST['nomeUsuario']) && !empty($_POST['email']) && !empty($_POST['senha']) && !empty($_POST['perfil']) ) {
 			$nome_usuario = addslashes($_POST['nomeUsuario']);
 			$email = addslashes($_POST['email']);
 			$senha = addslashes($_POST['senha']);
@@ -64,7 +64,7 @@ class usuariosController extends controller {
 			'msgAdicionarUsuarioNOTOK' => $msgAdicionarUsuarioNOTOK
 		);
 
-		$this->loadTemplate('adicionar', $dados);
+		$this->loadTemplate('usuario-adicionar', $dados);
 
 	}
 

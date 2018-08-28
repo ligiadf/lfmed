@@ -13,7 +13,7 @@ class medicosController extends controller {
 			'quantidade' => $medicos->totalMedicos()
 		);
 
-		$this->loadTemplate('medicos', $dados);
+		$this->loadTemplate('medico-listar', $dados);
 	}
 }
 

@@ -2,7 +2,7 @@
 	<h1>Médicos <small>[<?php echo $quantidade; ?>]</small></h1>
 </header>
 
-<p>Total: <?php echo $quantidade; ?></p>
+<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>usuarios/adicionar"><i class="fas fa-user-plus mr-1"></i> Adicionar médico</a></p>
 
 <table class="table table-bordered">
 	<tr>

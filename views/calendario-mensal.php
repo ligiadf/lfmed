@@ -2,9 +2,13 @@
 	<h1>Calendário <small><?php echo $mes_extenso." ".$ano_atual; ?></small></h1>
 </header>
 
-<div class="mt-3 mb-3">
-	<a class="btn btn-secondary btn-sm" href="?mes=<?php echo date("Y-m", strtotime($data. 'last month')); ?>">Mês anterior</a>
-	<a class="btn btn-secondary btn-sm text-right" href="?mes=<?php echo date("Y-m", strtotime($data. 'next month')); ?>">Próximo mês</a>
+<div class="row col-12 mt-3 mb-3">
+	<div class="col-6">
+		<a class="btn btn-secondary btn-sm" href="?mes=<?php echo date("Y-m", strtotime($data. 'last month')); ?>"><i class="far fa-calendar-minus mr-1"></i> Mês anterior</a>
+	</div>
+	<div class="col-6 text-right">
+		<a class="btn btn-secondary btn-sm" href="?mes=<?php echo date("Y-m", strtotime($data. 'next month')); ?>">Próximo mês <i class="far fa-calendar-plus ml-1"></i></a>
+	</div>
 </div>
 
 <div class="table-responsive">

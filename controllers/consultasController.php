@@ -12,7 +12,7 @@ class consultasController extends controller {
 			'quantidade' => $consultas->totalConsultas()
 		);
 
-		$this->loadTemplate('consultas', $dados);
+		$this->loadTemplate('consulta-listar', $dados);
 	}
 
 	# URL: /consultas/marcar
@@ -66,7 +66,7 @@ class consultasController extends controller {
 			'msgConsultaMarcada' => $msgConsultaMarcada
 		);
 
-		$this->loadTemplate('marcar', $dados);
+		$this->loadTemplate('consulta-marcar', $dados);
 	}
 }
 

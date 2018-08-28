@@ -66,7 +66,7 @@ class Pacientes extends Model {
 		}
 	}
 
-	public function perfilPaciente($id) {
+	public function fichaPaciente($id) {
 
 		$array = array();
 

@@ -38,7 +38,7 @@
 		<td><?php echo $item['telefone']; ?></td>
 		<td><?php echo $item['cpf']; ?></td>
 		<td><?php echo $item['plano_saude']; ?></td>
-		<td><a href="<?php echo BASE_URL ?>pacientes/cadastro/<?php echo $item['id']; ?>"><i class="fas fa-id-card mr-1"></i> Ver cadastro</a></td>
+		<td><a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $item['id']; ?>"><i class="fas fa-id-card mr-1"></i> Ver cadastro</a></td>
 	</tr>
 
 <?php endforeach; ?>

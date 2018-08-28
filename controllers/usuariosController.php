@@ -68,6 +68,31 @@ class usuariosController extends controller {
 
 	}
 
+	# URL: /usuarios/ficha/[id]
+	public function ficha($id) {
+
+		$usuarios = new Usuarios();
+		$consultas = new Consultas();
+
+		$ficha = $usuarios->fichaUsuario($id);
+		$consultaMed = $consultas->listarConsultasMedico($id);
+
+		$dados = array(
+			// vai para view
+			'ficha' => $ficha,
+			'consulta' => $consultaMed,
+			'id'=> $id,
+			'nome' => $ficha['nome'],
+			'email' => $ficha['email'],
+			'perfil' => $ficha['perfil'],
+			'status' => $ficha['status'],
+			'especialidade' => $ficha['especialidade'],
+			'crm' => $ficha['crm']
+		);
+
+		$this->loadTemplate('usuario-ficha', $dados);
+	}
+
 }
 
 ?>

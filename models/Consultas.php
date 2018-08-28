@@ -16,7 +16,7 @@ class Consultas extends Model {
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		else echo "Não há consultas";
+		// else echo "Não há consultas";
 
 		return $array;
 	}
@@ -37,7 +37,29 @@ class Consultas extends Model {
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		} else {
-			echo "Não há consultas";
+			// echo "Não há consultas";
+		}
+
+		return $array;
+	}
+
+	public function listarConsultasMedico($id) {
+		$array = array();
+
+		$sql = "SELECT pacientes.nome, pacientes.id, usuarios.nome as med_nome, usuarios.id, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
+				FROM consultas
+				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
+				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
+				WHERE usuarios.id = :id
+				ORDER BY con_inicio";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		} else {
+			$msgSemConsultas = "Não há consultas";
 		}
 
 		return $array;

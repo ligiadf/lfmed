@@ -57,7 +57,7 @@ class Usuarios extends Model {
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		else echo "Não há usuários";
+		// else echo "Não há usuários";
 
 		return $array;
 
@@ -92,10 +92,22 @@ class Usuarios extends Model {
 		}
 	}
 
-	public function deletarUsuario() {
-		$sql = "DELETE from usuarios WHERE id = ?";
+	public function fichaUsuario($id) {
+
+		$array = array();
+
+		$sql = "SELECT * FROM usuarios
+				WHERE id = :id";
 		$sql = $this->pdo->prepare($sql);
-		$sql->execute(array($this->id));
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+		}
+
+		return $array;
+
 	}
 }
 

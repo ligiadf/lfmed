@@ -49,7 +49,7 @@
 			?>
 		</td>
 		<td>
-			<span><a href="usuarios/ficha/[id]"><i class="fas fa-id-card-alt mr-1"></i> Ver ficha</a></span>
+			<span><a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $item['id']; ?>"><i class="fas fa-id-card-alt mr-1"></i> Ver ficha</a></span>
 		</td>
 	</tr>
 

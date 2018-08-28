@@ -54,7 +54,6 @@ class pacientesController extends controller {
 		}
 
 		$dados = array(
-			//'pacientes' => $pacientes->cadastrarPaciente($nome_paciente, $data_nasc, $email, $telefone, $cpf, $plano_saude),
 			'nome_paciente' => $nome_paciente,
 			'data_nasc' => $data_nasc,
 			'email' => $email,
@@ -70,32 +69,32 @@ class pacientesController extends controller {
 	}
 
 
-	# URL: /pacientes/cadastro/[id]
-	public function cadastro($id) {
+	# URL: /pacientes/ficha/[id]
+	public function ficha($id) {
 
 		$pacientes = new Pacientes();
 		$consultas = new Consultas();
 
-		$perfil = $pacientes->perfilPaciente($id);
+		$ficha = $pacientes->fichaPaciente($id);
 		$consultaPac = $consultas->listarConsultasPaciente($id);
 
-		$dataNascimento = explode('-', addslashes($perfil['data_nasc']));
+		$dataNascimento = explode('-', addslashes($ficha['data_nasc']));
 		$dataNasc = $dataNascimento[2].'/'.$dataNascimento[1].'/'.$dataNascimento[0];
 
 		$dados = array(
 			// vai para view
-			'perfil' => $perfil,
+			'ficha' => $ficha,
 			'consulta' => $consultaPac,
 			'id'=> $id,
-			'nome' => $perfil['nome'],
+			'nome' => $ficha['nome'],
 			'data_nasc' => $dataNasc,
-			'email' => $perfil['email'],
-			'telefone' => $perfil['telefone'],
-			'cpf' => $perfil['cpf'],
-			'plano_saude' => $perfil['plano_saude']
+			'email' => $ficha['email'],
+			'telefone' => $ficha['telefone'],
+			'cpf' => $ficha['cpf'],
+			'plano_saude' => $ficha['plano_saude']
 		);
 
-		$this->loadTemplate('paciente-cadastro', $dados);
+		$this->loadTemplate('paciente-ficha', $dados);
 	}
 
 	# URL: /pacientes/editar/[id]
@@ -116,11 +115,11 @@ class pacientesController extends controller {
 
 			$pacientes->editarPaciente($id, $nome_paciente, $data_nasc, $email, $telefone, $cpf, $plano_saude);
 				$msgCadastrarPacienteOK = "Paciente atualizado com sucesso: ".$nome_paciente;
-				header('Location:'. BASE_URL.'pacientes/cadastro/'.$id.'?msgOK='.urlencode($msgCadastrarPacienteOK));
+				header('Location:'. BASE_URL.'pacientes/ficha/'.$id.'?msgOK='.urlencode($msgCadastrarPacienteOK));
 			
 		}
 
-		$info = $pacientes->perfilPaciente($id);
+		$info = $pacientes->fichaPaciente($id);
 
 		$dataNascimento = explode('-', addslashes($info['data_nasc']));
 		$dataNasc = $dataNascimento[2].'/'.$dataNascimento[1].'/'.$dataNascimento[0];

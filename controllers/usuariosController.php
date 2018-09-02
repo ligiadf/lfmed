@@ -112,8 +112,8 @@ class usuariosController extends controller {
 			$usuarios->editarUsuario($id, $nome_usuario, $perfil, $email, $status, $especialidade, $crm);
 			$msgAdicionarUsuarioOK = "Usuário editado com sucesso: ".$nome_usuario;
 			header('Location:'. BASE_URL.'usuarios/ficha/'.$id.'?msgOK='.urlencode($msgAdicionarUsuarioOK));
-
 		}
+		
 		$dados = array(
 			// vai para view
 			'info' => $info

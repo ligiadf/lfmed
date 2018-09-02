@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
-	<div class="col-md-8">
+	<div class="col-md-10">
 	<header class="mt-4 mb-4">
-		<h1><?php if($con_status=='0') { echo "<span class='text-danger'><i class='fas fa-ban mr-1'></i> Indisponibilidade</span>"; } else { echo "Detalhes da consulta"; } ?></h1>
+		<h1><?php if($con_status=='0') { echo "<span class='text-danger'><i class='fas fa-ban mr-1'></i> Editar indisponibilidade</span>"; } else { echo "Editar consulta"; } ?></h1>
 	</header>
 
 	<?php if(!empty($_GET['msgError'])): ?>
@@ -48,7 +48,7 @@
 
 <?php if($con_status == 0): ?>
 
-		<div class="form-row" id="blocoIndisponibilidade">
+		<div class="form-row">
 			<div class="form-group col-sm-6">
 				<label for="dataConsultaFim"><i class="far fa-calendar-alt mr-1"></i> Data fim:</label>
 				<input type="text" class="form-control" id="dataConsultaFim" name="dataConsultaFim" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" maxlength="10" placeholder="DD/MM/AAAA" value="<?php echo $con_data_fim; ?>" required>
@@ -65,7 +65,7 @@
 <?php endif; ?>
 
 
-<?php if($con_status != 0): ?>
+<?php if($con_status != "0"): ?>
 
 		<div class="form-group">
 			<label for="paciente"><i class="fas fa-users mr-1"></i> Paciente:</label>
@@ -76,9 +76,18 @@
 			</select>
 		</div>
 
+<?php endif; ?><!-- $con_status != 0 -->
+
 		<div class="form-row justify-content-left">
 			<label for="statusConsulta" class="col-12"><i class="fas fa-user mr-1"></i> Situação:</label>
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-6 col-lg-4">
+
+	<?php if($con_status == "0"): ?>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta1" value="0" <?php if($con_status == '0') { echo "checked"; }; ?>>
+					<label class="form-check-label text-danger" for="statusConsulta1"><i class='fas fa-ban mr-1'></i> Indisponibilidade (0)</label>
+				</div>
+	<?php else :?>
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta1" value="1" <?php if($con_status == '1') { echo "checked"; }; ?>>
 					<label class="form-check-label text-primary" for="statusConsulta1"><i class='far fa-calendar-check mr-1'></i> Marcada (1)</label>
@@ -88,7 +97,7 @@
 					<label class="form-check-label text-success" for="statusConsulta2"><i class='fas fa-check mr-1'></i> Realizada (2)</label>
 				</div>
 			</div>
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-6 col-lg-4">
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta3" value="3" <?php if($con_status == '3') { echo "checked"; }; ?>>
 					<label class="form-check-label text-secondary" for="statusConsulta3"><i class='far fa-user mr-1'></i> Ausente (3)</label>
@@ -98,10 +107,8 @@
 					<label class="form-check-label text-secondary" for="statusConsulta4"><i class='far fa-calendar-times mr-1'></i> Cancelada (4)</label>
 				</div>
 			</div>
-
+	<?php endif; ?>
 		</div><!--form-row -->
-
-<?php endif; ?><!-- $con_status != 0 -->
 
 		<div class="row">
 			<div class="col-6">

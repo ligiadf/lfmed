@@ -65,7 +65,7 @@
 
 
 	<p class="mt-2 text-right">
-		<a class="btn btn-warning" href="<?php echo BASE_URL ?>consultas/editar"><i class="far fa-calendar-check mr-1"></i> Editar</a>
+		<a class="btn btn-warning" href="<?php echo BASE_URL ?>consultas/editar/<?php echo $id; ?>"><i class="far fa-calendar-check mr-1"></i> Editar</a>
 	</p>
 
 <?php if($con_status == '2'): ?>

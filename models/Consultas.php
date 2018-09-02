@@ -130,6 +130,18 @@ class Consultas extends Model {
 
 	}
 
+	public function editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente='', $statusConsulta) {
+		$sql = "UPDATE consultas SET id_med = :id_med, id_pac = :id_pac, con_inicio = :con_inicio, con_fim = :con_fim, con_status = :con_status WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->bindValue(":id_med", $id_medico);
+		$sql->bindValue(":id_pac", $paciente);
+		$sql->bindValue(":con_inicio", $dtConsulta_inicio);
+		$sql->bindValue(":con_fim", $dtConsulta_fim);
+		$sql->bindValue(":con_status", $statusConsulta);
+		$sql->execute();
+	}
+
 }
 
 ?>

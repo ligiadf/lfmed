@@ -109,6 +109,20 @@ class Usuarios extends Model {
 		return $array;
 
 	}
+
+	public function editarUsuario($id, $nome_usuario, $perfil, $email, $status, $especialidade, $crm) {
+		$sql = "UPDATE usuarios SET nome = :nome, perfil = :perfil, email = :email, status = :status, especialidade = :especialidade, crm = :crm WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->bindValue(":nome", $nome_usuario);
+		$sql->bindValue(":perfil", $perfil);
+		$sql->bindValue(":email", $email);
+		$sql->bindValue(":status", $status);
+		$sql->bindValue(":especialidade", $especialidade);
+		$sql->bindValue(":crm", $crm);
+		$sql->execute();
+	}
+
 }
 
 class Recepcionista extends Usuarios {

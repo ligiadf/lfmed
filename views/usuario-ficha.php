@@ -57,7 +57,7 @@
 	</dl>
 
 	<p class="mt-2 text-right">
-		<a class="btn btn-warning" href="<?php echo BASE_URL ?>usuario/editar/<?php echo $id; ?>"><i class="fas fa-user-edit mr-1"></i> Editar usuário</a>
+		<a class="btn btn-warning" href="<?php echo BASE_URL ?>usuarios/editar/<?php echo $id; ?>"><i class="fas fa-user-edit mr-1"></i> Editar usuário</a>
 	</p>
 	</div><!-- col-md-6 -->
 
@@ -104,7 +104,7 @@
 						break;
 					case "4": 
 						$situacao_nome = "Consulta cancelada";
-						$situacao_cor = "text-warning";
+						$situacao_cor = "text-secondary";
 						$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
 						break;
 				} 
@@ -123,9 +123,6 @@
 					echo $dt_fim." ".$hora_fim;
 
 				endif; ?>
-
-
-
 			</a>
 
 		<?php endforeach; ?>

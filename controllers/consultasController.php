@@ -68,6 +68,46 @@ class consultasController extends controller {
 
 		$this->loadTemplate('consulta-marcar', $dados);
 	}
+
+	# URL: /consultas/detalhe/[id]
+	public function detalhe($id) {
+
+		$consultas = new Consultas();
+		//$usuarios = new Usuarios();
+		//$pacientes = new Pacientes();
+
+		$detalhe = $consultas->detalheConsulta($id);
+
+		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
+		$horaConsulta = substr($detalhe['con_inicio'], 11, 5); // HH:ii
+
+		$dataConsulta = explode('-', addslashes($diaMesConsulta));
+		$dtConsulta_inicio = $dataConsulta[2].'/'.$dataConsulta[1].'/'.$dataConsulta[0]; // DD/MM/AAA
+
+		$diaMesConsultaFim = substr($detalhe['con_fim'], 0, 10); // AAAA-MM-DD
+		$horaConsultaFim = substr($detalhe['con_fim'], 11, 5); // HH:ii
+
+		$dataConsultaFim = explode('-', addslashes($diaMesConsultaFim));
+		$dtConsulta_fim = $dataConsultaFim[2].'/'.$dataConsultaFim[1].'/'.$dataConsultaFim[0]; // DD/MM/AAA
+
+		$dados = array(
+			'med_id' => $detalhe['med_id'],
+			'med_nome' => $detalhe['med_nome'],
+			'especialidade' => $detalhe['especialidade'],
+			'pac_id' => $detalhe['pac_id'],
+			'pac_nome' => $detalhe['pac_nome'],
+			'detalhe' => $detalhe,
+			'id'=> $id,
+			'con_data' => $dtConsulta_inicio,
+			'con_hora' => $horaConsulta,
+			'con_status' => $detalhe['con_status'],
+			'con_data_fim' => $dtConsulta_fim,
+			'con_hora_fim' => $horaConsultaFim,
+		);
+
+		$this->loadTemplate('consulta-detalhe', $dados);
+	}
+
 }
 
 ?>

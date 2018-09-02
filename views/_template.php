@@ -9,13 +9,14 @@
 	<!--
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"> -->
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/sb-admin.css">
 
 	<!-- Font Awesome -->
 	<!--
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 	-->
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/fontawesome.min.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/all.min.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/fontawesome.all.min.css">
 	
 	<!-- Sistema -->
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/template.css">
@@ -26,45 +27,73 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md sticky-top navbar-dark" style="background-color: #008080;">
+<nav class="navbar navbar-expand-md static-top navbar-dark" style="background-color: #008080;">
 	<a class="navbar-brand" href="<?php echo BASE_URL; ?>"><?php echo NOME_CLINICA; ?></a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
+
+	<button class="btn btn-link btn-sm text-white order-sm-0" id="sidebarToggle" href="#" title="Esconde/mostra menu lateral">
+		<i class="fas fa-exchange-alt"></i>
 	</button>
-	<div class="collapse navbar-collapse" id="navbarText">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>calendario"><i class="far fa-calendar-alt mr-1"></i> Calendário</a>
-			</li>
-			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas')) { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>consultas"><i class="far fa-calendar-check ml-2 mr-1"></i> Consultas</a> 
-			</li>
-			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'pacientes')) { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>pacientes"><i class="fas fa-users ml-2 mr-1"></i> Pacientes</a>
-			</li>
-			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'medicos')) { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>medicos"><i class="fas fa-user-md ml-2 mr-1"></i> Médicos</a>
-			</li>
-			<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios')) { echo "active"; } ?>">
-				<a class="nav-link" href="<?php echo BASE_URL; ?>usuarios"><i class="fas fa-users-cog ml-2 mr-1"></i> Usuários</a>
-			</li>
-		</ul>
+
+	<div class="ml-auto" id="navbarText">
 		<span class="navbar-text">
 		<i class="fas fa-user-circle"></i> Bárbara Gordon
 		</span>
 	</div>
 </nav>
 
-<main class="container-fluid mb-5">
+<div id="wrapper">
+	<!-- Sidebar -->
+	<ul class="sidebar navbar-nav">
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>calendario">
+				<i class="far fa-calendar-alt mr-1"></i>
+				<span>Calendário</span>
+			</a>
+		</li>
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>consultas">
+				<i class="far fa-calendar-check mr-1"></i>
+				<span>Consultas</span>
+			</a>
+		</li>
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'pacientes')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>pacientes">
+				<i class="fas fa-users mr-1"></i>
+				<span>Pacientes</span>
+			</a>
+		</li>
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'medicos')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>medicos">
+				<i class="fas fa-user-md mr-1"></i>
+				<span>Médicos</span>
+			</a>
+		</li>
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>usuarios">
+				<i class="fas fa-users-cog mr-1"></i>
+				<span>Usuários</span>
+			</a>
+		</li>
+	</ul>
 
 	<!-- Conteúdo -->
-	<?php $this->loadViewInTemplate($viewName, $viewData) ?>
+	<div id="content-wrapper">
+		<main class="container-fluid mb-5">
+			<?php $this->loadViewInTemplate($viewName, $viewData) ?>
+		</main><!-- container-fluid -->
+		<footer class="sticky-footer p-0">
+			<div class="container my-auto">
+				<div class="copyright text-center">
+					<span class="text-dark">&copy; <?php echo NAME." v.".VERSION; ?> &ndash; <?php echo "Desenvolvido por ".DEV; ?> &ndash; <?php echo LICENSE; ?></span>
+				</div>
+			</div>
+		</footer>
 
-</main><!-- container-fluid -->
 
-<footer class="mt-4 pl-2 p-0 text-center">
-	<small>&copy; <?php echo NAME; ?> &ndash; <?php echo VERSION; ?></small>
-</footer>
+
+	</div><!-- content-wrapper -->
+
+</div><!-- #wrapper -->
 
 	<!-- Bootstrap 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -75,9 +104,11 @@
 
 	<script src="<?php echo BASE_URL?>assets/js/bootstrap.min.js"></script>
 
-	<?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios/adicionar')): ?>
-		<script src="<?php echo BASE_URL?>assets/js/valida.js"></script>
+	<?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios/adicionar') || strpos($_SERVER['REQUEST_URI'], 'usuarios/editar')): ?>
+	<script src="<?php echo BASE_URL?>assets/js/valida-cadastro-usuarios.js"></script>
 	<?php endif; ?>
+
+	<script src="<?php echo BASE_URL?>assets/js/sb-admin.js"></script>
 
 </body>
 </html>

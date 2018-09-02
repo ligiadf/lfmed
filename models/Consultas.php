@@ -24,12 +24,11 @@ class Consultas extends Model {
 	public function listarConsultasPaciente($id) {
 		$array = array();
 
-		$sql = "SELECT pacientes.nome, pacientes.id, usuarios.nome as med_nome, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
+		$sql = "SELECT pacientes.nome, pacientes.id, usuarios.nome as med_nome, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id, consultas.atestado_periodo, consultas.atestado_motivo, consultas.atestado_cid
 				FROM consultas
 				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
-				WHERE pacientes.id = :id
-				ORDER BY con_inicio";
+				WHERE pacientes.id = :id";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":id", $id);
 		$sql->execute();
@@ -107,6 +106,28 @@ class Consultas extends Model {
 		else {
 			return true;
 		}
+	}
+
+	public function detalheConsulta($id) {
+
+		$array = array();
+
+		$sql = "SELECT pacientes.nome pac_nome, pacientes.id as pac_id, usuarios.nome as med_nome, usuarios.id as med_id, usuarios.especialidade, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id as con_id
+				FROM consultas
+				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
+				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
+				WHERE consultas.id = :id
+				ORDER BY con_inicio";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+		}
+
+		return $array;
+
 	}
 
 }

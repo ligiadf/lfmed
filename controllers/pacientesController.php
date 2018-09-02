@@ -116,7 +116,6 @@ class pacientesController extends controller {
 			$pacientes->editarPaciente($id, $nome_paciente, $data_nasc, $email, $telefone, $cpf, $plano_saude);
 				$msgCadastrarPacienteOK = "Paciente atualizado com sucesso: ".$nome_paciente;
 				header('Location:'. BASE_URL.'pacientes/ficha/'.$id.'?msgOK='.urlencode($msgCadastrarPacienteOK));
-			
 		}
 
 		$info = $pacientes->fichaPaciente($id);

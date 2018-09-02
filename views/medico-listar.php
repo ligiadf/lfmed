@@ -4,7 +4,7 @@
 
 <p><a class="btn btn-primary" href="<?php echo BASE_URL ?>usuarios/adicionar"><i class="fas fa-user-plus mr-1"></i> Adicionar médico</a></p>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<tr>
 		<th>id</th>
 		<th>Nome</th>
@@ -28,7 +28,7 @@
 		</td>
 		<td><?php echo $item['crm']; ?></td>
 		<td>
-			<span><a href="usuarios/ficha/[id]"><i class="fas fa-id-card-alt mr-1"></i> Ver ficha</a></span>
+			<span><a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $item['id']; ?>"><i class="fas fa-id-card-alt mr-1"></i> Ver ficha</a></span>
 		</td>
 	</tr>
 

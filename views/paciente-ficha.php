@@ -21,10 +21,15 @@
 		<dd class="col-md-7"><?php echo $id; ?></dd>
 		
 		<dt class="col-md-5"><i class="fas fa-birthday-cake mr-1"></i> Idade</dt>
-		<dd class="col-md-7"><?php echo $idade; ?></dd>
-
-		<dt class="col-md-5"><i class="fas fa-birthday-cake mr-1"></i> Data de nascimento</dt>
-		<dd class="col-md-7"><?php echo $data_nasc; ?></dd>
+		<dd class="col-md-7">
+			<?php
+				$data_nasc_iso = $ficha['data_nasc'];
+				$hoje = date("Y-m-d");
+				$idade = date_diff(date_create($data_nasc_iso), date_create($hoje));
+				echo $idade->format('%y')." anos (".$data_nasc.")";
+			?>
+			
+		</dd>
 
 		<dt class="col-md-5"><i class="fas fa-envelope mr-1"></i> E-mail</dt>
 		<dd class="col-md-7"><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></dd>
@@ -37,7 +42,6 @@
 
 		<dt class="col-md-5"><i class="fas fa-briefcase-medical mr-1"></i> Plano de saúde</dt>
 		<dd class="col-md-7"><?php echo $plano_saude; ?></dd>
-
 	</dl>
 
 	<p class="mt-2 text-right">
@@ -75,12 +79,12 @@
 						break;
 					case "4": 
 						$situacao_nome = "Consulta cancelada";
-						$situacao_cor = "text-warning";
+						$situacao_cor = "text-secondary";
 						$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
 						break;
 				} 
 			?>
-			<a class="list-group-item mb-1 link-unstyled <?php echo $situacao_cor; ?>" title="<?php echo $situacao_nome ?>" href="<?php echo BASE_URL ?>consultas/detalhes/<?php echo $info['id']; ?>">
+			<a class="list-group-item mb-1 link-unstyled <?php echo $situacao_cor; ?>" title="<?php echo $situacao_nome ?>" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>">
 				<?php echo $situacao_icone; ?>
 				<?php echo $dt_inicio." ".$hora_inicio ?>
 				<!--&ndash;-->

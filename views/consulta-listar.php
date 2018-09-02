@@ -4,7 +4,7 @@
 
 <p><a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></p>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-hover">
 	<tr>
 		<th>id</th>
 		<th>Início da consulta</th>
@@ -57,7 +57,7 @@
 			echo $situacao;
 			?>
 		</td>
-		<td></td>
+		<td><span><a href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>"><i class="fas fa-list-alt mr-1"></i> Ver detalhes</a></span></td>
 	</tr>
 
 <?php endforeach; ?>

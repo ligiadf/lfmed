@@ -93,6 +93,36 @@ class usuariosController extends controller {
 		$this->loadTemplate('usuario-ficha', $dados);
 	}
 
+	# URL: /usuarios/editar/[id]
+	public function editar($id) {
+
+		$usuarios = new Usuarios();
+		$verificacao = new Usuarios();
+
+		$info = $usuarios->fichaUsuario($id);
+
+		if( !empty($_POST['nomeUsuario']) && !empty($_POST['email']) && !empty($_POST['perfil']) ) {
+			$nome_usuario = addslashes($_POST['nomeUsuario']);
+			$email = addslashes($_POST['email']);
+			$perfil = addslashes($_POST['perfil']);
+			$status = addslashes($_POST['status']);
+			$especialidade = addslashes($_POST['especialidade']);
+			$crm = addslashes($_POST['crm']);
+
+			$usuarios->editarUsuario($id, $nome_usuario, $perfil, $email, $status, $especialidade, $crm);
+			$msgAdicionarUsuarioOK = "Usuário editado com sucesso: ".$nome_usuario;
+			header('Location:'. BASE_URL.'usuarios/ficha/'.$id.'?msgOK='.urlencode($msgAdicionarUsuarioOK));
+
+		}
+		$dados = array(
+			// vai para view
+			'info' => $info
+		);
+
+		$this->loadTemplate('usuario-editar', $dados);
+
+	}
+
 }
 
 ?>

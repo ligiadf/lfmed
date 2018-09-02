@@ -43,7 +43,7 @@
 
 		<div class="form-group">
 			<label for="telefone"><i class="fas fa-phone mr-1"></i> Telefone:</label>
-			<input type="text" class="form-control" id="telefone" name="telefone" maxlength="12" value="<?php echo $info['telefone']; ?>"required>
+			<input type="text" class="form-control" id="telefone" name="telefone" maxlength="12" value="<?php echo $info['telefone']; ?>" required>
 			<small id="telefoneHelp" class="form-text text-muted">Preencha o telefone do paciente no formato DDD123456789. Ex.: 051998765432.</small>
 		</div>
 

@@ -109,7 +109,7 @@
 						break;
 				} 
 			?>
-			<a class="list-group-item mb-1 link-unstyled <?php echo $situacao_cor; ?>" title="<?php echo $situacao_nome ?>" href="<?php echo BASE_URL ?>consultas/detalhes/<?php echo $info['id']; ?>">
+			<a class="list-group-item mb-1 link-unstyled <?php echo $situacao_cor; ?>" title="<?php echo $situacao_nome ?>" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['con_id']; ?>">
 				<?php if($situacao != '0'):
 					echo $situacao_icone;
 					echo $dt_inicio." ".$hora_inicio ?>

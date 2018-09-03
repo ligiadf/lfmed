@@ -27,12 +27,14 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md static-top navbar-dark" style="background-color: #008080;">
-	<a class="navbar-brand" href="<?php echo BASE_URL; ?>"><?php echo NOME_CLINICA; ?></a>
+<nav class="navbar navbar-expand-md static-top navbar-dark pl-1" style="background-color: #008080;">
+	
 
-	<button class="btn btn-link btn-sm text-white order-sm-0" id="sidebarToggle" href="#" title="Esconde/mostra menu lateral">
-		<i class="fas fa-exchange-alt"></i>
+	<button class="btn btn-link btn-sm text-white order-sm-0 mr-3" id="sidebarToggle" href="#" title="Menu principal">
+		<i class="fas fa-bars"></i>
 	</button>
+
+	<a class="navbar-brand" href="<?php echo BASE_URL; ?>"><?php echo NOME_CLINICA; ?></a>
 
 	<div class="ml-auto" id="navbarText">
 		<span class="navbar-text">

@@ -1,6 +1,6 @@
 <?php
 
-class calendarioController extends controller {
+class calendarioController extends Controller {
 
 	public function index() {
 

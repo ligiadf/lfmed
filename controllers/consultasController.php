@@ -1,6 +1,6 @@
 <?php
 
-class consultasController extends controller {
+class consultasController extends Controller {
 
 	# URL: /consultas
 	public function index() {

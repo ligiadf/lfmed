@@ -1,6 +1,6 @@
 <?php
 
-class pacientesController extends controller {
+class pacientesController extends Controller {
 
 	# URL: /pacientes
 	public function index() {

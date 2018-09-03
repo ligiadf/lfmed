@@ -1,6 +1,6 @@
 <?php
 
-class medicosController extends controller {
+class medicosController extends Controller {
 
 	public function index() {
 

@@ -1,6 +1,6 @@
 <?php
 // Controlador da página inicial
-class homeController extends controller {
+class homeController extends Controller {
 
 	public function index() {
 

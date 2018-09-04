@@ -21,6 +21,8 @@
 	<!-- Sistema -->
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/template.css">
 
+	<link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL?>assets/images/clinica-oftorrino-icone.png">
+
 	<title>Clínica Oftorrino</title>
 
 </head>

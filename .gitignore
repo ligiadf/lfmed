@@ -3,6 +3,12 @@
 db.php
 config.php
 
+# Imagens #
+###########
+assets/images/clinica-oftorrino-icone.png
+assets/images/clinica-oftorrino-logo.png
+
+
 # Arquivos de trabalho #
 ########################
 consultas-SQL.txt

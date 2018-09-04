@@ -194,6 +194,61 @@ class consultasController extends Controller {
 		$this->loadTemplate('consulta-editar', $dados);
 	}
 
+	# URL: /consultas/comprovante/id
+	public function comprovante($id) {
+
+		$consultas = new Consultas();
+
+		$detalhe = $consultas->detalheConsulta($id);
+
+		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
+		$horaConsulta = substr($detalhe['con_inicio'], 11, 5); // HH:ii
+
+		$dataConsulta = explode('-', addslashes($diaMesConsulta));
+		$dtConsulta_inicio = $dataConsulta[2].'/'.$dataConsulta[1].'/'.$dataConsulta[0]; // DD/MM/AAA
+
+		$horaConsultaFim = substr($detalhe['con_fim'], 11, 5); // HH:ii
+
+		$data_atual = date('d/m/Y');
+
+		require ("assets/fpdf/fpdf.php");
+		require ("assets/tfpdf/tfpdf.php");
+		$pdf = new tFPDF();
+		$pdf->AddPage('P','A5');
+		$pdf->SetAutoPageBreak(true,1);
+		
+		$pdf->SetAuthor(NOME_CLINICA, true);
+		$pdf->SetTitle(NOME_CLINICA. ' - Comprovante comparecimento consulta '.$id, true);
+		
+		// Fonte Unicode para usar UTF-8
+		$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+		$pdf->SetFont('DejaVu','',12);
+
+		$pdf->Image(LOGO_CLINICA,5,5,80,40,'PNG');
+
+		$pdf->Ln(40);
+		$pdf->MultiCell(125,20,'COMPROVANTE DE COMPARECIMENTO',0,'C');
+		$pdf->MultiCell(125,10,'Declaro para os devidos fins que '.$detalhe['pac_nome'].' esteve em consulta médica na Clínica Oftorrino no dia '.$dtConsulta_inicio.', das '.$horaConsulta.' às '.$horaConsultaFim.'.');
+
+		$pdf->Ln(10);
+		$pdf->MultiCell(125,10, 'Atenciosamente,',0,'R');
+		$pdf->MultiCell(125,10, '__________________________',0,'R');
+		$pdf->MultiCell(125,7, $detalhe['med_nome'],0,'R');
+		$pdf->MultiCell(125,7, $detalhe['especialidade'],0,'R');
+		$pdf->MultiCell(125,7, $detalhe['crm'],0,'R');
+
+		$pdf->Ln(20);
+		$pdf->MultiCell(120,10, 'Porto Alegre, '.$data_atual,0,'C');
+
+		$pdf->SetY(-15);
+		$pdf->SetFont('Arial','I',8);
+		$pdf->Cell(0,10,END_CLINICA,0,0,'C');
+
+		$pdf->Output();
+
+	}
+
+
 }
 
 ?>

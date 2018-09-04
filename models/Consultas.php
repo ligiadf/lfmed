@@ -112,7 +112,7 @@ class Consultas extends Model {
 
 		$array = array();
 
-		$sql = "SELECT pacientes.nome pac_nome, pacientes.id as pac_id, usuarios.nome as med_nome, usuarios.id as med_id, usuarios.especialidade, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id as con_id
+		$sql = "SELECT pacientes.nome pac_nome, pacientes.id as pac_id, usuarios.nome as med_nome, usuarios.id as med_id, usuarios.especialidade, usuarios.crm, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id as con_id
 				FROM consultas
 				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med

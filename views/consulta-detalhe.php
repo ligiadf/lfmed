@@ -69,7 +69,7 @@
 	</p>
 
 <?php if($con_status == '2'): ?>
-	<p><a class="btn btn-info" href="<?php echo BASE_URL ?>consultas/editar"><i class="fas fa-file-contract mr-1"></i> Comprovante</a></p>
+	<p><a class="btn btn-info" href="<?php echo BASE_URL ?>consultas/comprovante/<?php echo $id; ?>" target="_blank"><i class="fas fa-file-contract mr-1"></i> Comprovante</a></p>
 
 <div class="card-deck">
 	<div class="card mt-3">

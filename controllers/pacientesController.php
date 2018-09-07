@@ -81,13 +81,18 @@ class pacientesController extends Controller {
 		$dataNascimento = explode('-', addslashes($ficha['data_nasc']));
 		$dataNasc = $dataNascimento[2].'/'.$dataNascimento[1].'/'.$dataNascimento[0];
 
+		// cálculo idade
+		$data_nasc_iso = $ficha['data_nasc'];
+		$hoje = date("Y-m-d");
+		$calculo = date_diff(date_create($data_nasc_iso), date_create($hoje));
+		$idade = $calculo->format('%y')." anos (".$dataNasc.")";
+
 		$dados = array(
-			// vai para view
 			'ficha' => $ficha,
 			'consulta' => $consultaPac,
 			'id'=> $id,
+			'idade'=> $idade,
 			'nome' => $ficha['nome'],
-			'data_nasc' => $dataNasc,
 			'email' => $ficha['email'],
 			'telefone' => $ficha['telefone'],
 			'cpf' => $ficha['cpf'],

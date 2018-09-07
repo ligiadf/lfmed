@@ -1,11 +1,6 @@
 <div class="row justify-content-center">
 	<div class="col-md-6">
 
-	<header class="mt-4 mb-4">
-		<p><i class="fas fa-user-edit mr-1"></i> Editar cadastro paciente</p>
-		<h1><?php echo $info['nome']; ?></h1>
-	</header>
-
 	<?php if(!empty($_GET['msgError'])): ?>
 		<div class="alert alert-danger">
 			<?php echo $_GET['msgError']; ?>
@@ -17,6 +12,11 @@
 			<?php echo $_GET['msgOK']; ?>
 		</div>
 	<?php endif ?>
+
+	<header class="mt-4 mb-4">
+		<p><i class="fas fa-user-edit mr-1"></i> Editar cadastro paciente</p>
+		<h1><?php echo $info['nome']; ?></h1>
+	</header>
 
 	<form method="POST">
 		<div class="form-group">

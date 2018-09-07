@@ -1,13 +1,5 @@
 <div class="row justify-content-center">
 	<div class="col-md-10">
-	<header class="mt-4 mb-4">
-		<h1>
-			<?php
-				if($con_status=='0') { echo "<span class='text-danger'>Indisponibilidade</span>"; }
-					else { echo "Detalhes da consulta"; } ?>
-			<small style="font-size: 40%;" class="badge badge-pill  badge-light"><?php echo $id; ?></small>
-		</h1>
-	</header>
 
 	<?php if(!empty($_GET['msgError'])): ?>
 		<div class="alert alert-danger">
@@ -20,6 +12,15 @@
 			<?php echo $_GET['msgOK']; ?>
 		</div>
 	<?php endif ?>
+
+	<header class="mt-4 mb-4">
+		<h1>
+			<?php
+				if($con_status=='0') { echo "<span class='text-danger'>Indisponibilidade</span>"; }
+					else { echo "Detalhes da consulta"; } ?>
+			<small style="font-size: 40%;" class="badge badge-pill  badge-light"><?php echo $id; ?></small>
+		</h1>
+	</header>
 
 	<?php if($con_status == '0'): ?>
 		<h5><i class="far fa-calendar-alt mr-1"></i> <?php echo $con_data." - ".$con_data_fim; ?> <i class="far fa-clock ml-5 mr-1"></i> <?php echo $con_hora." - ".$con_hora_fim; ?></h5>
@@ -75,7 +76,24 @@
 	<div class="card mt-3">
 		<div class="card-header"><i class="fas fa-file-signature mr-1"></i> Atestado</div>
 		<div class="card-body">
-			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+			<p class="card-text">
+				<?php
+					if(!empty($atestado_periodo)){
+						echo "Atestado ".$atestado_periodo." por ".$atestado_motivo;
+						if(!empty($atestado_cid)) {
+							echo " (".$atestado_cid.")";
+						}
+						echo ".";
+					} else {
+						echo "Não há atestado vinculado a esta consulta.";
+					}
+				?>
+			</p>
+			<p class="card-text">
+				<?php if(!empty($atestado_periodo)): ?>
+				Atesto para os devidos fins que <strong><?php echo $pac_nome; ?></strong>, inscrito(a) no CPF sob o nº <strong><?php echo $cpf; ?></strong>, esteve em consulta no dia <strong><?php echo $con_data; ?></strong> às <strong><?php echo $con_hora; ?></strong>, apresentando quadro de <strong><?php echo $atestado_motivo; if(!empty($atestado_cid)) { echo " (".$atestado_cid.")"; } ?></strong> e necessitando de repouso <strong><?php echo $atestado_periodo ?></strong>.
+				<?php endif; ?>
+			</p>
 			<a href="<?php echo BASE_URL ?>consultas/anotacoes" class="btn btn-info"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 		</div>
 	</div>

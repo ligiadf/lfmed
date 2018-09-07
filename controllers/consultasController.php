@@ -96,13 +96,17 @@ class consultasController extends Controller {
 			'especialidade' => $detalhe['especialidade'],
 			'pac_id' => $detalhe['pac_id'],
 			'pac_nome' => $detalhe['pac_nome'],
+			'cpf' => $detalhe['cpf'],
 			'detalhe' => $detalhe,
 			'id'=> $id,
 			'con_data' => $dtConsulta_inicio,
 			'con_hora' => $horaConsulta,
 			'con_status' => $detalhe['con_status'],
 			'con_data_fim' => $dtConsulta_fim,
-			'con_hora_fim' => $horaConsultaFim
+			'con_hora_fim' => $horaConsultaFim,
+			'atestado_motivo' => $detalhe['atestado_motivo'],
+			'atestado_periodo' => $detalhe['atestado_periodo'],
+			'atestado_cid' => $detalhe['atestado_cid']
 		);
 
 		$this->loadTemplate('consulta-detalhe', $dados);
@@ -151,10 +155,7 @@ class consultasController extends Controller {
 			// AAAA-MM-DD HH:MM
 			$dtConsulta_inicio = $dataConsulta[2].'-'.$dataConsulta[1].'-'.$dataConsulta[0].' '.$horaConsulta;
 
-
-
 			if($statusConsulta == "0") {
-
 				// AAAA-MM-DD HH:MM
 				$dtConsulta_fim = $dataConsultaFim[2].'-'.$dataConsultaFim[1].'-'.$dataConsultaFim[0].' '.$horaConsultaFim;
 
@@ -164,8 +165,6 @@ class consultasController extends Controller {
 				$dtConsulta_fim = date("Y-m-d H:i", strtotime($dtConsulta_inicio. '+30 minutes'));
 
 			}
-
-
 
 			$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
 			$msgEditarConsultaOK = "Consulta alterada com sucesso: em ".$dtConsulta_inicio;

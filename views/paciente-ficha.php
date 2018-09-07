@@ -1,8 +1,5 @@
 <div class="row justify-content-center">
-	<div class="col-md-6 col-lg-5">
-	<header class="mt-4 mb-4">
-		<h1><?php echo $nome; ?> </h1> 
-	</header>
+	<div class="col-md-10">
 
 	<?php if(!empty($_GET['msgError'])): ?>
 		<div class="alert alert-danger">
@@ -16,45 +13,41 @@
 		</div>
 	<?php endif ?>
 
-	<dl class="row">
-		<dt class="col-md-5"><i class="fas fa-passport mr-1"></i> ID</dt>
-		<dd class="col-md-7"><?php echo $id; ?></dd>
-		
-		<dt class="col-md-5"><i class="fas fa-birthday-cake mr-1"></i> Idade</dt>
-		<dd class="col-md-7">
-			<?php
-				$data_nasc_iso = $ficha['data_nasc'];
-				$hoje = date("Y-m-d");
-				$idade = date_diff(date_create($data_nasc_iso), date_create($hoje));
-				echo $idade->format('%y')." anos (".$data_nasc.")";
-			?>
-			
-		</dd>
+	<header class="mt-4 mb-4">
+		<p><i class="fas fa-user mr-1"></i> Ficha do paciente</p>
+		<h1>
+			<?php echo $nome; ?>
+			<small style="font-size: 40%;" class="badge badge-pill  badge-light"><?php echo $id; ?></small>
+		</h1>
+	</header>
 
-		<dt class="col-md-5"><i class="fas fa-envelope mr-1"></i> E-mail</dt>
-		<dd class="col-md-7"><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></dd>
+	<h5><i class="fas fa-birthday-cake mr-1"></i> 
+		<?php
 
-		<dt class="col-md-5"><i class="fas fa-phone mr-1"></i> Telefone</dt>
-		<dd class="col-md-7"><?php echo $telefone; ?></dd>
+			echo $idade;
+		?>
+	</h5>
 
-		<dt class="col-md-5"><i class="fas fa-id-card mr-1"></i> CPF</dt>
-		<dd class="col-md-7"><?php echo $cpf; ?></dd>
+	<p><i class="fas fa-envelope mr-1"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></p>
+	<p><i class="fas fa-phone mr-1"></i> <?php echo $telefone; ?></p>
+	<p><i class="fas fa-id-card mr-1"></i> CPF <?php echo $cpf; ?></p>
+	<p><i class="fas fa-briefcase-medical mr-1"></i> <?php echo $plano_saude; ?></p>
 
-		<dt class="col-md-5"><i class="fas fa-briefcase-medical mr-1"></i> Plano de saúde</dt>
-		<dd class="col-md-7"><?php echo $plano_saude; ?></dd>
-	</dl>
-
-	<p class="mt-2 text-right">
+	<p class="mt-2">
 		<a class="btn btn-warning" href="<?php echo BASE_URL ?>pacientes/editar/<?php echo $id; ?>"><i class="fas fa-user-edit mr-1"></i> Editar paciente</a>
 	</p>
-	</div><!-- col-md-6 -->
+	</div><!-- col-md-10 -->
 
-	<div class="col-md-6 col-lg-5">
+	<div class="col-md-10">
 	<header class="mt-4 mb-4">
 		<h2>Consultas</h2>
 	</header>
 
-	<div class="list-group">
+	<p class="mt-2">
+		<a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
+	</p>
+
+	<div class="row">
 		<?php foreach($consulta as $item): ?>
 			<?php 
 				$dt_inicio = date('d/m/Y', strtotime($item['con_inicio']));
@@ -63,41 +56,65 @@
 				$situacao = $item['con_status'];
 				switch ($situacao) {
 					case "1": 
-						$situacao_nome = "Ver detalhes da consulta marcada.";
-						$situacao_cor = "text-primary";
+						$situacao_nome = "Marcada";
+						$situacao_cor = "info";
 						$situacao_icone = "<i class='far fa-calendar-check mr-1'></i>";
 						break;
 					case "2": 
-						$situacao_nome = "Ver detalhes da consulta realizada";
-						$situacao_cor = "text-success";
+						$situacao_nome = "Realizada";
+						$situacao_cor = "success";
 						$situacao_icone = "<i class='fas fa-check mr-1'></i>";
 						break;
 					case "3": 
 						$situacao_nome = "Paciente ausente";
-						$situacao_cor = "text-secondary";
+						$situacao_cor = "secondary";
 						$situacao_icone = "<i class='far fa-user mr-1'></i>";
 						break;
 					case "4": 
-						$situacao_nome = "Consulta cancelada";
-						$situacao_cor = "text-secondary";
+						$situacao_nome = "Cancelada";
+						$situacao_cor = "secondary";
 						$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
 						break;
 				} 
 			?>
-			<a class="list-group-item mb-1 link-unstyled <?php echo $situacao_cor; ?>" title="<?php echo $situacao_nome ?>" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>">
-				<?php echo $situacao_icone; ?>
-				<?php echo $dt_inicio." ".$hora_inicio ?>
-				<!--&ndash;-->
-				<i class="fas fa-user-md ml-3 mr-1"></i> <?php echo $item['med_nome']; ?>
-
+			<!--
+			<a class="list-group-item mb-1 link-unstyled text-<?php //echo $situacao_cor; ?>" title="<?php //echo $situacao_nome ?>" href="<?php //echo BASE_URL ?>consultas/detalhe/<?php// echo $item['id']; ?>">
+				<?php //echo $situacao_icone; ?>
+				<?php // $dt_inicio." ".$hora_inicio ?>
+				<i class="fas fa-user-md ml-3 mr-1"></i> <?php //echo $item['med_nome']; ?>
 			</a>
+			-->
+
+			<div class="col-md-6">
+				<div class="card mb-2 border-<?php echo $situacao_cor; ?>">
+					<div class="card-header text-<?php echo $situacao_cor; ?> font-weight-bold border-<?php echo $situacao_cor; ?>">
+						<?php echo $situacao_icone.$dt_inicio." ".$hora_inicio." - ".$situacao_nome; ?>
+					</div>
+					<div class="card-body">
+						<p class="card-text">Consulta com <?php echo $item['med_nome']." - ".$item['especialidade']."."; ?></p>
+						<?php if($situacao=='2'): ?>
+							<div class="row">
+								<p class="card-text col-lg-6"><i class="fas fa-file-signature mr-1"></i> 
+									<?php
+										if(!empty($item['atestado_periodo'])) { echo "Atestado emitido"; }
+											else { echo "Sem atestado"; }
+									?>
+								</p>
+								<p class="card-text col-lg-6"><i class="fas fa-file-medical mr-1"></i> Anotações?</p>
+							</div>
+							<div class="row mt-3 mb-3 mt-lg-0 mb-lg-0">
+								<p class="card-text col-lg-6"><i class="fas fa-pills mr-1"></i> Medicamentos?</p>
+								<p class="card-text col-lg-6"><i class="fas fa-prescription mr-1"></i> Exames?</p>
+							</div>
+						<?php endif; ?>
+						<a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>">Ver detalhes</a>
+					</div>
+				</div>
+			</div>
+
 
 		<?php endforeach; ?>
-	</div><!-- list-grop -->
+	</div><!-- row -->
 
-	<p class="mt-2 text-right">
-		<a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
-	</p>
-
-	</div><!-- col-md-6 -->
+	</div><!-- col-md-10 -->
 </div><!-- row -->

@@ -30,7 +30,6 @@
 <body>
 
 <nav class="navbar navbar-expand-md static-top navbar-dark pl-1" style="background-color: #008080;">
-	
 
 	<button class="btn btn-link btn-sm text-white order-sm-0 mr-3" id="sidebarToggle" href="#" title="Menu principal">
 		<i class="fas fa-bars"></i>
@@ -47,7 +46,7 @@
 
 <div id="wrapper">
 	<!-- Sidebar -->
-	<ul class="sidebar navbar-nav">
+	<ul class="sidebar navbar-nav toggled">
 		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
 			<a class="nav-link" href="<?php echo BASE_URL; ?>calendario">
 				<i class="far fa-calendar-alt mr-1"></i>

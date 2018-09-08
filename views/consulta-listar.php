@@ -43,7 +43,7 @@
 							break;
 						}
 				?>
-				<a href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $id; ?>" class="list-group-item list-group-item-action text-<?php echo $situacao_cor; ?>" title="Ver detalhes da consulta">
+				<a href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>" class="list-group-item list-group-item-action text-<?php echo $situacao_cor; ?>" title="Ver detalhes da consulta">
 					<div class="row">
 						<div class="col-12 col-md-4">
 							<?php

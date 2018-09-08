@@ -7,11 +7,25 @@ class pacientesController extends Controller {
 
 		$pacientes = new Pacientes();
 
-		$dados = array(
-			// vai para view
-			'pacientes' => $pacientes->listarPacientes(),
-			'quantidade' => $pacientes->totalPacientes()
-		);
+		$dados = array();
+
+	// paginação
+		$offset = 0;
+		$limite = 10;
+
+		$dados['quantidade'] = $pacientes->totalPacientes();
+		$quantidade = $dados['quantidade'];
+
+		$dados['paginas'] = ceil($quantidade/$limite);
+
+		$dados['pagina_atual'] = 1;
+		
+		if(!empty($_GET['p'])) {
+			$dados['pagina_atual'] = intval($_GET['p']);
+		}
+		$offset = ($dados['pagina_atual'] * $limite) - $limite;
+
+		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite);
 
 		$this->loadTemplate('paciente-listar', $dados);
 	}

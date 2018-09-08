@@ -10,11 +10,11 @@ class Pacientes extends Model {
 	private $cpf;
 	private $plano_saude;
 
-	public function listarPacientes() {
+	public function listarPacientes($offset, $limite) {
 
 		$array = array();
 
-		$sql = "SELECT * FROM pacientes ORDER BY nome";
+		$sql = "SELECT * FROM pacientes ORDER BY nome LIMIT $offset, $limite";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {

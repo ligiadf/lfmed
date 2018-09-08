@@ -2,10 +2,8 @@
 	<div class="col-md-10">
 
 		<header class="mt-4 mb-4">
-			<h1>Consultas</h1>
+			<h1>Consultas <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></small></h1>
 		</header>
-
-		<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></p>
 
 		<?php foreach($consultas as $item): ?>
 

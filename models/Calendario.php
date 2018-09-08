@@ -6,7 +6,7 @@ class Calendario extends Model {
 
 		$array = array();
 
-		$sql = "SELECT pacientes.nome, usuarios.nome as med_nome, consultas.con_inicio, consultas.con_fim, consultas.con_status
+		$sql = "SELECT pacientes.nome, usuarios.nome as med_nome, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
 				FROM consultas
 				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med

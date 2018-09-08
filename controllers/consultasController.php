@@ -7,10 +7,25 @@ class consultasController extends Controller {
 
 		$consultas = new Consultas();
 
-		$dados = array(
-			'consultas' => $consultas->listarConsultas(),
-			'quantidade' => $consultas->totalConsultas()
-		);
+		$dados = array();
+
+	// paginação
+		$offset = 0;
+		$limite = 10;
+
+		$dados['quantidade'] = $consultas->totalConsultas();
+		$quantidade = $dados['quantidade'];
+
+		$dados['paginas'] = ceil($quantidade/$limite);
+
+		$dados['pagina_atual'] = 1;
+		
+		if(!empty($_GET['p'])) {
+			$dados['pagina_atual'] = intval($_GET['p']);
+		}
+		$offset = ($dados['pagina_atual'] * $limite) - $limite;
+
+		$dados['consultas'] = $consultas->listarConsultas($offset, $limite);
 
 		$this->loadTemplate('consulta-listar', $dados);
 	}
@@ -168,7 +183,7 @@ class consultasController extends Controller {
 
 			$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
 			$msgEditarConsultaOK = "Consulta alterada com sucesso: em ".$dtConsulta_inicio;
-			header('Location:'. BASE_URL.'consultas/editar/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
+			header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
 		}
 
 		$dados = array(

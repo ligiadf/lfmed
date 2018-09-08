@@ -2,14 +2,15 @@
 
 class Consultas extends Model {
 
-	public function listarConsultas() {
+	public function listarConsultas($offset, $limite) {
 		$array = array();
 
-		$sql = "SELECT pacientes.nome, usuarios.nome as med_nome, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
+		$sql = "SELECT pacientes.nome, usuarios.nome as med_nome, usuarios.especialidade, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
 				FROM consultas
 				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
-				ORDER BY con_inicio";
+				ORDER BY con_inicio
+				LIMIT $offset, $limite";
 		$sql = $this->pdo->query($sql);
 		$sql->execute();
 

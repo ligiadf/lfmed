@@ -1,65 +1,78 @@
-<header class="mt-4 mb-4">
-	<h1>Consultas <small>[<?php echo $quantidade; ?>]</small></h1>
-</header>
+<div class="row justify-content-center">
+	<div class="col-md-10">
 
-<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></p>
+		<header class="mt-4 mb-4">
+			<h1>Consultas</h1>
+		</header>
 
-<table class="table table-bordered table-hover">
-	<tr>
-		<th>id</th>
-		<th>Início da consulta</th>
-		<th>Fim da consulta</th>
-		<th>Paciente</th>
-		<th>Médico</th>
-		<th>Situação</th>
-		<th>Ações</th>
-	</tr>
+		<p><a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></p>
 
-<?php foreach($consultas as $item): ?>
+		<?php foreach($consultas as $item): ?>
 
-	<?php 
-		$dt_inicio = date('d/m/Y H:i', strtotime($item['con_inicio']));
-		$dt_fim = date('d/m/Y H:i', strtotime($item['con_fim']));
-		$hora_fim = date('H:i', strtotime($item['con_fim']));
-		$situacao = $item['con_status'];
-	?>
+			<div class="list-group list-group-flush">
+				<?php
+					$dt_inicio = date('d/m/Y', strtotime($item['con_inicio']));
+					$hora_inicio = date('H:i', strtotime($item['con_inicio']));
+					$dt_fim = date('d/m/Y', strtotime($item['con_fim']));
+					$hora_fim = date('H:i', strtotime($item['con_fim']));
+					$situacao = $item['con_status'];
 
-	<tr >
-		<td><?php echo $item['id']; ?></td>
-		<td><?php echo $dt_inicio ?></td>
-		<td><?php echo $dt_fim ?></td>
-		<td>
-			<?php
-			if($situacao == 0) { echo "- Indisponibilidade -"; }
-				else { echo $item['nome']; }
-			?>
-		</td>
-		<td><?php echo $item['med_nome']; ?></td>
-		<td>
-			<?php
-			switch ($situacao) {
-				case "0":
-					$situacao = "<span class='text-danger'>Indisponibilidade</span>";
-					break;
-				case "1":
-					$situacao = "<span class='text-info'>Marcada</span>";
-					break;
-				case "2":
-					$situacao = "<span class='text-success'>Realizada</span>";
-					break;
-				case "3":
-					$situacao = "<span class='text-secondary'>Ausente</span>";
-					break;
-				case "4":
-					$situacao = "<span class='text-secondary'>Cancelada</span>";
-					break;
-			}
-			echo $situacao;
-			?>
-		</td>
-		<td><span><a href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>"><i class="fas fa-list-alt mr-1"></i> Ver detalhes</a></span></td>
-	</tr>
+					switch ($situacao) {
+						case "0": 
+							$situacao_nome = "Indisponibilidade";
+							$situacao_cor = "danger";
+							$situacao_icone = "<i class='fas fa-ban mr-1'></i>";
+							break;
+						case "1": 
+							$situacao_nome = "Marcada";
+							$situacao_cor = "info";
+							$situacao_icone = "<i class='far fa-calendar-check mr-1'></i>";
+							break;
+						case "2": 
+							$situacao_nome = "Realizada";
+							$situacao_cor = "success";
+							$situacao_icone = "<i class='fas fa-check mr-1'></i>";
+							break;
+						case "3": 
+							$situacao_nome = "Paciente ausente";
+							$situacao_cor = "secondary";
+							$situacao_icone = "<i class='far fa-user mr-1'></i>";
+							break;
+						case "4": 
+							$situacao_nome = "Cancelada";
+							$situacao_cor = "secondary";
+							$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
+							break;
+						}
+				?>
+				<a href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $id; ?>" class="list-group-item list-group-item-action text-<?php echo $situacao_cor; ?>" title="Ver detalhes da consulta">
+					<?php
 
-<?php endforeach; ?>
+						echo $situacao_icone." ";
+						if($situacao != '0') {
+							echo "<strong>".$dt_inicio." ".$hora_inicio."</strong>";
+						} else {
+							echo "<strong>".$dt_inicio." ".$hora_inicio." - ".$dt_inicio." ".$hora_fim."</strong>";
+						}
+						echo " - ".$situacao_nome."<br>";
+						
+						echo "<strong>".$item['med_nome']."</strong> (".$item['especialidade'].")";
 
-</table>
+						if($situacao != '0') { echo "<br><i class='fas fa-user'></i> ".$item['nome']; }
+					?>
+				</a>
+			</div>
+
+		<?php endforeach; ?>
+
+		<div class="row text-center mt-3">
+			<div class="col-12">
+			<?php for($p=1; $p<=$paginas; $p++): ?>
+				<a class="btn btn-secondary <?php if($pagina_atual == $p) { echo "active"; } ?>" role="button" href="<?php echo BASE_URL; ?>consultas?p=<?php echo $p; ?>"><?php echo $p; ?></a>
+			<?php endfor; ?>
+			<p class="text-muted mt-2">Total: <?php echo $quantidade; ?></p>
+			</div>
+		</div>
+
+	</div>
+</div>

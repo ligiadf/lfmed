@@ -19,7 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/fontawesome.all.min.css">
 	
 	<!-- Sistema -->
-	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/template.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/template.css?v=<?php echo rand(1,99) ?>">
 
 	<link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL?>assets/images/clinica-oftorrino-icone.png">
 
@@ -81,7 +81,7 @@
 
 	<!-- Conteúdo -->
 	<div id="content-wrapper">
-		<main class="container-fluid mb-5">
+		<main class="container-fluid mb-1">
 			<?php $this->loadViewInTemplate($viewName, $viewData) ?>
 		</main><!-- container-fluid -->
 		<footer class="sticky-footer p-0">

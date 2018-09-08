@@ -12,6 +12,10 @@ footer {
 	display: none; 
 }
 
+#calendario_completo td {
+	width: 20%;
+}
+
 label {
 	font-weight: bold;
 }

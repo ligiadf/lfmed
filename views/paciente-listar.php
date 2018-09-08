@@ -1,18 +1,6 @@
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
-		<?php if(!empty($_GET['msgError'])): ?>
-			<div class="alert alert-danger">
-				<?php echo $_GET['msgError']; ?>
-			</div>
-		<?php endif ?>
-
-		<?php if(!empty($_GET['msgOK'])): ?>
-			<div class="alert alert-success">
-				<?php echo $_GET['msgOK']; ?>
-			</div>
-		<?php endif ?>
-
 		<header class="mt-4 mb-4">
 			<h1>Pacientes <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a></small></h1>
 		</header>

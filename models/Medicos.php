@@ -20,11 +20,15 @@ class Medicos extends Usuarios {
 
 	}
 
-	public function listarMedicosAtivos() {
+	public function listarMedicosAtivos($offset, $limite) {
 
 		$array = array();
 
-		$sql = "SELECT * FROM usuarios WHERE perfil = 'MED' and status = '1'";
+		$sql = "SELECT *
+				FROM usuarios
+				WHERE perfil = 'MED' AND status = '1'
+				ORDER BY nome
+				LIMIT $offset, $limite";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {
@@ -37,7 +41,7 @@ class Medicos extends Usuarios {
 	}
 
 	public function totalMedicos() {
-		$sql = "SELECT COUNT(*) as c FROM usuarios WHERE perfil = 'MED'";
+		$sql = "SELECT COUNT(*) as c FROM usuarios WHERE perfil = 'MED' AND status = '1'";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {

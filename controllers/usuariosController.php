@@ -6,11 +6,23 @@ class usuariosController extends Controller {
 
 		$usuarios = new Usuarios();
 
-		$dados = array(
-			// vai para view
-			'usuarios' => $usuarios->listarUsuarios(),
-			'quantidade' => $usuarios->totalUsuarios()
-		);
+	// paginação
+		$offset = 0;
+		$limite = 10;
+
+		$dados['quantidade'] = $usuarios->totalUsuarios();
+		$quantidade = $dados['quantidade'];
+
+		$dados['paginas'] = ceil($quantidade/$limite);
+
+		$dados['pagina_atual'] = 1;
+		
+		if(!empty($_GET['p'])) {
+			$dados['pagina_atual'] = intval($_GET['p']);
+		}
+		$offset = ($dados['pagina_atual'] * $limite) - $limite;
+
+		$dados['usuarios'] = $usuarios->listarUsuarios($offset, $limite);
 
 		$this->loadTemplate('usuario-listar', $dados);
 	}

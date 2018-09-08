@@ -47,11 +47,14 @@ class Usuarios extends Model {
 		}
 	}
 
-	public function listarUsuarios() {
+	public function listarUsuarios($offset, $limite) {
 
 		$array = array();
 
-		$sql = "SELECT * FROM usuarios ORDER BY status DESC, perfil ASC, nome ASC";
+		$sql = "SELECT *
+				FROM usuarios
+				ORDER BY status DESC, perfil ASC, nome ASC
+				LIMIT $offset, $limite";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {

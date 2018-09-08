@@ -7,7 +7,7 @@
 
 		<div class="list-group list-group-flush">
 			<?php foreach($pacientes as $item): ?>
-				<a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $item['id']; ?>" class="list-group-item list-group-item-action text-<?php echo $situacao_cor; ?>" title="Ver ficha do paciente">
+				<a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $item['id']; ?>" class="list-group-item list-group-item-action" title="Ver ficha do paciente">
 					<div class="row">
 						<div class="col-12 col-md-4"><i class="fas fa-user mr-1"></i> <strong><?php echo $item['nome']; ?></strong> (<?php echo $item['cpf']; ?>)</div>
 						<div class="col-12 col-md-4"><i class="fas fa-phone mr-1"></i> <?php echo $item['telefone']; ?></div>

@@ -33,6 +33,5 @@
 			</div>
 		</div>
 
-		</table>
 	</div>
 </div>

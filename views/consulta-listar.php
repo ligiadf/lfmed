@@ -44,20 +44,30 @@
 						}
 				?>
 				<a href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $id; ?>" class="list-group-item list-group-item-action text-<?php echo $situacao_cor; ?>" title="Ver detalhes da consulta">
-					<?php
+					<div class="row">
+						<div class="col-12 col-md-4">
+							<?php
+								echo $situacao_icone." ";
+								if($situacao != '0') {
+									echo "<strong>".$dt_inicio." ".$hora_inicio."</strong> - ".$situacao_nome;
+								} else {
+									echo "<strong>".$dt_inicio." ".$hora_inicio." - ".$dt_inicio." ".$hora_fim."</strong>";
+								}
+							?>
+						</div>
+						<div class="col-12 col-md-4">
+							<?php
+								echo "<strong>".$item['med_nome']."</strong> (".$item['especialidade'].")";
+							?>
+						</div>
+						<div class="col-12 col-md-4">
+							<?php
+								if($situacao != '0') { echo "<i class='fas fa-user'></i> ".$item['nome']; }
+								else { echo $situacao_nome; }
+							?>
+						</div>
+					</div>
 
-						echo $situacao_icone." ";
-						if($situacao != '0') {
-							echo "<strong>".$dt_inicio." ".$hora_inicio."</strong>";
-						} else {
-							echo "<strong>".$dt_inicio." ".$hora_inicio." - ".$dt_inicio." ".$hora_fim."</strong>";
-						}
-						echo " - ".$situacao_nome."<br>";
-						
-						echo "<strong>".$item['med_nome']."</strong> (".$item['especialidade'].")";
-
-						if($situacao != '0') { echo "<br><i class='fas fa-user'></i> ".$item['nome']; }
-					?>
 				</a>
 			</div>
 

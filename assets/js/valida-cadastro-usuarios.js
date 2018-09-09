@@ -9,7 +9,7 @@ $(document).ready(function(){
 		$("#especialidade2").prop("required", true);
 		$("#crm").prop("required", true);
 	}
-	else if (perfil == 'REC') {
+	else if (perfil == 'REC' || perfil == 'LAB') {
 		$("#apenasMedicos").prop("disabled", true);
 		$("#especialidade1").prop("required", false);
 		$("#especialidade2").prop("required", false);
@@ -22,11 +22,21 @@ $(document).ready(function(){
 		$("#especialidade2").prop("required", true);
 		$("#crm").prop("required", true);
 	});
+
 	$('input[type=radio][id=perfil2]').click(function() {
 		$("#apenasMedicos").prop("disabled", true);
 		$("#especialidade1").prop("required", false);
 		$("#especialidade2").prop("required", false);
 		$("#crm").prop("required", false);
 	});
+
+	$('input[type=radio][id=perfil3]').click(function() {
+		$("#apenasMedicos").prop("disabled", true);
+		$("#especialidade1").prop("required", false);
+		$("#especialidade2").prop("required", false);
+		$("#crm").prop("required", false);
+	});
+
+
 
 });

@@ -38,6 +38,8 @@
 						echo '<i class="fas fa-user-md mr-1"></i> Médico'; break;
 					case 'REC':
 						echo '<i class="fas fa-user-clock mr-1"></i> Recepcionista'; break;
+					case 'LAB':
+						echo '<i class="fas fa-hospital mr-1"></i> Laboratório'; break;
 					}
 			?>
 		</dd>

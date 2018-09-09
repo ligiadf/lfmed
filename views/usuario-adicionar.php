@@ -45,6 +45,10 @@
 				<input class="form-check-input" type="radio" name="perfil" id="perfil2" value="REC">
 				<label class="form-check-label" for="perfil2">Recepcionista</label>
 			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="perfil" id="perfil3" value="LAB">
+				<label class="form-check-label" for="perfil3">Laboratório</label>
+			</div>
 			<small id="planoSaudeHelp" class="form-text text-muted">Selecione o perfil do usuário.</small>
 		</div>
 

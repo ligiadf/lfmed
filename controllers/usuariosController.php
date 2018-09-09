@@ -47,7 +47,7 @@ class usuariosController extends Controller {
 		if( !empty($_POST['nomeUsuario']) && !empty($_POST['email']) && !empty($_POST['senha']) && !empty($_POST['perfil']) ) {
 			$nome_usuario = addslashes($_POST['nomeUsuario']);
 			$email = addslashes($_POST['email']);
-			$senha = addslashes($_POST['senha']);
+			$senha = $_POST['senha'];
 			$perfil = addslashes($_POST['perfil']);
 			$status = addslashes($_POST['statusUsuario']);
 			$especialidade = addslashes($_POST['especialidade']);

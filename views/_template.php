@@ -4,6 +4,7 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="theme-color" content="#008080">
 
 	<!-- Bootstrap -->
 	<!--
@@ -42,7 +43,13 @@
 
 	<div class="ml-auto" id="navbarText">
 		<span class="navbar-text">
-		<i class="fas fa-user-circle"></i> Bárbara Gordon
+			<?php if( isset($_SESSION['lfLogin']) && !empty($_SESSION['lfLogin']) ): ?>
+				<i class="fas fa-user-circle mr-1"></i> Bárbara Gordon
+				<a href="<?php echo BASE_URL; ?>logout"><i class="fas fa-sign-out-alt ml-4 mr-1"></i> Sair</a>
+			<?php else : ?>
+				<a href="<?php echo BASE_URL; ?>login"><i class="fas fa-sign-in-alt mr-1"></i> Entrar</a>
+		
+			<?php endif; ?>
 		</span>
 	</div>
 </nav>

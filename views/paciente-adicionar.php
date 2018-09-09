@@ -63,7 +63,7 @@
 				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>pacientes"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
-				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Cadastrar paciente</button>
+				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Cadastrar</button>
 			</div>
 		</div>
 	</form>

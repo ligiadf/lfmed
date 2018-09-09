@@ -27,7 +27,7 @@
 			<label for="medico"><i class="fas fa-user-md mr-1"></i> Médico(a):</label>
 			<select class="form-control" id="medico" name="medico" required>
 				<?php foreach($medicos as $item): ?>
-					<option value="<?php echo $item['id']; ?>" <?php if($medicoSelecionadoID == $item['id']) { echo "selected"; } ?>> <?php echo $item['id']." ".$item['nome'] ." (". $item['especialidade'] .")"; ?></option>
+					<option value="<?php echo $item['id']; ?>" <?php if($medicoSelecionadoID == $item['id']) { echo "selected"; } ?>> <?php echo $item['nome'] ." (". $item['especialidade'] .")"; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -71,7 +71,7 @@
 			<label for="paciente"><i class="fas fa-users mr-1"></i> Paciente:</label>
 			<select class="form-control" id="paciente" name="paciente" required>
 				<?php foreach($pacientes as $item): ?>
-					<option value="<?php echo $item['id']; ?>" <?php if($pacienteSelecionadoID == $item['id']) { echo "selected"; } ?>> <?php echo $item['id']." ".$item['nome']." [CPF: ".$item['cpf']."]"; ?></option>
+					<option value="<?php echo $item['id']; ?>" <?php if($pacienteSelecionadoID == $item['id']) { echo "selected"; } ?>> <?php echo $item['nome']." [CPF: ".$item['cpf']."]"; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -112,10 +112,10 @@
 
 		<div class="row">
 			<div class="col-6">
-				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $id; ?>"><i class="fas fa-times mr-1"></i> Cancelar edição</a>
+				<a class="btn btn-link btn-sm text-danger" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $id; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
-				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Atualizar consulta</button>
+				<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check mr-1"></i> Atualizar</button>
 			</div>
 		</div>
 	</form>

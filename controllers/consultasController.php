@@ -38,6 +38,9 @@ class consultasController extends Controller {
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
 
+		$offset = 0;
+		$limite = 100;
+
 		$dtConsulta_fim = '';
 		$dtConsulta_inicio = '';
 		$id_medico = '';
@@ -70,8 +73,8 @@ class consultasController extends Controller {
 		}
 
 		$dados = array(
-			'medicos' => $medicos->listarMedicosAtivos(),
-			'pacientes' => $pacientes->listarPacientes(),
+			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
+			'pacientes' => $pacientes->listarPacientes($offset, $limite),
 			'id_medico' => $id_medico,
 			'paciente' => $paciente,
 			'statusConsulta' => $statusConsulta,
@@ -136,6 +139,9 @@ class consultasController extends Controller {
 
 		$detalhe = $consulta->detalheConsulta($id);
 
+		$offset = 0;
+		$limite = 100;
+
 		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
 		$horaConsulta = substr($detalhe['con_inicio'], 11, 5); // HH:ii
 
@@ -188,8 +194,8 @@ class consultasController extends Controller {
 
 		$dados = array(
 			'detalhe' => $detalhe,
-			'medicos' => $medicos->listarMedicosAtivos(),
-			'pacientes' => $pacientes->listarPacientes(),
+			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
+			'pacientes' => $pacientes->listarPacientes($offset, $limite),
 			'med_id' => $detalhe['med_id'],
 			'med_nome' => $detalhe['med_nome'],
 			'especialidade' => $detalhe['especialidade'],

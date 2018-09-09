@@ -30,13 +30,13 @@
 
 		<div class="form-group">
 			<label for="dataConsulta"><i class="far fa-calendar-alt mr-1"></i> Data:</label>
-			<input type="text" class="form-control" id="dataConsulta" name="dataConsulta" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" maxlength="10" placeholder="DD/MM/AAAA" required>
+			<input type="text" class="form-control" id="dataConsulta" name="dataConsulta" pattern="[0-9]{2}\/[0-9]{2}\/[0-9]{4}" maxlength="10" placeholder="DD/MM/AAAA" data-mask="99/99/9999" required>
 			<small id="dataConsultaHelp" class="form-text text-muted">Preencha no formato DD/MM/AAAA. Ex.: 26/08/2018</small>
 		</div>
 
 		<div class="form-group">
 			<label for="horaConsulta"><i class="far fa-clock mr-1"></i> Horário:</label>
-			<input type="text" class="form-control" id="horaConsulta" name="horaConsulta" pattern="[0-9]{2}:[0-9]{2}" maxlength="5" placeholder="HH:mm" required>
+			<input type="text" class="form-control" id="horaConsulta" name="horaConsulta" pattern="(2[0-3]|1[0-9]|0[0-9]):([0-5][0-9])" maxlength="5" placeholder="HH:mm" data-mask="99:99" required>
 			<small id="horaConsultaHelp" class="form-text text-muted">Preencha no formato HH:mm. Ex.: 16:00</small>
 		</div>
 
@@ -54,10 +54,10 @@
 
 		<div class="row">
 			<div class="col-6">
-				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar edição</a>
+				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
-				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Marcar consulta</button>
+				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Marcar</button>
 			</div>
 		</div>
 	</form>

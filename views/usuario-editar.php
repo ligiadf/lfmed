@@ -84,10 +84,10 @@
 
 		<div class="row">
 			<div class="col-6">
-				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar edição</a>
+				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
-				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Salvar alterações</button>
+				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Salvar</button>
 			</div>
 		</div>
 

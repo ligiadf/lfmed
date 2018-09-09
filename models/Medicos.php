@@ -34,7 +34,7 @@ class Medicos extends Usuarios {
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		else echo "Não há médicos";
+		//else echo "Não há médicos";
 
 		return $array;
 

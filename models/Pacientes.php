@@ -14,13 +14,16 @@ class Pacientes extends Model {
 
 		$array = array();
 
-		$sql = "SELECT * FROM pacientes ORDER BY nome LIMIT $offset, $limite";
+		$sql = "SELECT *
+				FROM pacientes
+				ORDER BY nome
+				LIMIT $offset, $limite";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		else echo "Não há pacientes";
+		//else echo "Não há pacientes";
 
 		return $array;
 

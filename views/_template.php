@@ -11,6 +11,9 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/sb-admin.css">
 
+	<!-- Input mask -->
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
+
 	<!-- Font Awesome -->
 	<!--
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
@@ -107,11 +110,19 @@
 
 	<script src="<?php echo BASE_URL?>assets/js/bootstrap.min.js"></script>
 
+	<!-- Input mask -->
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+
 	<?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios/adicionar') || strpos($_SERVER['REQUEST_URI'], 'usuarios/editar')): ?>
 	<script src="<?php echo BASE_URL?>assets/js/valida-cadastro-usuarios.js"></script>
 	<?php endif; ?>
 
 	<script src="<?php echo BASE_URL?>assets/js/sb-admin.js"></script>
+
+
+
+	
+
 
 </body>
 </html>

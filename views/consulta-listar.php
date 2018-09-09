@@ -51,7 +51,7 @@
 								if($situacao != '0') {
 									echo "<strong>".$dt_inicio." ".$hora_inicio."</strong> - ".$situacao_nome;
 								} else {
-									echo "<strong>".$dt_inicio." ".$hora_inicio." - ".$dt_inicio." ".$hora_fim."</strong>";
+									echo "<strong>".$dt_inicio." ".$hora_inicio." - ".$dt_fim." ".$hora_fim."</strong>";
 								}
 							?>
 						</div>

@@ -92,19 +92,36 @@
 
 						if( $d == $dt_con_inicio || ($d >= $dh_con_inicio) && ($d <= $dh_con_fim) ) {
 							if($situacao != '0') {
-								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$situacao_icone." ".$hr_con_inicio." ".
+								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$hr_con_inicio." ".
 									 $paciente."<br>".
 									 "<small><strong>".$medico."</strong></small></a></p>";
 							} else {
-								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$hr_con_inicio."-".$hr_con_fim."<br>".
-									 "<small>".$situacao_icone." ".$medico."</small></a></p>";
+								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$hr_con_inicio."-".$hr_con_fim." ".
+									 "<small><strong>".$medico."</strong></small></a></p>";
 							}
 						}
-					}
+					} // foreach
+				if(empty($calendario)) { echo 'nada'; }
 				?>
+
 			</div>
 			<?php endfor; ?>
 			</div><!-- row -->
 		</div><!-- list-group -->
+
+
+		<div class="d-lg-none">
+			<div class="row col-12 mt-3 mb-3">
+			<div class="col-6">
+				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'last week')); ?>"><i class="far fa-calendar-minus mr-1"></i> Semana anterior</a>
+			</div>
+			<div class="col-6 text-right">
+				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'next week')); ?>">Próximo semana <i class="far fa-calendar-plus ml-1"></i></a>
+			</div>
+		</div>
+		</div>
+
+
+
 	</div>
 </div>

@@ -117,7 +117,7 @@ class pacientesController extends Controller {
 			$this->loadTemplate('paciente-ficha', $dados);
 		} else {
 			$dados404 = array (
-				'msg404' => 'Paciente não existe',
+				'msg404' => 'Paciente não existe:',
 				'msglink404' => 'ver todos os pacientes',
 				'link404' => BASE_URL.'pacientes'
 			);

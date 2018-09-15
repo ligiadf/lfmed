@@ -106,7 +106,7 @@ class usuariosController extends Controller {
 			$this->loadTemplate('usuario-ficha', $dados);
 		} else {
 			$dados404 = array (
-				'msg404' => 'Usuário não existe',
+				'msg404' => 'Usuário não existe:',
 				'msglink404' => 'ver todos os usuários.',
 				'link404' => BASE_URL.'usuarios'
 			);

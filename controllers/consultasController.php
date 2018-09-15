@@ -131,7 +131,7 @@ class consultasController extends Controller {
 			$this->loadTemplate('consulta-detalhe', $dados);
 		} else {
 			$dados404 = array (
-				'msg404' => 'Consulta não existe',
+				'msg404' => 'Consulta não existe:',
 				'msglink404' => 'ver todas as consultas.',
 				'link404' => BASE_URL.'consultas'
 			);

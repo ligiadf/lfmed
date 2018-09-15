@@ -33,62 +33,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-md static-top navbar-dark pl-1" style="background-color: #008080;">
-
-	<button class="btn btn-link btn-sm text-white order-sm-0 mr-3" id="sidebarToggle" href="#" title="Menu principal">
-		<i class="fas fa-bars"></i>
-	</button>
-
-	<a class="navbar-brand" href="<?php echo BASE_URL; ?>"><?php echo NOME_CLINICA; ?></a>
-
-	<div class="ml-auto" id="navbarText">
-		<span class="navbar-text">
-			<?php if( isset($_SESSION['uLogin']) && !empty($_SESSION['uLogin']) ): ?>
-				<i class="fas fa-user-circle mr-1"></i>
-				<a href="<?php echo BASE_URL; ?>usuarios/ficha/<?php echo $_SESSION['uLogin']; ?>"><?php echo $_SESSION['uLogin']; ?></a>
-				<a href="<?php echo BASE_URL; ?>login/sair"><i class="fas fa-sign-out-alt ml-4 mr-1"></i> Sair</a>
-			<?php else : ?>
-				<a href="<?php echo BASE_URL; ?>login"><i class="fas fa-sign-in-alt mr-1"></i> Entrar</a>
-		
-			<?php endif; ?>
-		</span>
-	</div>
-</nav>
-
 <div id="wrapper">
-	<!-- Sidebar -->
-	<ul class="sidebar navbar-nav toggled bg-light">
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
-			<a class="nav-link" href="<?php echo BASE_URL; ?>calendario">
-				<i class="far fa-calendar-alt mr-1"></i>
-				<span>Calendário</span>
-			</a>
-		</li>
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas')) { echo "active"; } ?>">
-			<a class="nav-link" href="<?php echo BASE_URL; ?>consultas">
-				<i class="far fa-calendar-check mr-1"></i>
-				<span>Consultas</span>
-			</a>
-		</li>
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'pacientes')) { echo "active"; } ?>">
-			<a class="nav-link" href="<?php echo BASE_URL; ?>pacientes">
-				<i class="fas fa-users mr-1"></i>
-				<span>Pacientes</span>
-			</a>
-		</li>
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'medicos')) { echo "active"; } ?>">
-			<a class="nav-link" href="<?php echo BASE_URL; ?>medicos">
-				<i class="fas fa-user-md mr-1"></i>
-				<span>Médicos</span>
-			</a>
-		</li>
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios')) { echo "active"; } ?>">
-			<a class="nav-link" href="<?php echo BASE_URL; ?>usuarios">
-				<i class="fas fa-users-cog mr-1"></i>
-				<span>Usuários</span>
-			</a>
-		</li>
-	</ul>
 
 	<!-- Conteúdo -->
 	<div id="content-wrapper">

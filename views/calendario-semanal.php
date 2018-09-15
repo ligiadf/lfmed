@@ -1,43 +1,49 @@
-<header class="mt-4 mb-4">
-	<p><i class="far fa-calendar-alt mr-1"></i> <?php echo "Início: ".$dia_atual." de ".$mes_atual_extenso." de ".$ano_atual; ?></p>
-	<h1>Agenda da semana
-	</h1>
-</header>
+<div class="row justify-content-center">
+	<div class="col-md-10">
+		<header class="mt-4 mb-4">
+			<p><i class="far fa-calendar-alt mr-1"></i> <?php echo "Início: ".$dia_atual." de ".$mes_atual_extenso." de ".$ano_atual; ?></p>
+			<h1>Agenda semanal
+			</h1>
+		</header>
 
-<div class="row col-12 mt-3 mb-3">
-	<div class="col-6">
-		<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'last week')); ?>"><i class="far fa-calendar-minus mr-1"></i> Semana anterior</a>
-	</div>
-	<div class="col-6 text-right">
-		<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'next week')); ?>">Próximo semana <i class="far fa-calendar-plus ml-1"></i></a>
-	</div>
-</div>
+		<div class="row col-12 mt-3 mb-3">
+			<div class="col-6">
+				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'last week')); ?>"><i class="far fa-calendar-minus mr-1"></i> Semana anterior</a>
+			</div>
+			<div class="col-6 text-right">
+				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'next week')); ?>">Próximo semana <i class="far fa-calendar-plus ml-1"></i></a>
+			</div>
+		</div>
 
-<div class="table-responsive">
-<table id="calendario_completo" class="table table-sm">
-	<thead>
-		<tr>
-			<th scope="col">Domingo</th>
-			<th scope="col">Segunda</th>
-			<th scope="col">Terça</th>
-			<th scope="col">Quarta</th>
-			<th scope="col">Quinta</th>
-			<th scope="col">Sexta</th>
-			<th scope="col">Sábado</th>
-		</tr>
-	</thead>
-	<tbody>
-	<?php for($l=0; $l<$linhas; $l++): ?>
-		<tr>
+		<div class="list-group list-group-flush">
+			<div class="row">
 			<?php for($c=0; $c<7; $c++): 
-				$d = date('Y-m-d', strtotime( ($c + ($l*7)).' days', strtotime($data_inicio)) );
-			?>
-			<td>
-				<?php
+				$d = date('Y-m-d', strtotime( ($c ).' days', strtotime($data_inicio)) );
+				// data atual do loop / exibição calendário:
+				$d = date('Y-m-d', strtotime($d));
+				
+				// dia da semana:
+				$w = date('l', strtotime($d));
+				switch ($w) {
+					case "Sunday":
+						$w = "Domingo"; break;
+					case "Monday":
+						$w = "Segunda"; break;
+					case "Tuesday":
+						$w = "Terça"; break;
+					case "Wednesday":
+						$w = "Quarta"; break;
+					case "Thursday":
+						$w = "Quinta"; break;
+					case "Friday":
+						$w = "Sexta"; break;
+					case "Saturday":
+						$w = "Sábado"; break;
+				}?>
 
-					// data atual do loop / exibição calendário:
-					$d = date('Y-m-d', strtotime($d));
-					echo "<strong>". date('d/m', strtotime($d)) ."</strong><br>";
+				<div class="col-xs-12 col-md-5 <?php if($w == 'Quarta') { echo "col-lg-3"; } else { echo "col-lg-2"; } ?> bg bg-light mr-1 mb-1" <?php if( $w == 'Domingo' || $w == 'Sábado') { echo "style='display:none;'"; } ?>>
+				<?php
+				echo "<p class='font-weight-bold mt-2'>". $w." ". date('d/m', strtotime($d)) ."</p>";
 
 					foreach ($calendario as $item) {
 
@@ -96,10 +102,9 @@
 						}
 					}
 				?>
-			</td>
+			</div>
 			<?php endfor; ?>
-		</tr>
-	<?php endfor; ?>
-	</tbody>
-</table>
-</div><!-- table-responsive -->
+			</div><!-- row -->
+		</div><!-- list-group -->
+	</div>
+</div>

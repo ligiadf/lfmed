@@ -48,7 +48,17 @@
 		</div>
 
 		<div class="form-group">
+			<label for="senha"><i class="fas fa-key mr-1"></i> Senha:</label>
+			<input type="password" class="form-control" id="senha" name="senha" value="<?php echo $info['senha']; ?>" required>
+			<small id="senhaHelp" class="form-text text-muted">Preencha a senha para o usuário entrar no sistema.</small>
+		</div>
+
+		<div class="form-group">
 			<label for="perfil"><i class="fas fa-user-cog mr-1"></i> Perfil:</label>
+			<div class="form-check form-check-inline ml-2">
+				<input class="form-check-input" type="radio" name="perfil" id="perfil0" value="ADM" <?php if($info['perfil'] == 'ADM') { echo "checked"; }; ?>>
+				<label class="form-check-label" for="perfil0">Administrador</label>
+			</div>
 			<div class="form-check form-check-inline ml-2">
 				<input class="form-check-input" type="radio" name="perfil" id="perfil1" value="MED" <?php if($info['perfil'] == 'MED') { echo "checked"; }; ?>>
 				<label class="form-check-label" for="perfil1">Médico</label>

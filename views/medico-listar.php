@@ -14,8 +14,8 @@
 						</div>
 						<div class="col-12 col-md-4">
 							<?php
-								if($item['especialidade'] == 'Oftalmologista') { echo '<i class="fas fa-deaf mr-1"></i> Oftalmologista'; }
-									else { echo '<i class="far fa-eye mr-1"></i> Otorrinolaringologista'; }
+								if($item['especialidade'] == 'Oftalmologista') { echo '<i class="far fa-eye mr-1"></i> Oftalmologista'; }
+									else { echo '<i class="fas fa-deaf mr-1"></i> Otorrinolaringologista'; }
 							?>
 						</div>
 						<div class="col-12 col-md-4"><i class="fas fa-id-card mr-1"></i> <?php echo $item['crm']; ?></div>

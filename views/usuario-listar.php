@@ -28,8 +28,8 @@
 						</div>
 						<div class="col-12 col-md-3">
 							<?php
-								if( $item['perfil'] == 'MED' && $item['especialidade'] == 'Oftalmologista') { echo '<i class="fas fa-deaf mr-1"></i> Oftalmologista'; }
-								else if( $item['perfil'] == 'MED' && $item['especialidade'] == 'Otorrinolaringologista') { echo '<i class="far fa-eye mr-1"></i> Otorrinolaringologista'; }
+								if( $item['perfil'] == 'MED' && $item['especialidade'] == 'Oftalmologista') { echo '<i class="far fa-eye mr-1"></i> Oftalmologista'; }
+								else if( $item['perfil'] == 'MED' && $item['especialidade'] == 'Otorrinolaringologista') { echo '<i class="fas fa-deaf mr-1"></i> Otorrinolaringologista'; }
 									else if ($item['perfil'] == 'MED') { echo '<span class="text-danger">Cadastrar especialidade!</span>'; }
 							?>
 						</div>

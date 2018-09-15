@@ -71,7 +71,7 @@ class Usuarios extends Model {
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":nome", $nome_usuario);
 		$sql->bindValue(":perfil", $perfil);
-		$sql->bindValue(":senha", $senha);
+		$sql->bindValue(":senha", md5($senha));
 		$sql->bindValue(":email", $email);
 		$sql->bindValue(":status", $status);
 		$sql->bindValue(":especialidade", $especialidade);
@@ -113,23 +113,46 @@ class Usuarios extends Model {
 
 	}
 
-	public function editarUsuario($id, $nome_usuario, $perfil, $email, $status, $especialidade, $crm) {
-		$sql = "UPDATE usuarios SET nome = :nome, perfil = :perfil, email = :email, status = :status, especialidade = :especialidade, crm = :crm WHERE id = :id";
+	public function editarUsuario($id, $email, $senha, $nome_usuario, $perfil, $status, $especialidade='', $crm='') {
+		$sql = "UPDATE usuarios SET email = :email, senha = :senha, nome = :nome, perfil = :perfil, status = :status, especialidade = :especialidade, crm = :crm WHERE id = :id";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":id", $id);
+		$sql->bindValue(":email", $email);
+		// sem alteração na senha:
+		if ( $senha == md5($senha) ) {
+			$sql->bindValue(":senha", $senha);
+		} else {
+			$sql->bindValue(":senha", md5($senha));
+		}
 		$sql->bindValue(":nome", $nome_usuario);
 		$sql->bindValue(":perfil", $perfil);
-		$sql->bindValue(":email", $email);
 		$sql->bindValue(":status", $status);
 		$sql->bindValue(":especialidade", $especialidade);
 		$sql->bindValue(":crm", $crm);
 		$sql->execute();
 	}
 
+	public function fazerLogin($email, $senha) {
+		$sql = "SELECT id FROM usuarios
+				WHERE email = :email
+				AND senha = :senha
+				AND status = '1'";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":email", $email);
+		$sql->bindValue(":senha", $senha);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$dado = $sql->fetch();
+			$_SESSION['uLogin'] = $dado['id'];
+			return true; // usuário existe
+		} 
+		else {
+			return false;
+		}
+	}
+
 }
 
-class Recepcionista extends Usuarios {
-
-}
 
 ?>

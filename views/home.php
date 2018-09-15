@@ -1,3 +1,15 @@
+	<?php if(!empty($_GET['msgError'])): ?>
+		<div class="alert alert-danger">
+			<?php echo $_GET['msgError']; ?>
+		</div>
+	<?php endif ?>
+
+	<?php if(!empty($_GET['msgOK'])): ?>
+		<div class="alert alert-success">
+			<?php echo $_GET['msgOK']; ?>
+		</div>
+	<?php endif ?>
+
 <header>
 	<h1>Página inicial</h1>
 </header>

@@ -12,6 +12,7 @@ class Calendario extends Model {
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
 				WHERE
 				( NOT ( :cal_inicio > con_fim OR :cal_fim < con_inicio ) )
+				AND (con_status = 0 OR con_status = 1 OR con_status = 2)
 				ORDER BY con_inicio";
 
 		$sql = $this->pdo->prepare($sql);

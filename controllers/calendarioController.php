@@ -2,7 +2,7 @@
 
 class calendarioController extends Controller {
 
-	// calendário semanal
+	// calendário semanal: apenas consultas marcadas ou realizadas e indisponibilidade
 	public function index() {
 
 		$calendario = new Calendario();

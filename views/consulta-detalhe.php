@@ -2,16 +2,17 @@
 	<div class="col-md-10">
 
 	<?php if(!empty($_GET['msgError'])): ?>
-		<div class="alert alert-danger">
+		<div class="alert alert-danger" role="alert">
 			<?php echo $_GET['msgError']; ?>
 		</div>
 	<?php endif ?>
 
 	<?php if(!empty($_GET['msgOK'])): ?>
-		<div class="alert alert-success">
+		<div class="alert alert-success" role="alert">
 			<?php echo $_GET['msgOK']; ?>
 		</div>
 	<?php endif ?>
+
 
 	<header class="mt-4 mb-4">
 		<h1>
@@ -30,9 +31,6 @@
 
 	<?php
 		switch ($con_status) {
-/*			case "0":
-				$situacao = "<p class='text-danger'><i class='fas fa-ban mr-1'></i>Indisponibilidade</p>";
-				break;*/
 			case "1":
 				$situacao = "<p class='text-info'><i class='far fa-calendar-check mr-1'></i>Marcada</p>";
 				break;
@@ -51,10 +49,10 @@
 
 	<h4><i class="fas fa-user-md mr-1"></i> <a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $med_id; ?>" title="Ver ficha do médico" target="_blank"><?php echo $med_nome; ?></a>
 	<span class="d-sm-none"><br></span>
-	<small>
+	<small class="h6">
 	<?php
-		if($especialidade == 'Oftalmologista') { echo '<i class="fas fa-deaf mr-1"></i> Oftalmologista'; }
-			else { echo '<i class="far fa-eye mr-1"></i> Otorrinolaringologista'; }
+		if($especialidade == 'Oftalmologista') { echo '<i class="far fa-eye ml-3 mr-0"></i> Oftalmologista'; }
+			else { echo '<i class="fas fa-deaf ml-3 mr-0"></i> Otorrinolaringologista'; }
 	?>
 	</small>
 	</h4>
@@ -124,6 +122,5 @@
 	</div>
 </div>
 <?php endif; ?>
-
 	</div><!-- col-md-6 -->
 </div><!-- row -->

@@ -37,6 +37,12 @@ class Core {
 			$currentAction = 'index';
 		}
 
+		// 404
+		if(!file_exists('controllers/'.$currentController.'.php') || !method_exists($currentController, $currentAction)  ) {
+				$currentController = 'notfoundController';
+				$currentAction = 'index';
+		}
+
 		// instanciar Controller definido acima, indo para arquivo pelo autoload
 		$c = new $currentController();
 

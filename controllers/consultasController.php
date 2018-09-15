@@ -127,7 +127,17 @@ class consultasController extends Controller {
 			'atestado_cid' => $detalhe['atestado_cid']
 		);
 
-		$this->loadTemplate('consulta-detalhe', $dados);
+		if( !empty($detalhe) ) {
+			$this->loadTemplate('consulta-detalhe', $dados);
+		} else {
+			$dados404 = array (
+				'msg404' => 'Consulta não existe',
+				'msglink404' => 'ver todas as consultas.',
+				'link404' => BASE_URL.'consultas'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
+
 	}
 
 	# URL: /consultas/editar/id
@@ -211,7 +221,17 @@ class consultasController extends Controller {
 			'pacienteSelecionadoID' => $pacienteSelecionadoID
 		);
 
-		$this->loadTemplate('consulta-editar', $dados);
+		if( !empty($detalhe) ) {
+			$this->loadTemplate('consulta-editar', $dados);
+		} else {
+			$dados404 = array (
+				'msg404' => 'Consulta não existe:',
+				'msglink404' => 'deseja marcar uma nova?',
+				'link404' => BASE_URL.'consultas/marcar'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
+
 	}
 
 	# URL: /consultas/comprovante/id
@@ -231,43 +251,66 @@ class consultasController extends Controller {
 
 		$data_atual = date('d/m/Y');
 
-		require ("assets/fpdf/fpdf.php");
-		require ("assets/tfpdf/tfpdf.php");
-		$pdf = new tFPDF();
-		$pdf->AddPage('P','A5');
-		$pdf->SetAutoPageBreak(true,1);
-		
-		$pdf->SetAuthor(NOME_CLINICA, true);
-		$pdf->SetTitle(NOME_CLINICA. ' - Comprovante comparecimento consulta '.$id, true);
-		
-		// Fonte Unicode para usar UTF-8
-		$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
-		$pdf->SetFont('DejaVu','',12);
+		// id inválido
+		//if( empty($dtConsulta_inicio) || empty($detalhe['med_nome']) ) {
+		if( empty($detalhe) ) {
+			$dados404 = array (
+				'msg404' => 'Consulta não existe:',
+				'msglink404' => 'deseja marcar uma nova?',
+				'link404' => BASE_URL.'consultas/marcar'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
 
-		$pdf->Image(LOGO_CLINICA,5,5,80,40,'PNG');
+		// id de consulta que não foi realizada
+		elseif( $detalhe['con_status'] != 2 ) {
+			$dados404 = array (
+				'id' => $id,
+				'msg404' => 'Não é possível emitir comprovante para a consulta, pois ela não foi realizada.'
+			);
+			$this->loadTemplate('404', $dados404);
 
-		$pdf->Ln(40);
-		$pdf->MultiCell(125,20,'COMPROVANTE DE COMPARECIMENTO',0,'C');
-		$pdf->MultiCell(125,10,'Declaro para os devidos fins que '.$detalhe['pac_nome'].' esteve em consulta médica na Clínica Oftorrino no dia '.$dtConsulta_inicio.', das '.$horaConsulta.' às '.$horaConsultaFim.'.');
+		// id de consulta realizada
+		} else {
+			ob_start();
+			require ("assets/fpdf/fpdf.php");
+			require ("assets/tfpdf/tfpdf.php");
+			$pdf = new tFPDF();
+			$pdf->AddPage('P','A5');
+			$pdf->SetAutoPageBreak(true,1);
+			
+			$pdf->SetAuthor(NOME_CLINICA, true);
+			$pdf->SetTitle(NOME_CLINICA. ' - Comprovante comparecimento consulta '.$id, true);
+			
+			// Fonte Unicode para usar UTF-8
+			$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
+			$pdf->SetFont('DejaVu','',12);
 
-		$pdf->Ln(10);
-		$pdf->MultiCell(125,10, 'Atenciosamente,',0,'R');
-		$pdf->MultiCell(125,10, '__________________________',0,'R');
-		$pdf->MultiCell(125,7, $detalhe['med_nome'],0,'R');
-		$pdf->MultiCell(125,7, $detalhe['especialidade'],0,'R');
-		$pdf->MultiCell(125,7, $detalhe['crm'],0,'R');
+			$pdf->Image(LOGO_CLINICA,5,5,80,40,'PNG');
 
-		$pdf->Ln(20);
-		$pdf->MultiCell(120,10, 'Porto Alegre, '.$data_atual,0,'C');
+			$pdf->Ln(40);
+			$pdf->MultiCell(125,20,'COMPROVANTE DE COMPARECIMENTO',0,'C');
+			$pdf->MultiCell(125,10,'Declaro para os devidos fins que '.$detalhe['pac_nome'].' esteve em consulta médica na Clínica Oftorrino no dia '.$dtConsulta_inicio.', das '.$horaConsulta.' às '.$horaConsultaFim.'.');
 
-		$pdf->SetY(-15);
-		$pdf->SetFont('Arial','I',8);
-		$pdf->Cell(0,10,END_CLINICA,0,0,'C');
+			$pdf->Ln(10);
+			$pdf->MultiCell(125,10, 'Atenciosamente,',0,'R');
+			$pdf->MultiCell(125,10, '__________________________',0,'R');
+			$pdf->MultiCell(125,7, $detalhe['med_nome'],0,'R');
+			$pdf->MultiCell(125,7, $detalhe['especialidade'],0,'R');
+			$pdf->MultiCell(125,7, $detalhe['crm'],0,'R');
 
-		$pdf->Output();
+			$pdf->Ln(20);
+			$pdf->MultiCell(120,10, 'Porto Alegre, '.$data_atual,0,'C');
+
+			$pdf->SetY(-15);
+			$pdf->SetFont('Arial','I',8);
+			$pdf->Cell(0,10,END_CLINICA,0,0,'C');
+
+			$pdf->Output();
+			ob_end_flush;
+		}
 
 	}
-
 
 }
 

@@ -113,7 +113,17 @@ class pacientesController extends Controller {
 			'plano_saude' => $ficha['plano_saude']
 		);
 
-		$this->loadTemplate('paciente-ficha', $dados);
+		if( !empty($ficha) ) {
+			$this->loadTemplate('paciente-ficha', $dados);
+		} else {
+			$dados404 = array (
+				'msg404' => 'Paciente não existe',
+				'msglink404' => 'ver todos os pacientes',
+				'link404' => BASE_URL.'pacientes'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
+
 	}
 
 	# URL: /pacientes/editar/[id]
@@ -148,7 +158,16 @@ class pacientesController extends Controller {
 			'data_nasc' => $dataNasc
 		);
 
-		$this->loadTemplate('paciente-editar', $dados);
+		if( !empty($info) ) {
+			$this->loadTemplate('paciente-editar', $dados);
+		} else {
+			$dados404 = array (
+				'msg404' => 'Paciente não existe:',
+				'msglink404' => 'deseja cadastrar um novo?',
+				'link404' => BASE_URL.'pacientes/cadastrar'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
 
 	}
 

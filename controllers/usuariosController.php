@@ -102,7 +102,17 @@ class usuariosController extends Controller {
 			'crm' => $ficha['crm']
 		);
 
-		$this->loadTemplate('usuario-ficha', $dados);
+		if( !empty($ficha) ) {
+			$this->loadTemplate('usuario-ficha', $dados);
+		} else {
+			$dados404 = array (
+				'msg404' => 'Usuário não existe',
+				'msglink404' => 'ver todos os usuários.',
+				'link404' => BASE_URL.'usuarios'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
+
 	}
 
 	# URL: /usuarios/editar/[id]
@@ -114,14 +124,15 @@ class usuariosController extends Controller {
 		$info = $usuarios->fichaUsuario($id);
 
 		if( !empty($_POST['nomeUsuario']) && !empty($_POST['email']) && !empty($_POST['perfil']) ) {
-			$nome_usuario = addslashes($_POST['nomeUsuario']);
 			$email = addslashes($_POST['email']);
+			$senha = $_POST['senha'];
+			$nome_usuario = addslashes($_POST['nomeUsuario']);
 			$perfil = addslashes($_POST['perfil']);
 			$status = addslashes($_POST['status']);
 			$especialidade = addslashes($_POST['especialidade']);
 			$crm = addslashes($_POST['crm']);
 
-			$usuarios->editarUsuario($id, $nome_usuario, $perfil, $email, $status, $especialidade, $crm);
+			$usuarios->editarUsuario($id, $email, $senha, $nome_usuario, $perfil, $status, $especialidade, $crm);
 			$msgAdicionarUsuarioOK = "Usuário editado com sucesso: ".$nome_usuario;
 			header('Location:'. BASE_URL.'usuarios/ficha/'.$id.'?msgOK='.urlencode($msgAdicionarUsuarioOK));
 		}
@@ -131,7 +142,16 @@ class usuariosController extends Controller {
 			'info' => $info
 		);
 
-		$this->loadTemplate('usuario-editar', $dados);
+		if( !empty($info) ) {
+			$this->loadTemplate('usuario-editar', $dados);
+		} else {
+			$dados404 = array (
+				'msg404' => 'Usuário não existe:',
+				'msglink404' => 'deseja adicionar um novo?',
+				'link404' => BASE_URL.'usuarios/adicionar'
+			);
+			$this->loadTemplate('404', $dados404);
+		}
 
 	}
 

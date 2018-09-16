@@ -86,18 +86,18 @@
 
 	<!-- Conteúdo -->
 	<div id="content-wrapper">
-		<main class="container-fluid mb-1">
+		<main class="container-fluid mb-5">
 			<?php $this->loadViewInTemplate($viewName, $viewData) ?>
 		</main><!-- container-fluid -->
 
-		<footer class="sticky-footer p-3 bg-light h-auto">
+		<footer class="sticky-footer mt-5 pt-1 pb-2 bg-light h-auto">
 			<div class="container my-auto">
 				<div class="text-center">
 					<p class="text-dark"><strong><?php echo NOME_CLINICA; ?></strong><br>
 					<?php echo END_CLINICA; ?></p>
 				</div>
 				<div class="copyright text-center">
-					<span class="text-dark">&copy; <?php echo NAME." v.".VERSION; ?> &ndash; <?php echo "Desenvolvido por ".DEV; ?> &ndash; <?php echo LICENSE; ?></span>
+					<span class="text-dark"><?php echo NAME." v.".VERSION; ?> &ndash; <?php echo "Desenvolvido por ".DEV; ?> <br><br> &copy; 2018 <?php echo LICENSE; ?></span>
 				</div>
 			</div>
 		</footer>

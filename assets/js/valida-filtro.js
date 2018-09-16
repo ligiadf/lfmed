@@ -5,8 +5,8 @@ $(document).ready(function(){
 	var status = $('select[id=status]').val();
 
 	if(medico == '' && status == '') {
-		$("button").prop("disabled", true);
-		$("button").prop("title", "Selecione pelo menos um campo");
+		$("button[id=filtro]").prop("disabled", true);
+		$("button[id=filtro]").prop("title", "Selecione pelo menos um campo");
 	}
 
 	$('select[id=medico]').change(function() {

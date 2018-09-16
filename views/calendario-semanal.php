@@ -26,7 +26,7 @@
 					</select>
 				</div>
 				<div class="form-group">
-				<button type="submit" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
+				<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
 				<small><a class="ml-4 text-secondary" href="<?php if(empty($_GET['d'])) { $dt = date('Y-m-d'); } else { $dt = $_GET['d']; }; echo BASE_URL.'calendario?d='.$dt; ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
 				</div>
 			</form>

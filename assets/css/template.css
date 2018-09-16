@@ -1,6 +1,9 @@
-footer {
-	height: 40px; /* altura footer */
-	line-height: 60px; /* altura footer */
+label {
+	font-weight: bold;
+}
+
+a {
+	color: #D56100;
 }
 
 /* Calendário mensal: esconder domingo e sábado
@@ -16,10 +19,3 @@ footer {
 	width: 20%;
 }
 
-label {
-	font-weight: bold;
-}
-
-a {
-	color: #D56100;
-}

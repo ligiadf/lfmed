@@ -51,7 +51,7 @@
 
 <div id="wrapper">
 	<!-- Sidebar -->
-	<ul class="sidebar navbar-nav toggled bg-light">
+	<ul class="sidebar navbar-nav toggled bg-white">
 		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
 			<a class="nav-link" href="<?php echo BASE_URL; ?>calendario">
 				<i class="far fa-calendar-alt mr-1"></i>
@@ -89,8 +89,13 @@
 		<main class="container-fluid mb-1">
 			<?php $this->loadViewInTemplate($viewName, $viewData) ?>
 		</main><!-- container-fluid -->
-		<footer class="sticky-footer p-0">
+
+		<footer class="sticky-footer p-3 bg-light h-auto">
 			<div class="container my-auto">
+				<div class="text-center">
+					<p class="text-dark"><strong><?php echo NOME_CLINICA; ?></strong><br>
+					<?php echo END_CLINICA; ?></p>
+				</div>
 				<div class="copyright text-center">
 					<span class="text-dark">&copy; <?php echo NAME." v.".VERSION; ?> &ndash; <?php echo "Desenvolvido por ".DEV; ?> &ndash; <?php echo LICENSE; ?></span>
 				</div>
@@ -114,7 +119,7 @@
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
 
 	<?php if(strpos($_SERVER['REQUEST_URI'], 'usuarios/adicionar') || strpos($_SERVER['REQUEST_URI'], 'usuarios/editar')): ?>
-	<script src="<?php echo BASE_URL?>assets/js/valida-cadastro-usuarios.js"></script>
+	<script src="<?php echo BASE_URL?>assets/js/valida-cadastro-usuarios.js?v=<?php echo rand(1,99) ?>"></script>
 	<?php endif; ?>
 
 	<?php if(strpos($_SERVER['REQUEST_URI'], 'calendario') ): ?>

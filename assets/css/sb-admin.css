@@ -331,8 +331,6 @@ footer.sticky-footer {
 	right: 0;
 	bottom: 0;
 	width: 100%;
-	height: 30px;
-	background-color: #F5F5F5;
 }
 
 footer.sticky-footer .copyright {

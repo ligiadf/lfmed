@@ -2,22 +2,63 @@
 
 class Consultas extends Model {
 
-	public function listarConsultas($offset, $limite) {
+	public function listarConsultas($offset, $limite, $md, $st) {
 		$array = array();
+
+		if(empty($_GET['md'])) { $md = ''; }
+			else { $md = $_GET['md']; }
+
+		if(empty($_GET['st'])) { $st = ''; }
+			else { $st = $_GET['st']; }
+
+		// array vazio dá erro no SQL, então 1=1
+		$filtroString = array('1=1');
+
+		if(!empty($md)){
+			$filtroString[] = 'usuarios.id = :med_id';
+		}
+		switch ($st) {
+			case 'm':
+				$filtroString[] = 'consultas.con_status = 1';
+				break;
+			case 'r':
+				$filtroString[] = 'consultas.con_status = 2';
+				break;
+			case 'a':
+				$filtroString[] = 'consultas.con_status = 3';
+				break;
+			case 'c':
+				$filtroString[] = 'consultas.con_status = 4';
+				break;
+			case 'i':
+				$filtroString[] = 'consultas.con_status = 0';
+				break;
+		}
 
 		$sql = "SELECT pacientes.nome, usuarios.nome as med_nome, usuarios.especialidade, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id
 				FROM consultas
 				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
+				WHERE ".implode(' AND ', $filtroString)."
 				ORDER BY con_inicio
 				LIMIT $offset, $limite";
-		$sql = $this->pdo->query($sql);
+		if(empty($md) && empty($st)){
+			$sql = $this->pdo->query($sql);
+		}
+
+		if(!empty($md) || !empty($st)){
+			$sql = $this->pdo->prepare($sql);
+			if(!empty($md)) {
+				$sql->bindValue(":med_id", $md);
+			}
+			$sql->execute();
+		}
+
 		$sql->execute();
 
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		// else echo "Não há consultas";
 
 		return $array;
 	}
@@ -65,9 +106,54 @@ class Consultas extends Model {
 		return $array;
 	}
 
-	public function totalConsultas() {
-		$sql = "SELECT COUNT(*) as c FROM consultas";
-		$sql = $this->pdo->query($sql);
+	public function totalConsultas($md, $st) {
+
+		if(empty($_GET['md'])) { $md = ''; }
+			else { $md = $_GET['md']; }
+
+		if(empty($_GET['st'])) { $st = ''; }
+			else { $st = $_GET['st']; }
+
+		// array vazio dá erro no SQL, então 1=1
+		$filtroString = array('1=1');
+		if(!empty($md)){
+			$filtroString[] = 'usuarios.id = :med_id';
+		}
+
+		switch ($st) {
+			case 'm':
+				$filtroString[] = 'consultas.con_status = 1';
+				break;
+			case 'r':
+				$filtroString[] = 'consultas.con_status = 2';
+				break;
+			case 'a':
+				$filtroString[] = 'consultas.con_status = 3';
+				break;
+			case 'c':
+				$filtroString[] = 'consultas.con_status = 4';
+				break;
+			case 'i':
+				$filtroString[] = 'consultas.con_status = 0';
+				break;
+		}
+
+		$sql = "SELECT COUNT(*) as c
+				FROM consultas
+				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
+				WHERE ".implode(' AND ', $filtroString)."";
+
+		if(empty($md) && empty($st)){
+			$sql = $this->pdo->query($sql);
+		}
+
+		if(!empty($md) || !empty($st)){
+			$sql = $this->pdo->prepare($sql);
+			if(!empty($md)) {
+				$sql->bindValue(":med_id", $md);
+			}
+			$sql->execute();
+		}
 
 		if($sql->rowCount() > 0) {
 			$sql = $sql->fetch();

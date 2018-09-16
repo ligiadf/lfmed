@@ -6,14 +6,28 @@ class consultasController extends Controller {
 	public function index() {
 
 		$consultas = new Consultas();
+		$medicos = new Medicos();
 
 		$dados = array();
+
+		// filtro
+			$md = '';
+			$st = '';
+			if(isset($_GET['md'])) {
+				$md = $_GET['md'];
+			}
+			if(isset($_GET['st'])) {
+				$st = $_GET['st'];
+			}
 
 	// paginação
 		$offset = 0;
 		$limite = 10;
 
-		$dados['quantidade'] = $consultas->totalConsultas();
+		$dados['md'] = $md;
+		$dados['st'] = $st;
+
+		$dados['quantidade'] = $consultas->totalConsultas($md, $st);
 		$quantidade = $dados['quantidade'];
 
 		$dados['paginas'] = ceil($quantidade/$limite);
@@ -25,7 +39,10 @@ class consultasController extends Controller {
 		}
 		$offset = ($dados['pagina_atual'] * $limite) - $limite;
 
-		$dados['consultas'] = $consultas->listarConsultas($offset, $limite);
+		$dados['consultas'] = $consultas->listarConsultas($offset, $limite, $md, $st);
+
+		$dados['medicos'] = $medicos->listarMedicosAtivos($offset=0, $limite=10);
+
 
 		$this->loadTemplate('consulta-listar', $dados);
 	}

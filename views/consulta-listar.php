@@ -5,6 +5,35 @@
 			<h1>Consultas <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></small></h1>
 		</header>
 
+		<div class="row">
+			<div class="col-12 mt-2 mb-2 pt-2 pb-2">
+				<form method="GET" class="form-inline">
+					<div class="form-group">
+						<select class="form-control form-control-sm ml-2" id="medico" name="md">
+							<option value="" selected>Todos os médicos</option>
+							<?php foreach($medicos as $item): ?>
+								<option value="<?php echo $item['id']; ?>" <?php if($item['id'] == $md) { echo "selected"; } ?> > <?php echo $item['nome'] ." (". $item['especialidade'] .")"; ?></option>
+							<?php endforeach; ?>
+						</select>
+					</div>
+					<div class="form-group">
+						<select class="form-control form-control-sm ml-2" id="status" name="st">
+							<option value="" selected>Todas as consultas</option>
+							<option value="m" <?php if($st == 'm') { echo "selected"; } ?> >Marcada</option>
+							<option value="r" <?php if($st == 'r') { echo "selected"; } ?> >Realizada</option>
+							<option value="a" <?php if($st == 'a') { echo "selected"; } ?> >Ausente</option>
+							<option value="c" <?php if($st == 'c') { echo "selected"; } ?> >Cancelada</option>
+							<option value="i" <?php if($st == 'i') { echo "selected"; } ?> >Indisponibilidade</option>
+						</select>
+					</div>
+					<div class="form-group">
+					<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
+					<small><a class="ml-4 text-secondary" href="<?php echo BASE_URL.'consultas' ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
+					</div>
+				</form>
+			</div>
+		</div>
+
 		<?php foreach($consultas as $item): ?>
 
 			<div class="list-group list-group-flush">
@@ -76,7 +105,7 @@
 		<div class="row text-center mt-3">
 			<div class="col-12">
 			<?php for($p=1; $p<=$paginas; $p++): ?>
-				<a class="btn btn-secondary <?php if($pagina_atual == $p) { echo "active"; } ?>" role="button" href="<?php echo BASE_URL; ?>consultas?p=<?php echo $p; ?>"><?php echo $p; ?></a>
+				<a class="btn btn-secondary <?php if($pagina_atual == $p) { echo "active"; } ?>" role="button" href="<?php echo BASE_URL.'consultas?p='.$p; if(!empty($_GET['md'])) { echo "&md=".$_GET['md']; } if(!empty($_GET['st'])) { echo "&st=".$_GET['st']; } ?>"><?php echo $p; ?></a>
 			<?php endfor; ?>
 			<p class="text-muted mt-2">Total: <?php echo $quantidade; ?></p>
 			</div>
@@ -84,3 +113,5 @@
 
 	</div>
 </div>
+
+

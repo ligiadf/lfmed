@@ -52,9 +52,6 @@ class Calendario extends Model {
 		if(!empty($md)){
 			$sql->bindValue(":med_id", $md);
 		}
-		/*if(!empty($s)) {
-			$sql->bindValue(":con_status", $s);
-		}*/
 
 		$sql->execute();
 

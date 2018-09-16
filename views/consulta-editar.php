@@ -68,7 +68,7 @@
 <?php if($con_status != "0"): ?>
 
 		<div class="form-group">
-			<label for="paciente"><i class="fas fa-users mr-1"></i> Paciente:</label>
+			<label for="paciente"><i class="fas fa-user mr-1"></i> Paciente:</label>
 			<select class="form-control" id="paciente" name="paciente" required>
 				<?php foreach($pacientes as $item): ?>
 					<option value="<?php echo $item['id']; ?>" <?php if($pacienteSelecionadoID == $item['id']) { echo "selected"; } ?>> <?php echo $item['nome']." [CPF: ".$item['cpf']."]"; ?></option>
@@ -79,7 +79,7 @@
 <?php endif; ?><!-- $con_status != 0 -->
 
 		<div class="form-row justify-content-left">
-			<label for="statusConsulta" class="col-12"><i class="fas fa-user mr-1"></i> Situação:</label>
+			<label for="statusConsulta" class="col-12"><i class="fas fa-asterisk mr-1"></i> Situação:</label>
 			<div class="form-group col-md-6 col-lg-4">
 
 	<?php if($con_status == "0"): ?>

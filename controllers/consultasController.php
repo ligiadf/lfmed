@@ -108,8 +108,6 @@ class consultasController extends Controller {
 	public function detalhe($id) {
 
 		$consultas = new Consultas();
-		//$usuarios = new Usuarios();
-		//$pacientes = new Pacientes();
 
 		$detalhe = $consultas->detalheConsulta($id);
 
@@ -269,7 +267,6 @@ class consultasController extends Controller {
 		$data_atual = date('d/m/Y');
 
 		// id inválido
-		//if( empty($dtConsulta_inicio) || empty($detalhe['med_nome']) ) {
 		if( empty($detalhe) ) {
 			$dados404 = array (
 				'msg404' => 'Consulta não existe:',

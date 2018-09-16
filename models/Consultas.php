@@ -218,7 +218,9 @@ class Consultas extends Model {
 	}
 
 	public function editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente='', $statusConsulta) {
-		$sql = "UPDATE consultas SET id_med = :id_med, id_pac = :id_pac, con_inicio = :con_inicio, con_fim = :con_fim, con_status = :con_status WHERE id = :id";
+		$sql = "UPDATE consultas
+				SET id_med = :id_med, id_pac = :id_pac, con_inicio = :con_inicio, con_fim = :con_fim, con_status = :con_status 
+				WHERE id = :id";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":id", $id);
 		$sql->bindValue(":id_med", $id_medico);
@@ -226,6 +228,18 @@ class Consultas extends Model {
 		$sql->bindValue(":con_inicio", $dtConsulta_inicio);
 		$sql->bindValue(":con_fim", $dtConsulta_fim);
 		$sql->bindValue(":con_status", $statusConsulta);
+		$sql->execute();
+	}
+
+	public function adicionarAtestado($id, $atestadoPeriodo, $atestadoMotivo, $atestadoCID='') {
+		$sql = "UPDATE consultas
+				SET atestado_periodo = :atestadoPeriodo, atestado_motivo = :atestadoMotivo, atestado_cid = :atestadoCID
+				WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->bindValue(":atestadoPeriodo", $atestadoPeriodo);
+		$sql->bindValue(":atestadoMotivo", $atestadoMotivo);
+		$sql->bindValue(":atestadoCID", $atestadoCID);
 		$sql->execute();
 	}
 

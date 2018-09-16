@@ -19,7 +19,7 @@
 			<?php
 				if($con_status=='0') { echo "<span class='text-danger'>Indisponibilidade</span>"; }
 					else { echo "Detalhes da consulta"; } ?>
-			<small style="font-size: 40%;" class="badge badge-pill  badge-light"><?php echo $id; ?></small>
+			<small style="font-size: 40%;" class="badge badge-pill badge-light"><?php echo $id; ?></small>
 		</h1>
 	</header>
 
@@ -61,8 +61,6 @@
 		<h5><i class="fas fa-user mr-1"></i> <a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $pac_id; ?>" title="Ver ficha do paciente" target="_blank"><?php echo $pac_nome; ?></a></h5>
 	<?php endif; ?>
 
-
-
 	<p class="mt-2 text-right">
 		<a class="btn btn-warning" href="<?php echo BASE_URL ?>consultas/editar/<?php echo $id; ?>"><i class="far fa-calendar-check mr-1"></i> Editar</a>
 	</p>
@@ -71,7 +69,7 @@
 	<p><a class="btn btn-info" href="<?php echo BASE_URL ?>consultas/comprovante/<?php echo $id; ?>" target="_blank"><i class="fas fa-file-contract mr-1"></i> Comprovante</a></p>
 
 <div class="card-deck">
-	<div class="card mt-3">
+	<div class="card border-light mt-3">
 		<div class="card-header"><i class="fas fa-file-signature mr-1"></i> Atestado</div>
 		<div class="card-body">
 			<p class="card-text">
@@ -87,37 +85,41 @@
 					}
 				?>
 			</p>
-			<p class="card-text">
-				<?php if(!empty($atestado_periodo)): ?>
-				Atesto para os devidos fins que <strong><?php echo $pac_nome; ?></strong>, inscrito(a) no CPF sob o nº <strong><?php echo $cpf; ?></strong>, esteve em consulta no dia <strong><?php echo $con_data; ?></strong> às <strong><?php echo $con_hora; ?></strong>, apresentando quadro de <strong><?php echo $atestado_motivo; if(!empty($atestado_cid)) { echo " (".$atestado_cid.")"; } ?></strong> e necessitando de repouso <strong><?php echo $atestado_periodo ?></strong>.
-				<?php endif; ?>
+
+			<p class="card-text text-center">
+			<?php if(!empty($atestado_periodo)): ?>
+				<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary"><i class="fas fa-edit mr-1"></i> Editar</a>
+				<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark ml-5"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
+			<?php else: ?>
+				<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<?php endif; ?>
 			</p>
-			<a href="<?php echo BASE_URL ?>consultas/anotacoes" class="btn btn-info"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			
 		</div>
 	</div>
 
-	<div class="card mt-3">
+	<div class="card border-light mt-3">
 		<div class="card-header"><i class="fas fa-file-medical mr-1"></i> Anotações</div>
 		<div class="card-body">
 			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			<a href="<?php echo BASE_URL ?>anotacoes/adicionar" class="btn btn-info"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<a href="<?php echo BASE_URL ?>anotacoes/adicionar" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 		</div>
 	</div>
 </div>
 <div class="card-deck">
-	<div class="card mt-3">
+	<div class="card border-light mt-3">
 		<div class="card-header"><i class="fas fa-pills mr-1"></i> Medicamentos</div>
 		<div class="card-body">
 			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			<a href="<?php echo BASE_URL ?>medicamentos/adicionar" class="btn btn-info"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<a href="<?php echo BASE_URL ?>medicamentos/adicionar" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 		</div>
 	</div>
 
-	<div class="card mt-3">
+	<div class="card border-light mt-3">
 		<div class="card-header"><i class="fas fa-prescription mr-1"></i> Exames</div>
 		<div class="card-body">
 			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			<a href="<?php echo BASE_URL ?>exames/adicionar" class="btn btn-info"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<a href="<?php echo BASE_URL ?>exames/adicionar" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 		</div>
 	</div>
 </div>

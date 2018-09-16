@@ -330,9 +330,7 @@ class consultasController extends Controller {
 	public function indisponibilidade() {
 
 		$consultas = new Consultas();
-		//$verificacao = new Consultas();
 		$medicos = new Medicos();
-		//$pacientes = new Pacientes();
 
 		$offset = 0;
 		$limite = 100;
@@ -340,11 +338,10 @@ class consultasController extends Controller {
 		$dtConsulta_fim = '';
 		$dtConsulta_inicio = '';
 		$id_medico = '';
-		
+
 		$statusConsulta = '';
 		$msgConsultaMarcada = '';
 		$msgIndisponibilidadeMedico = '';
-
 
 		if(empty($_GET['md'])) {
 			$medicoSelecionadoID = '';
@@ -370,7 +367,7 @@ class consultasController extends Controller {
 				header('Location:'. BASE_URL.'usuarios/ficha/'.$id_medico.'?msgOK='.urlencode($msgMarcarConsultaOK));
 			} else {
 				$msgMarcarConsultaNOTOK = "Não é possível marcar indisponibilidade: o(a) médico(a) já possui consulta neste horário.";
-				header('Location:'. BASE_URL.'consultas/indisponibilidade?msgError='.urlencode($msgMarcarConsultaNOTOK));
+				header('Location:'. BASE_URL.'consultas/indisponibilidade?md='.$medicoSelecionadoID.'&msgError='.urlencode($msgMarcarConsultaNOTOK));
 			}
 		}
 

@@ -166,7 +166,7 @@
 							</div>
 						<?php endif; ?>
 						<p class="card-text text-center">
-							<a class="btn btn-secondary" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>">Ver detalhes</a>
+							<a class="btn btn-secondary" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['con_id']; ?>">Ver detalhes</a>
 						</p>
 					</div>
 				</div>

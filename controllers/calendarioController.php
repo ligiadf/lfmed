@@ -6,6 +6,7 @@ class calendarioController extends Controller {
 	public function index() {
 
 		$calendario = new Calendario();
+		$medicos = new Medicos();
 
 		// data atual: AAAA-MM-DD
 		if(empty($_GET['d'])) {
@@ -45,7 +46,7 @@ class calendarioController extends Controller {
 		//$linhas = ceil(($dia1 + $dias) / 7);
 		$linhas = '1';
 
-		// data de início do calendário: saber dias antes e depois do mês atual
+		// data de início do calendário
 		// diminui do primeiro dia do mês o número de dias que tem antes, que é igual ao número do dia da semana
 		// domingo é 0 e fica na primeira coluna
 		$data_inicio = date('Y-m-d', strtotime(- $dia1.' days', strtotime($data)));
@@ -53,15 +54,19 @@ class calendarioController extends Controller {
 		// data do final do calendário: primeiro dia + número de linhas x 7; menos 1 para contar o primeiro dia
 		$data_fim = date('Y-m-d', strtotime( (- $dia1 + ($linhas*7) - 1 ).' days', strtotime($data)));
 
-		// seleção médicos
-		if(empty($_GET['m'])) {
-			$med = '';
-		} else {
-			$med = $_GET['m'];
-		}
+		// filtro
+			$md = '';
+			$st = '';
+			if(isset($_GET['md'])) {
+				$md = $_GET['md'];
+			}
+			if(isset($_GET['st'])) {
+				$st = $_GET['st'];
+			}
 
 		$dados = array(
-			'calendario' => $calendario->mostrarCalendario($data_inicio, $data_fim),
+			'medicos' => $medicos->listarMedicosAtivos($offset=0, $limite=10),
+			'calendario' => $calendario->mostrarCalendario($data_inicio, $data_fim, $md, $st),
 			'data' => $data,
 			'dia_atual' => $dia_atual,
 			'mes_atual_extenso' => $mes_atual_extenso,
@@ -70,7 +75,9 @@ class calendarioController extends Controller {
 			'dias' => $dias,
 			'linhas' => $linhas,
 			'data_inicio' => $data_inicio,
-			'data_fim' => $data_fim
+			'data_fim' => $data_fim,
+			'md' => $md,
+			'st' => $st
 		);
 
 		$this->loadTemplate('calendario-semanal', $dados);

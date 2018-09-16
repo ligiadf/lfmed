@@ -1,17 +1,48 @@
 <div class="row justify-content-center">
 	<div class="col-md-10">
 		<header class="mt-4 mb-4">
-			<p><i class="far fa-calendar-alt mr-1"></i> <?php echo "Início: ".$dia_atual." de ".$mes_atual_extenso." de ".$ano_atual; ?></p>
-			<h1>Agenda semanal
-			</h1>
+			<h1>Agenda semanal</h1>
+			<small><i class="far fa-calendar-alt mr-1"></i> Semana do dia: <?php echo $dia_atual." de ".$mes_atual_extenso." de ".$ano_atual; ?></small>
 		</header>
+
+		<div class="row">
+			<div class="col-12 mt-2 mb-2 pt-2 pb-2 bg-light">
+			<form method="GET" class="form-inline">
+				<input type="hidden" name="d" value="<?php if(empty($_GET['d'])) { echo date('Y-m-d'); } else { echo $_GET['d']; } ?>">
+				<div class="form-group">
+					<select class="form-control form-control-sm ml-2" id="medico" name="md">
+						<option value="">Todos os médicos</option>
+						<?php foreach($medicos as $item): ?>
+							<option value="<?php echo $item['id']; ?>" <?php if($item['id'] == $md) { echo "selected"; } ?> > <?php echo $item['nome'] ." (". $item['especialidade'] .")"; ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+				<div class="form-group">
+					<select class="form-control form-control-sm ml-2" id="medico" name="st">
+						<option value="">Todas as consultas</option>
+						<option value="m" <?php if($st == 'm') { echo "selected"; } ?> >Marcada</option>
+						<option value="r" <?php if($st == 'r') { echo "selected"; } ?> >Realizada</option>
+						<option value="i" <?php if($st == 'i') { echo "selected"; } ?> >Indisponibilidade</option>
+					</select>
+				</div>
+				
+				<input type="submit" value="Filtrar" class="btn btn-primary btn-sm ml-2">
+			</form>
+			</div>
+		</div>
 
 		<div class="row col-12 mt-3 mb-3">
 			<div class="col-6">
-				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'last week')); ?>"><i class="far fa-calendar-minus mr-1"></i> Semana anterior</a>
+				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'last week')); ?>
+					<?php if(!empty($md)) { echo '&md='.$md; } ?>
+					<?php if(!empty($st)) { echo '&st='.$st; } ?>"
+					><i class="far fa-calendar-minus mr-1"></i> Semana anterior</a>
 			</div>
 			<div class="col-6 text-right">
-				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'next week')); ?>">Próximo semana <i class="far fa-calendar-plus ml-1"></i></a>
+				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'next week')); ?>
+				<?php if(!empty($md)) { echo '&md='.$md; } ?>
+				<?php if(!empty($st)) { echo '&st='.$st; } ?>"
+				>Próximo semana <i class="far fa-calendar-plus ml-1"></i></a>
 			</div>
 		</div>
 
@@ -46,12 +77,14 @@
 				echo "<p class='font-weight-bold mt-2'>". $w." ". date('d/m', strtotime($d)) ."</p>";
 
 					foreach ($calendario as $item) {
-
+						// consulta
 						$dt_con_inicio = date('Y-m-d', strtotime($item['con_inicio']));
-
 						$dh_con_inicio = date('Y-m-d H:i', strtotime($item['con_inicio']));
 						$dh_con_fim =    date('Y-m-d H:i', strtotime($item['con_fim']));
 
+						// exibição
+						$dthr_con_inicio = date('d/m H:i', strtotime($item['con_inicio']));
+						$dthr_con_fim =    date('d/m H:i', strtotime($item['con_fim']));
 						$hr_con_inicio = date('H:i', strtotime($item['con_inicio']));
 						$hr_con_fim =    date('H:i', strtotime($item['con_fim']));
 
@@ -96,19 +129,17 @@
 									 $paciente."<br>".
 									 "<small><strong>".$medico."</strong></small></a></p>";
 							} else {
-								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$hr_con_inicio."-".$hr_con_fim." ".
+								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$dthr_con_inicio." - ".$dthr_con_fim." ".
 									 "<small><strong>".$medico."</strong></small></a></p>";
 							}
 						}
 					} // foreach
-				if(empty($calendario)) { echo 'nada'; }
 				?>
 
 			</div>
 			<?php endfor; ?>
 			</div><!-- row -->
 		</div><!-- list-group -->
-
 
 		<div class="d-lg-none">
 			<div class="row col-12 mt-3 mb-3">
@@ -120,8 +151,6 @@
 			</div>
 		</div>
 		</div>
-
-
 
 	</div>
 </div>

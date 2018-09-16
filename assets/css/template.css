@@ -1,3 +1,7 @@
+footer.sticky-footer {
+	position: relative;
+}
+
 label {
 	font-weight: bold;
 }

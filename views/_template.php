@@ -85,12 +85,12 @@
 	</ul>
 
 	<!-- Conteúdo -->
-	<div id="content-wrapper">
+	<div id="content-wrapper" class="pb-0">
 		<main class="container-fluid mb-5">
 			<?php $this->loadViewInTemplate($viewName, $viewData) ?>
 		</main><!-- container-fluid -->
 
-		<footer class="sticky-footer mt-5 pt-1 pb-2 bg-light h-auto">
+		<footer class="sticky-footer mt-5 pt-3 pb-3 bg-light h-auto">
 			<div class="container my-auto">
 				<div class="text-center">
 					<p class="text-dark"><strong><?php echo NOME_CLINICA; ?></strong><br>

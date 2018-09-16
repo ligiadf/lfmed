@@ -115,6 +115,7 @@
 	<div class="row">
 		<?php foreach($consulta as $item): ?>
 			<?php 
+			if($item['con_status'] != '0'): 
 				$dt_inicio = date('d/m/Y', strtotime($item['con_inicio']));
 				$hora_inicio = date('H:i', strtotime($item['con_inicio']));
 				$hora_fim = date('H:i', strtotime($item['con_fim']));
@@ -172,7 +173,7 @@
 				</div>
 			</div>
 
-
+		<?php endif; ?>
 		<?php endforeach; ?>
 	</div><!-- row -->
 

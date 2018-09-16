@@ -22,10 +22,7 @@
 	</header>
 
 	<h5><i class="fas fa-birthday-cake mr-1"></i> 
-		<?php
-
-			echo $idade;
-		?>
+		<?php echo $idade; ?>
 	</h5>
 
 	<p><i class="fas fa-envelope mr-1"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></p>
@@ -38,13 +35,13 @@
 	</p>
 	</div><!-- col-md-10 -->
 
-	<div class="col-md-10">
+	<div class="col-md-12">
 	<header class="mt-4 mb-4">
 		<h2>Consultas</h2>
 	</header>
 
 	<p class="mt-2">
-		<a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
+		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
 	</p>
 
 	<div class="row">
@@ -77,16 +74,9 @@
 						break;
 				} 
 			?>
-			<!--
-			<a class="list-group-item mb-1 link-unstyled text-<?php //echo $situacao_cor; ?>" title="<?php //echo $situacao_nome ?>" href="<?php //echo BASE_URL ?>consultas/detalhe/<?php// echo $item['id']; ?>">
-				<?php //echo $situacao_icone; ?>
-				<?php // $dt_inicio." ".$hora_inicio ?>
-				<i class="fas fa-user-md ml-3 mr-1"></i> <?php //echo $item['med_nome']; ?>
-			</a>
-			-->
 
-			<div class="col-md-6">
-				<div class="card mb-2 border-<?php echo $situacao_cor; ?>">
+			<div class="col-md-6 col-xl-4">
+				<div class="card mb-2 border-<?php echo $situacao_cor; ?> border-light">
 					<div class="card-header text-<?php echo $situacao_cor; ?> font-weight-bold border-<?php echo $situacao_cor; ?>">
 						<?php echo $situacao_icone.$dt_inicio." ".$hora_inicio." - ".$situacao_nome; ?>
 					</div>
@@ -100,14 +90,16 @@
 											else { echo "Sem atestado"; }
 									?>
 								</p>
-								<p class="card-text col-lg-6"><i class="fas fa-file-medical mr-1"></i> Anotações?</p>
+								<p class="card-text col-xl-6"><i class="fas fa-file-medical mr-1"></i> Anotações?</p>
 							</div>
-							<div class="row mt-3 mb-3 mt-lg-0 mb-lg-0">
-								<p class="card-text col-lg-6"><i class="fas fa-pills mr-1"></i> Medicamentos?</p>
-								<p class="card-text col-lg-6"><i class="fas fa-prescription mr-1"></i> Exames?</p>
+							<div class="row mt-3 mb-3 mt-xl-0 mb-xl-0">
+								<p class="card-text col-xl-6"><i class="fas fa-pills mr-1"></i> Medicamentos?</p>
+								<p class="card-text col-xl-6"><i class="fas fa-prescription mr-1"></i> Exames?</p>
 							</div>
 						<?php endif; ?>
-						<a class="btn btn-primary" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>">Ver detalhes</a>
+						<p class="card-text text-center">
+							<a class="btn btn-secondary" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $item['id']; ?>">Ver detalhes</a>
+						</p>
 					</div>
 				</div>
 			</div>
@@ -116,5 +108,5 @@
 		<?php endforeach; ?>
 	</div><!-- row -->
 
-	</div><!-- col-md-10 -->
+	</div><!-- col-md-12 -->
 </div><!-- row -->

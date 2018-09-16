@@ -326,6 +326,71 @@ class consultasController extends Controller {
 
 	}
 
+	# URL: /consultas/indisponibilidade
+	public function indisponibilidade() {
+
+		$consultas = new Consultas();
+		//$verificacao = new Consultas();
+		$medicos = new Medicos();
+		//$pacientes = new Pacientes();
+
+		$offset = 0;
+		$limite = 100;
+
+		$dtConsulta_fim = '';
+		$dtConsulta_inicio = '';
+		$id_medico = '';
+		
+		$statusConsulta = '';
+		$msgConsultaMarcada = '';
+		$msgIndisponibilidadeMedico = '';
+
+
+		if(empty($_GET['md'])) {
+			$medicoSelecionadoID = '';
+		} else {
+			$medicoSelecionadoID = $_GET['md'];
+		}
+
+		if(!empty($_POST['medico']) && !empty($_POST['dataConsulta']) && !empty($_POST['horaConsulta'])) {
+			$id_medico = addslashes($_POST['medico']);
+			$dataConsulta = explode('/', addslashes($_POST['dataConsulta']));
+			$horaConsulta = addslashes($_POST['horaConsulta']);
+			$dataConsultaFim = explode('/', addslashes($_POST['dataConsultaFim']));
+			$horaConsultaFim = addslashes($_POST['horaConsultaFim']);
+			$statusConsulta = addslashes($_POST['statusConsulta']);
+
+			// AAAA-MM-DD HH:MM
+			$dtConsulta_inicio = $dataConsulta[2].'-'.$dataConsulta[1].'-'.$dataConsulta[0].' '.$horaConsulta;
+			$dtConsulta_fim = $dataConsultaFim[2].'-'.$dataConsultaFim[1].'-'.$dataConsultaFim[0].' '.$horaConsultaFim;
+
+			if($consultas->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
+				$consultas->marcarIndisponibilidade($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $statusConsulta);
+				$msgMarcarConsultaOK = "Indisponibilidade marcada com sucesso: em ".$dtConsulta_inicio;
+				header('Location:'. BASE_URL.'usuarios/ficha/'.$id_medico.'?msgOK='.urlencode($msgMarcarConsultaOK));
+			} else {
+				$msgMarcarConsultaNOTOK = "Não é possível marcar indisponibilidade: o(a) médico(a) já possui consulta neste horário.";
+				header('Location:'. BASE_URL.'consultas/indisponibilidade?msgError='.urlencode($msgMarcarConsultaNOTOK));
+			}
+		}
+
+		$dados = array(
+			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
+			//'pacientes' => $pacientes->listarPacientes($offset, $limite),
+			'id_medico' => $id_medico,
+			//'paciente' => $paciente,
+			'statusConsulta' => $statusConsulta,
+			'dtConsulta_inicio' => $dtConsulta_inicio,
+			'dtConsulta_fim' => $dtConsulta_fim,
+			'msgIndisponibilidadeMedico' => $msgIndisponibilidadeMedico,
+			'msgConsultaMarcada' => $msgConsultaMarcada,
+			'medicoSelecionadoID' => $medicoSelecionadoID
+		);
+
+		$this->loadTemplate('consulta-indisponibilidade', $dados);
+
+	}
+
 }
 
 ?>

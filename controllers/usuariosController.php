@@ -87,12 +87,12 @@ class usuariosController extends Controller {
 		$consultas = new Consultas();
 
 		$ficha = $usuarios->fichaUsuario($id);
-		$consultaMed = $consultas->listarConsultasMedico($id);
+		$consulta = $consultas->listarConsultasMedico($id);
 
 		$dados = array(
 			// vai para view
 			'ficha' => $ficha,
-			'consulta' => $consultaMed,
+			'consulta' => $consulta,
 			'id'=> $id,
 			'nome' => $ficha['nome'],
 			'email' => $ficha['email'],

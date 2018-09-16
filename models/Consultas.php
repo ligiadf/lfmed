@@ -175,6 +175,15 @@ class Consultas extends Model {
 		$sql->execute();
 	}
 
+	public function marcarIndisponibilidade($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $statusConsulta) {
+		$sql = "INSERT INTO consultas (id_med, con_inicio, con_fim, con_status) VALUES (:id_med, :con_inicio, :con_fim, 0)";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id_med", $id_medico);
+		$sql->bindValue(":con_inicio", $dtConsulta_inicio);
+		$sql->bindValue(":con_fim", $dtConsulta_fim);
+		$sql->execute();
+	}
+
 	public function verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim) {
 		$sql = "SELECT * FROM consultas
 				WHERE

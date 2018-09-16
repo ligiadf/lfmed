@@ -8,7 +8,7 @@
 
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
-	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/sb-admin.css">
+	<link rel="stylesheet" type="text/css" href="<?php echo BASE_URL?>assets/css/sb-admin.min.css">
 
 	<!-- Input mask -->
 	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">
@@ -43,7 +43,6 @@
 				<a href="<?php echo BASE_URL; ?>login/sair"><i class="fas fa-sign-out-alt ml-4 mr-1"></i> Sair</a>
 			<?php else : ?>
 				<a href="<?php echo BASE_URL; ?>login"><i class="fas fa-sign-in-alt mr-1"></i> Entrar</a>
-		
 			<?php endif; ?>
 		</span>
 	</div>
@@ -86,9 +85,11 @@
 
 	<!-- Conteúdo -->
 	<div id="content-wrapper" class="pb-0">
-		<main class="container-fluid mb-5">
+		<main class="container-fluid mb-5 pb-1">
 			<?php $this->loadViewInTemplate($viewName, $viewData) ?>
 		</main><!-- container-fluid -->
+
+		<div class="clearfix mt-5 mb-5 p-5"></div>
 
 		<footer class="sticky-footer mt-5 pt-3 pb-3 bg-light h-auto">
 			<div class="container my-auto">
@@ -101,8 +102,6 @@
 				</div>
 			</div>
 		</footer>
-
-
 
 	</div><!-- content-wrapper -->
 

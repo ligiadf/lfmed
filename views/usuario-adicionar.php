@@ -78,7 +78,7 @@
 
 		<div class="row">
 			<div class="col-6">
-				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>pacientes/perfil/<?php echo $info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
+				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>usuarios/"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
 				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Adicionar</button>

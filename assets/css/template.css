@@ -1,7 +1,3 @@
-footer.sticky-footer {
-	position: relative;
-}
-
 label {
 	font-weight: bold;
 }
@@ -10,16 +6,59 @@ a {
 	color: #D56100;
 }
 
+/* Ajustes sb-admin
+-------------------------------------------------- */
+
+
+.navbar-nav .nav-item.active .nav-link {
+	background-color: #008080;
+	color: #F5F5F5;
+}
+
+.sidebar {
+	background-color: #F5F5F5;
+}
+
+.sidebar .nav-item .nav-link {
+	color: #008080;
+}
+
+.sidebar .nav-item .nav-link:active {
+	background-color: #008080;
+	color: #F5F5F5;
+}
+
+.sidebar .nav-item .nav-link:focus, .sidebar .nav-item .nav-link:hover {
+	background-color: #D56100;
+	color: #F5F5F5;
+}
+
+footer.sticky-footer {
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	height: 130px;
+	width: 100%;
+}
+/*
+@media (min-width: 980px) {
+	footer.sticky-footer {
+		position: absolute;
+	}
+}*/
+
 /* Calendário mensal: esconder domingo e sábado
 -------------------------------------------------- */
-#calendario_completo th:first-child,
-#calendario_completo td:first-child,
-#calendario_completo th:last-child,
-#calendario_completo td:last-child {
-	display: none; 
-}
+	#calendario_completo th:first-child,
+	#calendario_completo td:first-child,
+	#calendario_completo th:last-child,
+	#calendario_completo td:last-child {
+		display: none; 
+	}
 
-#calendario_completo td {
-	width: 20%;
-}
-
+	#calendario_completo td {
+		width: 20%;
+	}

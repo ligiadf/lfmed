@@ -292,10 +292,10 @@ class consultasController extends Controller {
 			$pdf = new tFPDF();
 			$pdf->AddPage('P','A5');
 			$pdf->SetAutoPageBreak(true,1);
-			
+
 			$pdf->SetAuthor(NOME_CLINICA, true);
-			$pdf->SetTitle(NOME_CLINICA. ' - Comprovante comparecimento consulta '.$id, true);
-			
+			$pdf->SetTitle(NOME_CLINICA. ' - Comprovante comparecimento '.$detalhe['pac_nome'].' em '.$dtConsulta_inicio, true);
+
 			// Fonte Unicode para usar UTF-8
 			$pdf->AddFont('DejaVu','','DejaVuSansCondensed.ttf',true);
 			$pdf->SetFont('DejaVu','',12);
@@ -320,7 +320,7 @@ class consultasController extends Controller {
 			$pdf->SetFont('Arial','I',8);
 			$pdf->Cell(0,10,END_CLINICA,0,0,'C');
 
-			$pdf->Output();
+			$pdf->Output(NOME_CLINICA. ' - Comprovante '.$detalhe['pac_nome'].' '.$dtConsulta_inicio.'.pdf', 'I');
 			ob_end_flush;
 		}
 

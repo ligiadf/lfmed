@@ -6,27 +6,29 @@
 		</header>
 
 		<div class="row">
-			<div class="col-12 mt-2 mb-2 pt-2 pb-2 bg-light">
+			<div class="col-12 mt-2 mb-2 pt-2 pb-2">
 			<form method="GET" class="form-inline">
 				<input type="hidden" name="d" value="<?php if(empty($_GET['d'])) { echo date('Y-m-d'); } else { echo $_GET['d']; } ?>">
 				<div class="form-group">
 					<select class="form-control form-control-sm ml-2" id="medico" name="md">
-						<option value="">Todos os médicos</option>
+						<option value="" selected>Todos os médicos</option>
 						<?php foreach($medicos as $item): ?>
 							<option value="<?php echo $item['id']; ?>" <?php if($item['id'] == $md) { echo "selected"; } ?> > <?php echo $item['nome'] ." (". $item['especialidade'] .")"; ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
 				<div class="form-group">
-					<select class="form-control form-control-sm ml-2" id="medico" name="st">
-						<option value="">Todas as consultas</option>
+					<select class="form-control form-control-sm ml-2" id="status" name="st">
+						<option value="" selected>Todas as consultas</option>
 						<option value="m" <?php if($st == 'm') { echo "selected"; } ?> >Marcada</option>
 						<option value="r" <?php if($st == 'r') { echo "selected"; } ?> >Realizada</option>
 						<option value="i" <?php if($st == 'i') { echo "selected"; } ?> >Indisponibilidade</option>
 					</select>
 				</div>
-				
-				<input type="submit" value="Filtrar" class="btn btn-primary btn-sm ml-2">
+				<div class="form-group">
+				<button type="submit" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
+				<small><a class="ml-4 text-secondary" href="<?php if(empty($_GET['d'])) { $dt = date('Y-m-d'); } else { $dt = $_GET['d']; }; echo BASE_URL.'calendario?d='.$dt; ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
+				</div>
 			</form>
 			</div>
 		</div>

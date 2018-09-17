@@ -1,8 +1,8 @@
 <?php
 
-class Calendario extends Model {
+class Agenda extends Model {
 
-	public function mostrarCalendario($data_inicio, $data_fim, $filtros) {
+	public function mostrarAgenda($data_inicio, $data_fim, $filtros) {
 
 		$array = array();
 
@@ -58,7 +58,6 @@ class Calendario extends Model {
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		//else echo "Não há consultas em ".$_GET['mes'];
 
 		return $array;
 	}

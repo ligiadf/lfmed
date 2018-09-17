@@ -25,6 +25,8 @@ class medicosController extends Controller {
 
 		$dados['medicos'] = $medicos->listarMedicosAtivos($offset, $limite);
 
+		$dados['titulo_pagina'] = 'Médicos(as)';
+
 		$this->loadTemplate('medico-listar', $dados);
 	}
 }

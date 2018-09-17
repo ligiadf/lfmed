@@ -1,8 +1,5 @@
 <div class="row justify-content-center">
 	<div class="col-md-6 col-lg-5">
-	<header class="mt-4 mb-4">
-		<h1><?php echo $nome; ?> </h1> 
-	</header>
 
 	<?php if(!empty($_GET['msgError'])): ?>
 		<div class="alert alert-danger">
@@ -16,54 +13,43 @@
 		</div>
 	<?php endif ?>
 
-	<dl class="row">
-		<dt class="col-md-5"><i class="fas fa-passport mr-1"></i> ID</dt>
-		<dd class="col-md-7"><?php echo $id; ?></dd>
-		
-		<dt class="col-md-5"><i class="fas fa-user mr-1"></i> Status</dt>
-		<dd class="col-md-7">
-			<?php
-				if($status == '1') { echo '<span class="text-success"><i class="fas fa-user-check mr-1"></i> Ativo</span>'; }
-					else { echo '<span class="text-danger"><i class="fas fa-user-times mr-1"></i> Inativo</span>'; }
-			?>
-		</dd>
+	<header class="mt-4 mb-4">
+		<p><i class="fas fa-users-cog mr-1"></i> Ficha do usuário</p>
+		<h1>
+			<?php echo $nome; ?>
+			<small style="font-size: 40%;" class="badge badge-pill  badge-light"><?php echo $id; ?></small>
+		</h1>
+	</header>
 
-		<dt class="col-md-5"><i class="fas fa-user-cog mr-1"></i> Perfil</dt>
-		<dd class="col-md-7">
-			<?php
-				switch($perfil) {
-					case 'ADM':
-						echo '<i class="fas fa-user-shield mr-1"></i> Administrador'; break;
-					case 'MED':
-						echo '<i class="fas fa-user-md mr-1"></i> Médico'; break;
-					case 'REC':
-						echo '<i class="fas fa-user-clock mr-1"></i> Recepcionista'; break;
-					case 'LAB':
-						echo '<i class="fas fa-hospital mr-1"></i> Laboratório'; break;
-					}
-			?>
-		</dd>
-
-		<dt class="col-md-5"><i class="fas fa-envelope mr-1"></i> E-mail</dt>
-		<dd class="col-md-7"><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></dd>
-
+	<h5>
+		<?php
+			if($status == '1') {
+				echo '<span class="text-success">'.$perfilTexto.'</span>';
+			}
+			else { 
+				echo '<span class="text-danger">'.$perfilTexto.'</span>';
+			}
+		?>
 		<?php if($perfil == 'MED'):?>
+			<small><i class="fas fa-id-card ml-3 mr-1"></i> <?php echo $crm; ?></small>
+		<?php endif; ?>
+	</h5>
 
-		<dt class="col-md-5"><i class="fas fa-medkit mr-1"></i> Especialidade</dt>
-		<dd class="col-md-7"><?php echo $especialidade; ?></dd>
-
-		<dt class="col-md-5"><i class="fas fa-id-card mr-1"></i> CRM</dt>
-		<dd class="col-md-7"><?php echo $crm; ?></dd>
-
+	<?php if($perfil == 'MED'):?>
+		<h6>
+			<i class="fas fa-medkit mr-1"></i> <?php echo $especialidade; ?>
+		</h6>
 	<?php endif; ?>
-	</dl>
+
+	<p><i class="fas fa-envelope mr-1"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></p>
 
 	<p class="mt-2 text-right">
-		<a class="btn btn-warning" href="<?php echo BASE_URL ?>usuarios/editar/<?php echo $id; ?>"><i class="fas fa-user-edit mr-1"></i> Editar usuário</a>
+		<a class="btn btn-warning" href="<?php echo BASE_URL ?>usuarios/editar/<?php echo $id; ?>">
+			<i class="fas fa-user-edit mr-1"></i> Editar usuário</a>
 	</p>
 	</div><!-- col-md-6 -->
 
-<?php if($perfil=='MED'):?>
+<?php if($perfil=='MED' && $status==1):?>
 	<div class="col-md-6 col-lg-5">
 	<header class="mt-4 mb-4">
 		<h2>Indisponibilidades</h2>
@@ -99,8 +85,8 @@
 
 	</div><!-- col-md-6 -->
 
-
 </div><!-- row -->
+
 <div class="row">
 
 	<div class="col-md-12">

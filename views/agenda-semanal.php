@@ -27,7 +27,7 @@
 					</div>
 					<div class="form-group">
 					<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
-					<small><a class="ml-4 text-secondary" href="<?php if(empty($_GET['d'])) { $dt = date('Y-m-d'); } else { $dt = $_GET['d']; }; echo BASE_URL.'calendario?d='.$dt; ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
+					<small><a class="ml-4 text-secondary" href="<?php if(empty($_GET['d'])) { $dt = date('Y-m-d'); } else { $dt = $_GET['d']; }; echo BASE_URL.'agenda?d='.$dt; ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
 					</div>
 				</form>
 			</div>
@@ -52,7 +52,7 @@
 			<div class="row">
 			<?php for($c=0; $c<7; $c++): 
 				$d = date('Y-m-d', strtotime( ($c ).' days', strtotime($data_inicio)) );
-				// data atual do loop / exibição calendário:
+				// data atual do loop / exibição agenda:
 				$d = date('Y-m-d', strtotime($d));
 				
 				// dia da semana:
@@ -78,7 +78,7 @@
 				<?php
 				echo "<p class='font-weight-bold mt-2'>". $w." ". date('d/m', strtotime($d)) ."</p>";
 
-					foreach ($calendario as $item) {
+					foreach ($agenda as $item) {
 						// consulta
 						$dt_con_inicio = date('Y-m-d', strtotime($item['con_inicio']));
 						$dh_con_inicio = date('Y-m-d H:i', strtotime($item['con_inicio']));

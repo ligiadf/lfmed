@@ -50,15 +50,15 @@ footer.sticky-footer {
 	}
 }*/
 
-/* Calendário mensal: esconder domingo e sábado
+/* Agenda: esconder domingo e sábado
 -------------------------------------------------- */
-	#calendario_completo th:first-child,
-	#calendario_completo td:first-child,
-	#calendario_completo th:last-child,
-	#calendario_completo td:last-child {
+	#agenda_completa th:first-child,
+	#agenda_completa td:first-child,
+	#agenda_completa th:last-child,
+	#agenda_completa td:last-child {
 		display: none; 
 	}
 
-	#calendario_completo td {
+	#agenda_completa td {
 		width: 20%;
 	}

@@ -27,6 +27,8 @@ class pacientesController extends Controller {
 
 		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite);
 
+		$dados['titulo_pagina'] = 'Pacientes';
+
 		$this->loadTemplate('paciente-listar', $dados);
 	}
 
@@ -68,6 +70,7 @@ class pacientesController extends Controller {
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Cadastrar paciente',
 			'nome_paciente' => $nome_paciente,
 			'data_nasc' => $data_nasc,
 			'email' => $email,
@@ -102,6 +105,7 @@ class pacientesController extends Controller {
 		$idade = $calculo->format('%y')." anos (".$dataNasc.")";
 
 		$dados = array(
+			'titulo_pagina' => 'Ficha paciente n. '.$id,
 			'ficha' => $ficha,
 			'consulta' => $consultaPac,
 			'id'=> $id,
@@ -153,7 +157,7 @@ class pacientesController extends Controller {
 		$dataNasc = $dataNascimento[2].'/'.$dataNascimento[1].'/'.$dataNascimento[0];
 
 		$dados = array(
-			// vai para view
+			'titulo_pagina' => 'Editar paciente n. '.$id,
 			'info' => $info,
 			'data_nasc' => $dataNasc
 		);

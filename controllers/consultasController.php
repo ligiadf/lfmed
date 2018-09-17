@@ -43,6 +43,8 @@ class consultasController extends Controller {
 
 		$dados['medicos'] = $medicos->listarMedicosAtivos($offset=0, $limite=10);
 
+		$dados['titulo_pagina'] = 'Consultas';
+
 
 		$this->loadTemplate('consulta-listar', $dados);
 	}
@@ -81,7 +83,7 @@ class consultasController extends Controller {
 
 			if($verificacao->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
 				$marcacao->marcarConsulta($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
-				$msgMarcarConsultaOK = "Consulta marcada com sucesso: em ".$dtConsulta_inicio;
+				$msgMarcarConsultaOK = "Consulta marcada com sucesso!";
 				header('Location:'. BASE_URL.'consultas/marcar?msgOK='.urlencode($msgMarcarConsultaOK));
 			} else {
 				$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
@@ -90,6 +92,7 @@ class consultasController extends Controller {
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Marcar consulta',
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
 			'pacientes' => $pacientes->listarPacientes($offset, $limite),
 			'id_medico' => $id_medico,
@@ -124,6 +127,7 @@ class consultasController extends Controller {
 		$dtConsulta_fim = $dataConsultaFim[2].'/'.$dataConsultaFim[1].'/'.$dataConsultaFim[0]; // DD/MM/AAA
 
 		$dados = array(
+			'titulo_pagina' => 'Detalhes da consulta n. '.$id,
 			'med_id' => $detalhe['med_id'],
 			'med_nome' => $detalhe['med_nome'],
 			'especialidade' => $detalhe['especialidade'],
@@ -182,6 +186,7 @@ class consultasController extends Controller {
 		$medicoSelecionadoID = $detalhe['med_id'];
 		$pacienteSelecionadoID = $detalhe['pac_id'];
 
+
 		if(!empty($_POST['medico']) && !empty($_POST['dataConsulta']) && !empty($_POST['horaConsulta'])) {
 			$id_medico = addslashes($_POST['medico']);
 			$dataConsulta = explode('/', addslashes($_POST['dataConsulta']));
@@ -206,18 +211,25 @@ class consultasController extends Controller {
 				$dtConsulta_fim = $dataConsultaFim[2].'-'.$dataConsultaFim[1].'-'.$dataConsultaFim[0].' '.$horaConsultaFim;
 
 			} else {
-
 				// $dtConsulta_inicio + 30 minutos
 				$dtConsulta_fim = date("Y-m-d H:i", strtotime($dtConsulta_inicio. '+30 minutes'));
 
 			}
 
-			$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
-			$msgEditarConsultaOK = "Consulta alterada com sucesso: em ".$dtConsulta_inicio;
-			header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
+			if($consulta->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
+				$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
+				$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
+				header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
+			} else {
+				$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
+				header('Location:'. BASE_URL.'consultas/marcar?msgError='.urlencode($msgMarcarConsultaNOTOK));
+			}
+
+
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Editar consulta n. '.$id,
 			'detalhe' => $detalhe,
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
 			'pacientes' => $pacientes->listarPacientes($offset, $limite),
@@ -372,10 +384,9 @@ class consultasController extends Controller {
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Marcar indisponibilidade',
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
-			//'pacientes' => $pacientes->listarPacientes($offset, $limite),
 			'id_medico' => $id_medico,
-			//'paciente' => $paciente,
 			'statusConsulta' => $statusConsulta,
 			'dtConsulta_inicio' => $dtConsulta_inicio,
 			'dtConsulta_fim' => $dtConsulta_fim,

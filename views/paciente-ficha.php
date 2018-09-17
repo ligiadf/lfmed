@@ -21,9 +21,7 @@
 		</h1>
 	</header>
 
-	<h5><i class="fas fa-birthday-cake mr-1"></i> 
-		<?php echo $idade; ?>
-	</h5>
+	<h5><i class="fas fa-birthday-cake mr-1"></i> <?php echo $idade; ?></h5>
 
 	<p><i class="fas fa-envelope mr-1"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></p>
 	<p><i class="fas fa-phone mr-1"></i> <?php echo $telefone; ?></p>

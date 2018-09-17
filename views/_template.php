@@ -21,7 +21,7 @@
 
 	<link rel="shortcut icon" type="image/png" href="<?php echo BASE_URL?>assets/images/clinica-oftorrino-icone.png">
 
-	<title><?php echo NOME_CLINICA; ?></title>
+	<title><?php if(!empty($titulo_pagina)) { echo $titulo_pagina." &ndash; ".NOME_CLINICA; } else { echo NOME_CLINICA; } ?></title>
 
 </head>
 
@@ -51,10 +51,10 @@
 <div id="wrapper">
 	<!-- Sidebar -->
 	<ul class="sidebar navbar-nav toggled bg-white">
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'calendario')) { echo "active"; } ?>">
-			<a class="nav-link" href="<?php echo BASE_URL; ?>calendario">
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'agenda')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>agenda">
 				<i class="far fa-calendar-alt mr-1"></i>
-				<span>Calendário</span>
+				<span>Agenda</span>
 			</a>
 		</li>
 		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas')) { echo "active"; } ?>">
@@ -121,7 +121,7 @@
 	<script src="<?php echo BASE_URL?>assets/js/valida-cadastro-usuarios.js?v=<?php echo rand(1,99) ?>"></script>
 	<?php endif; ?>
 
-	<?php if(strpos($_SERVER['REQUEST_URI'], 'calendario') || strpos($_SERVER['REQUEST_URI'], 'consultas') ): ?>
+	<?php if(strpos($_SERVER['REQUEST_URI'], 'agenda') || strpos($_SERVER['REQUEST_URI'], 'consultas') ): ?>
 	<script src="<?php echo BASE_URL?>assets/js/valida-filtro.js?v=<?php echo rand(1,99) ?>"></script>
 	<?php endif; ?>
 

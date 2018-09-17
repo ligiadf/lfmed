@@ -37,6 +37,7 @@ class atestadosController extends Controller {
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Adicionar atestado para consulta n. '.$id,
 			'detalhe' => $detalhe,
 			'med_id' => $detalhe['med_id'],
 			'med_nome' => $detalhe['med_nome'],
@@ -87,6 +88,7 @@ class atestadosController extends Controller {
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Editar atestado para consulta n. '.$id,
 			'detalhe' => $detalhe,
 			'med_id' => $detalhe['med_id'],
 			'med_nome' => $detalhe['med_nome'],

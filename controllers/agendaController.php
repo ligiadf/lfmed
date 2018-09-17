@@ -1,11 +1,11 @@
 <?php
 
-class calendarioController extends Controller {
+class agendaController extends Controller {
 
-	// calendário semanal: apenas consultas marcadas ou realizadas e indisponibilidade
+	// agenda semanal: apenas consultas marcadas ou realizadas e indisponibilidade
 	public function index() {
 
-		$calendario = new Calendario();
+		$agenda = new Agenda();
 		$medicos = new Medicos();
 
 		// data atual: AAAA-MM-DD
@@ -46,12 +46,12 @@ class calendarioController extends Controller {
 		//$linhas = ceil(($dia1 + $dias) / 7);
 		$linhas = '1';
 
-		// data de início do calendário
+		// data de início da agenda
 		// diminui do primeiro dia do mês o número de dias que tem antes, que é igual ao número do dia da semana
 		// domingo é 0 e fica na primeira coluna
 		$data_inicio = date('Y-m-d', strtotime(- $dia1.' days', strtotime($data)));
 
-		// data do final do calendário: primeiro dia + número de linhas x 7; menos 1 para contar o primeiro dia
+		// data do final da agenda: primeiro dia + número de linhas x 7; menos 1 para contar o primeiro dia
 		$data_fim = date('Y-m-d', strtotime( (- $dia1 + ($linhas*7) - 1 ).' days', strtotime($data)));
 
 		// filtro
@@ -65,8 +65,9 @@ class calendarioController extends Controller {
 			}
 
 		$dados = array(
+			'titulo_pagina' => 'Calendário semanal',
 			'medicos' => $medicos->listarMedicosAtivos($offset=0, $limite=10),
-			'calendario' => $calendario->mostrarCalendario($data_inicio, $data_fim, $md, $st),
+			'agenda' => $agenda->mostrarAgenda($data_inicio, $data_fim, $md, $st),
 			'data' => $data,
 			'dia_atual' => $dia_atual,
 			'mes_atual_extenso' => $mes_atual_extenso,
@@ -80,12 +81,12 @@ class calendarioController extends Controller {
 			'st' => $st
 		);
 
-		$this->loadTemplate('calendario-semanal', $dados);
+		$this->loadTemplate('agenda-semanal', $dados);
 	}
 
 	public function mensal() {
 
-		$calendario = new Calendario();
+		$agenda = new Agenda();
 
 		// data atual: AAAA-MM
 		if(empty($_GET['d'])) {
@@ -122,16 +123,16 @@ class calendarioController extends Controller {
 		// número de linhas, arredondando para cima
 		$linhas = ceil(($dia1 + $dias) / 7);
 
-		// data de início do calendário: saber dias antes e depois do mês atual
+		// data de início do agenda: saber dias antes e depois do mês atual
 		// diminui do primeiro dia do mês o número de dias que tem antes, que é igual ao número do dia da semana
 		// domingo é 0 e fica na primeira coluna
 		$data_inicio = date('Y-m-d', strtotime(- $dia1.' days', strtotime($data)));
 
-		// data do final do calendário: primeiro dia + número de linhas x 7; menos 1 para contar o primeiro dia
+		// data do final do agenda: primeiro dia + número de linhas x 7; menos 1 para contar o primeiro dia
 		$data_fim = date('Y-m-d', strtotime( (- $dia1 + ($linhas*7) - 1 ).' days', strtotime($data)));
 
 		$dados = array(
-			'calendario' => $calendario->mostrarCalendario($data_inicio, $data_fim),
+			'agenda' => $agenda->mostrarAgenda($data_inicio, $data_fim, $md, $st),
 			'data' => $data,
 			'mes_atual_extenso' => $mes_atual_extenso,
 			'ano_atual' => $ano_atual,
@@ -142,7 +143,7 @@ class calendarioController extends Controller {
 			'data_fim' => $data_fim
 		);
 
-		$this->loadTemplate('calendario-mensal', $dados);
+		$this->loadTemplate('agenda-mensal', $dados);
 	}
 }
 

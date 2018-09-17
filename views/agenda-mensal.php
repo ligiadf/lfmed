@@ -1,5 +1,5 @@
 <header class="mt-4 mb-4">
-	<h1>Calendário <small><?php echo $mes_atual_extenso." ".$ano_atual; ?></small></h1>
+	<h1>Agenda <small><?php echo $mes_atual_extenso." ".$ano_atual; ?></small></h1>
 </header>
 
 <div class="row col-12 mt-3 mb-3">
@@ -12,7 +12,7 @@
 </div>
 
 <div class="table-responsive">
-<table id="calendario_completo" class="table table-sm">
+<table id="agenda_completo" class="table table-sm">
 	<tr>
 		<th>Domingo</th>
 		<th>Segunda</th>
@@ -30,11 +30,11 @@
 			?>
 			<td>
 				<?php
-					// data atual do loop / exibição calendário:
+					// data atual do loop / exibição agenda:
 					$d = date('Y-m-d', strtotime($d));
 					echo "<strong>". date('d/m', strtotime($d)) ."</strong><br>";
 
-					foreach ($calendario as $item) {
+					foreach ($agenda as $item) {
 						$dt_con_inicio = date('Y-m-d', strtotime($item['con_inicio']));
 
 						$dh_con_inicio = date('Y-m-d H:i', strtotime($item['con_inicio']));

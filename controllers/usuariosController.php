@@ -24,6 +24,8 @@ class usuariosController extends Controller {
 
 		$dados['usuarios'] = $usuarios->listarUsuarios($offset, $limite);
 
+		$dados['titulo_pagina'] = 'Usuários';
+
 		$this->loadTemplate('usuario-listar', $dados);
 	}
 
@@ -65,6 +67,7 @@ class usuariosController extends Controller {
 		}
 
 		$dados = array(
+			'titulo_pagina' => 'Adicionar usuário',
 			'nome_usuario' => $nome_usuario,
 			'email' => $email,
 			'senha' => $senha,
@@ -89,14 +92,26 @@ class usuariosController extends Controller {
 		$ficha = $usuarios->fichaUsuario($id);
 		$consulta = $consultas->listarConsultasMedico($id);
 
+		switch($ficha['perfil']) {
+			case 'ADM':
+				$perfilTexto = '<i class="fas fa-user-shield mr-1"></i> Administrador'; break;
+			case 'MED':
+				$perfilTexto = '<i class="fas fa-user-md mr-1"></i> Médico'; break;
+			case 'REC':
+				$perfilTexto = '<i class="fas fa-user-clock mr-1"></i> Recepcionista'; break;
+			case 'LAB':
+				$perfilTexto = '<i class="fas fa-hospital mr-1"></i> Laboratório'; break;
+			}
+
 		$dados = array(
-			// vai para view
+			'titulo_pagina' => 'Ficha usuário n. '.$id,
 			'ficha' => $ficha,
 			'consulta' => $consulta,
 			'id'=> $id,
 			'nome' => $ficha['nome'],
 			'email' => $ficha['email'],
 			'perfil' => $ficha['perfil'],
+			'perfilTexto' => $perfilTexto,
 			'status' => $ficha['status'],
 			'especialidade' => $ficha['especialidade'],
 			'crm' => $ficha['crm']
@@ -138,7 +153,7 @@ class usuariosController extends Controller {
 		}
 		
 		$dados = array(
-			// vai para view
+			'titulo_pagina' => 'Editar usuário n. '.$id,
 			'info' => $info
 		);
 

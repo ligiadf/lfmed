@@ -13,7 +13,6 @@
 		</div>
 	<?php endif ?>
 
-
 	<header class="mt-4 mb-4">
 		<h1>
 			<?php
@@ -24,7 +23,12 @@
 	</header>
 
 	<?php if($con_status == '0'): ?>
-		<h5><i class="far fa-calendar-alt mr-1"></i> <?php echo $con_data." - ".$con_data_fim; ?> <i class="far fa-clock ml-5 mr-1"></i> <?php echo $con_hora." - ".$con_hora_fim; ?></h5>
+		<h5>
+			<i class="far fa-calendar-alt mr-1"></i> <?php echo $con_data; ?> <i class="far fa-clock ml-3 mr-1"></i> <?php echo $con_hora; ?>
+		</h5>
+		<h5>
+			<i class="far fa-calendar-alt mr-1"></i> <?php echo $con_data_fim; ?> <i class="far fa-clock ml-3 mr-1"></i> <?php echo $con_hora_fim; ?>
+		</h5>
 	<?php else: ?>
 		<h5><i class="far fa-calendar-alt mr-1"></i> <?php echo $con_data; ?> <i class="far fa-clock ml-5 mr-1"></i> <?php echo $con_hora; ?></h5>
 	<?php endif; ?>
@@ -47,19 +51,22 @@
 		if(isset($situacao)) { echo $situacao; }
 	?>
 
-	<h4><i class="fas fa-user-md mr-1"></i> <a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $med_id; ?>" title="Ver ficha do médico" target="_blank"><?php echo $med_nome; ?></a>
-	<span class="d-sm-none"><br></span>
-	<small class="h6">
-	<?php
-		if($especialidade == 'Oftalmologista') { echo '<i class="far fa-eye ml-3 mr-0"></i> Oftalmologista'; }
-			else { echo '<i class="fas fa-deaf ml-3 mr-0"></i> Otorrinolaringologista'; }
-	?>
-	</small>
-	</h4>
-
 	<?php if($con_status != '0'): ?>
-		<h5><i class="fas fa-user mr-1"></i> <a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $pac_id; ?>" title="Ver ficha do paciente" target="_blank"><?php echo $pac_nome; ?></a></h5>
+		<h4 class="mt-4">
+			<i class="fas fa-user mr-1"></i> <a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $pac_id; ?>" title="Ver ficha do paciente"><?php echo $pac_nome; ?></a>
+		</h4>
 	<?php endif; ?>
+
+	<h5 class="mt-4">
+		<i class="fas fa-user-md mr-1"></i> <a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $med_id; ?>" title="Ver ficha do médico"><?php echo $med_nome; ?></a>
+		<span class="d-sm-none"><br></span>
+		<small class="h6">
+		<?php
+			if($especialidade == 'Oftalmologista') { echo '<i class="far fa-eye ml-3 mr-0"></i> Oftalmologista'; }
+				else { echo '<i class="fas fa-deaf ml-3 mr-0"></i> Otorrinolaringologista'; }
+		?>
+		</small>
+	</h5>
 
 	<p class="mt-2 text-right">
 		<a class="btn btn-warning" href="<?php echo BASE_URL ?>consultas/editar/<?php echo $id; ?>"><i class="far fa-calendar-check mr-1"></i> Editar</a>

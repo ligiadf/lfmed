@@ -95,21 +95,34 @@
 
 			<p class="card-text text-center">
 			<?php if(!empty($atestado_periodo)): ?>
-				<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary"><i class="fas fa-edit mr-1"></i> Editar</a>
-				<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark ml-5"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
+				<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+				<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-5"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
 			<?php else: ?>
-				<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+				<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 			<?php endif; ?>
 			</p>
-			
+
 		</div>
 	</div>
 
 	<div class="card border-light mt-3">
 		<div class="card-header"><i class="fas fa-file-medical mr-1"></i> Anotações</div>
 		<div class="card-body">
-			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			<a href="<?php echo BASE_URL ?>anotacoes/adicionar" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<p class="card-text">
+				<?php
+					if(!empty($anotacao)){ echo $anotacao; }
+					else { echo "Não há anotação vinculada a esta consulta."; }
+				?>
+			</p>
+
+			<p class="card-text text-center">
+			<?php if(!empty($anotacao)): ?>
+				<a href="<?php echo BASE_URL ?>anotacoes/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+			<?php else: ?>
+				<a href="<?php echo BASE_URL ?>anotacoes/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<?php endif; ?>
+			</p>
+
 		</div>
 	</div>
 </div>
@@ -118,7 +131,7 @@
 		<div class="card-header"><i class="fas fa-pills mr-1"></i> Medicamentos</div>
 		<div class="card-body">
 			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			<a href="<?php echo BASE_URL ?>medicamentos/adicionar" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<a href="<?php echo BASE_URL ?>medicamentos/adicionar" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 		</div>
 	</div>
 
@@ -126,7 +139,7 @@
 		<div class="card-header"><i class="fas fa-prescription mr-1"></i> Exames</div>
 		<div class="card-body">
 			<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-			<a href="<?php echo BASE_URL ?>exames/adicionar" class="btn btn-secondary"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+			<a href="<?php echo BASE_URL ?>exames/adicionar" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 		</div>
 	</div>
 </div>

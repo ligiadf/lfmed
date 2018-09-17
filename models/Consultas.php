@@ -208,7 +208,7 @@ class Consultas extends Model {
 
 		$array = array();
 
-		$sql = "SELECT pacientes.nome pac_nome, pacientes.id as pac_id, pacientes.cpf, usuarios.nome as med_nome, usuarios.id as med_id, usuarios.especialidade, usuarios.crm, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id as con_id, consultas.atestado_motivo, consultas.atestado_periodo, consultas.atestado_cid
+		$sql = "SELECT pacientes.nome pac_nome, pacientes.id as pac_id, pacientes.cpf, usuarios.nome as med_nome, usuarios.id as med_id, usuarios.especialidade, usuarios.crm, consultas.con_inicio, consultas.con_fim, consultas.con_status, consultas.id as con_id, consultas.atestado_motivo, consultas.atestado_periodo, consultas.atestado_cid, consultas.anotacao
 				FROM consultas
 				LEFT JOIN pacientes ON pacientes.id = consultas.id_pac
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
@@ -249,6 +249,16 @@ class Consultas extends Model {
 		$sql->bindValue(":atestadoPeriodo", $atestadoPeriodo);
 		$sql->bindValue(":atestadoMotivo", $atestadoMotivo);
 		$sql->bindValue(":atestadoCID", $atestadoCID);
+		$sql->execute();
+	}
+
+	public function adicionarAnotacao($id, $anotacao) {
+		$sql = "UPDATE consultas
+				SET anotacao = :anotacao
+				WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->bindValue(":anotacao", $anotacao);
 		$sql->execute();
 	}
 

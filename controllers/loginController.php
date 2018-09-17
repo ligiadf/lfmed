@@ -19,7 +19,6 @@ class loginController extends Controller {
 			if($login->fazerLogin($email, $senha)) {
 				header('Location:'. BASE_URL);
 			} else {
-				// echo "You shall not pass!";
 				$msgError = "Usuário e/ou senha errados.";
 			}
 		}

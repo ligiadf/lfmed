@@ -143,7 +143,8 @@ class consultasController extends Controller {
 			'con_hora_fim' => $horaConsultaFim,
 			'atestado_motivo' => $detalhe['atestado_motivo'],
 			'atestado_periodo' => $detalhe['atestado_periodo'],
-			'atestado_cid' => $detalhe['atestado_cid']
+			'atestado_cid' => $detalhe['atestado_cid'],
+			'anotacao' => $detalhe['anotacao']
 		);
 
 		if( !empty($detalhe) ) {

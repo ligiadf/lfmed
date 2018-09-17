@@ -52,10 +52,7 @@
 		</small>
 	</h5>
 
-	
-
 	<form method="POST">
-
 		<div class="form-group col-12">
 			<label for="anotacao">
 				<h5 class="mt-3 mb-3"><i class="fas fa-file-signature mr-1"></i> Anotação</h5>

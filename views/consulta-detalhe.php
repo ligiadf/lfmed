@@ -94,12 +94,12 @@
 			</p>
 
 			<p class="card-text text-center">
-			<?php if(!empty($atestado_periodo)): ?>
-				<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
-				<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-5"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
-			<?php else: ?>
-				<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
-			<?php endif; ?>
+				<?php if(!empty($atestado_periodo)): ?>
+					<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+					<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-5"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
+				<?php else: ?>
+					<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+				<?php endif; ?>
 			</p>
 
 		</div>
@@ -116,11 +116,11 @@
 			</p>
 
 			<p class="card-text text-center">
-			<?php if(!empty($anotacao)): ?>
-				<a href="<?php echo BASE_URL ?>anotacoes/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
-			<?php else: ?>
-				<a href="<?php echo BASE_URL ?>anotacoes/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
-			<?php endif; ?>
+				<?php if(!empty($anotacao)): ?>
+					<a href="<?php echo BASE_URL ?>anotacoes/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+				<?php else: ?>
+					<a href="<?php echo BASE_URL ?>anotacoes/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+				<?php endif; ?>
 			</p>
 
 		</div>

@@ -6,19 +6,29 @@
 		</header>
 
 		<div class="list-group list-group-flush">
-			<div class="row pt-2 pb-3 ml-1">
-				<div class="col-12 col-md-5 pl-0 text-uppercase font-weight-bold"><i class="fas fa-medkit mr-1"></i> Nome comercial (Fabricante)</div>
-				<div class="col-12 col-md-2 pl-0 text-uppercase font-weight-bold"><i class="fas fa-mortar-pestle mr-1"></i> Princípio ativo</div>
-				<div class="col-12 col-md-5 pl-0 text-uppercase font-weight-bold"><i class="fas fa-pills mr-1"></i> Apresentação</div>
+			<div class="row mb-3">
+				<div class="col-12 col-md-5 font-weight-bold">
+					<i class="fas fa-medkit mr-1"></i> Nome comercial (Fabricante)
+				</div>
+				<div class="col-12 col-md-2 font-weight-bold">
+					<i class="fas fa-mortar-pestle mr-1"></i> Princípio ativo
+				</div>
+				<div class="col-12 col-md-5 font-weight-bold">
+					<i class="fas fa-pills mr-1"></i> Apresentação
+				</div>
 			</div>
 			<?php foreach($medicamentos as $item): ?>
-				<a href="<?php echo BASE_URL ?>medicamentos/ficha/<?php echo $item['id']; ?>" class="list-group-item list-group-item-action" title="Ver ficha do paciente">
-					<div class="row">
-						<div class="col-12 col-md-5 pl-0"><i class="fas fa-medkit mr-1"></i> <strong><?php echo $item['nome_comercial']; ?></strong> (<?php echo $item['fabricante']; ?>)</div>
-						<div class="col-12 col-md-2 pl-0"><i class="fas fa-mortar-pestle mr-1"></i> <?php echo $item['principio_ativo']; ?></div>
-						<div class="col-12 col-md-5 pl-0"><i class="fas fa-pills mr-1"></i> <?php echo $item['apresentacao']; ?></div>
+				<div class="row text-secondary mb-3">
+					<div class="col-12 col-md-5">
+						<span class="d-md-none"><i class="fas fa-medkit mr-1"></i></span> <strong><?php echo $item['nome_comercial']; ?></strong> (<?php echo $item['fabricante']; ?>)
 					</div>
-				</a>
+					<div class="col-12 col-md-2">
+						<span class="d-md-none"><i class="fas fa-mortar-pestle mr-1"></i></span> <?php echo $item['principio_ativo']; ?>
+					</div>
+					<div class="col-12 col-md-5">
+						<span class="d-md-none"><i class="fas fa-pills mr-1"></i></span> <?php echo $item['apresentacao']; ?>
+					</div>
+				</div>
 			<?php endforeach; ?>
 		</div>
 

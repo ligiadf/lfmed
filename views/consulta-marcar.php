@@ -23,7 +23,7 @@
 			<select class="form-control" id="medico" name="medico" required>
 					<option value="">-- Selecione --</option>
 				<?php foreach($medicos as $item): ?>
-					<option value=" <?php echo $item['id']; ?> " > <?php echo $item['nome'] ." (". $item['especialidade'] .")"; ?></option>
+					<option value=" <?php echo $item['id']; ?> " <?php if($md == $item['id']) { echo "selected"; } ?> > <?php echo $item['nome'] ." (". $item['especialidade'] .")"; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -45,7 +45,8 @@
 			<select class="form-control" id="paciente" name="paciente" required>
 					<option value="">-- Selecione --</option>
 				<?php foreach($pacientes as $item): ?>
-					<option value=" <?php echo $item['id']; ?> "> <?php echo $item['nome']." [CPF: ".$item['cpf']."]"; ?></option>
+
+					<option value=" <?php echo $item['id']; ?> " <?php if($pc == $item['id']) { echo "selected"; } ?> > <?php echo $item['nome']." [CPF: ".$item['cpf']."]"; ?></option>
 				<?php endforeach; ?>
 			</select>
 		</div>

@@ -198,12 +198,13 @@ class atestadosController extends Controller {
 			$pdf->MultiCell(125,7, $detalhe['especialidade'],0,'R');
 			$pdf->MultiCell(125,7, $detalhe['crm'],0,'R');
 
-			$pdf->Ln(10);
+			$pdf->Ln(5);
 			$pdf->MultiCell(120,10, 'Porto Alegre, '.$data_atual,0,'C');
 
-			$pdf->SetY(-15);
+			$pdf->SetY(-20);
 			$pdf->SetFont('Arial','I',8);
-			$pdf->Cell(0,10,END_CLINICA,0,0,'C');
+			$pdf->MultiCell(0,7, "E-mail: ".EMAIL_CLINICA." - Telefone: ".FONE_CLINICA,0,'C');
+			$pdf->MultiCell(0,7, END_CLINICA,0,'C');
 
 			$pdf->Output(NOME_CLINICA. ' - Atestado '.$detalhe['pac_nome'].' '.$dtConsulta_inicio.'.pdf', 'I');
 			ob_end_flush;

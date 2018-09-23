@@ -34,12 +34,21 @@
 	</div><!-- col-md-10 -->
 
 	<div class="col-md-12">
+
+	<header class="mt-4 mb-4">
+		<h2>Exames</h2>
+	</header>
+
+	<p class="mt-2">
+		<a class="btn btn-primary" href="<?php echo BASE_URL ?>exames/paciente/<?php echo $id; ?>"><i class="fas fa-prescription mr-1"></i> Ver exames</a>
+	</p>
+
 	<header class="mt-4 mb-4">
 		<h2>Consultas</h2>
 	</header>
 
 	<p class="mt-2">
-		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
+		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$id; ?>"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
 	</p>
 
 	<div class="row">
@@ -88,7 +97,12 @@
 											else { echo "Sem atestado"; }
 									?>
 								</p>
-								<p class="card-text col-xl-6"><i class="fas fa-file-medical mr-1"></i> Anotações?</p>
+								<p class="card-text col-xl-6"><i class="fas fa-file-medical mr-1"></i>
+									<?php
+										if(!empty($item['anotacao'])) { echo "Anotações realizadas"; }
+											else { echo "Sem anotações"; }
+									?>
+								</p>
 							</div>
 							<div class="row mt-3 mb-3 mt-xl-0 mb-xl-0">
 								<p class="card-text col-xl-6"><i class="fas fa-pills mr-1"></i> Medicamentos?</p>

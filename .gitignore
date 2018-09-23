@@ -3,10 +3,11 @@
 db.php
 config.php
 
-# Imagens #
-###########
+# Imagens e uploads #
+#####################
 assets/images/clinica-oftorrino-icone.png
 assets/images/clinica-oftorrino-logo.png
+uploads/*
 
 
 # Arquivos de trabalho #

@@ -27,8 +27,8 @@
 						</select>
 					</div>
 					<div class="form-group">
-					<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
-					<small><a class="ml-4 text-secondary" href="<?php echo BASE_URL.'consultas' ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
+						<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-4"><i class="fas fa-filter"></i> Filtrar</button>
+						<small><a class="ml-4 text-secondary" href="<?php echo BASE_URL.'consultas' ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
 					</div>
 				</form>
 			</div>

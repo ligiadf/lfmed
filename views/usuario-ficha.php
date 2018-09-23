@@ -95,7 +95,7 @@
 	</header>
 
 	<p class="mt-2">
-		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
+		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL .'consultas/marcar?md='.$id; ?>"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
 	</p>
 
 	<div class="row">

@@ -60,6 +60,16 @@ class consultasController extends Controller {
 		$offset = 0;
 		$limite = 100;
 
+		// filtro
+			$md = '';
+			$pc = '';
+			if(isset($_GET['md'])) {
+				$md = $_GET['md'];
+			}
+			if(isset($_GET['pc'])) {
+				$pc = $_GET['pc'];
+			}
+
 		$dtConsulta_fim = '';
 		$dtConsulta_inicio = '';
 		$id_medico = '';
@@ -101,7 +111,9 @@ class consultasController extends Controller {
 			'dtConsulta_inicio' => $dtConsulta_inicio,
 			'dtConsulta_fim' => $dtConsulta_fim,
 			'msgIndisponibilidadeMedico' => $msgIndisponibilidadeMedico,
-			'msgConsultaMarcada' => $msgConsultaMarcada
+			'msgConsultaMarcada' => $msgConsultaMarcada,
+			'md' => $md,
+			'pc' => $pc
 		);
 
 		$this->loadTemplate('consulta-marcar', $dados);
@@ -111,8 +123,13 @@ class consultasController extends Controller {
 	public function detalhe($id) {
 
 		$consultas = new Consultas();
+		$medicamentos = new Medicamentos();
+		$exames = new Exames();
 
 		$detalhe = $consultas->detalheConsulta($id);
+		$receita = $medicamentos->prescricoesMedicamentos($id);
+
+		$pedido = $exames->requisicoesExames($id);
 
 		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
 		$horaConsulta = substr($detalhe['con_inicio'], 11, 5); // HH:ii
@@ -128,23 +145,14 @@ class consultasController extends Controller {
 
 		$dados = array(
 			'titulo_pagina' => 'Detalhes da consulta n. '.$id,
-			'med_id' => $detalhe['med_id'],
-			'med_nome' => $detalhe['med_nome'],
-			'especialidade' => $detalhe['especialidade'],
-			'pac_id' => $detalhe['pac_id'],
-			'pac_nome' => $detalhe['pac_nome'],
-			'cpf' => $detalhe['cpf'],
 			'detalhe' => $detalhe,
+			'receita' => $receita,
+			'pedido' => $pedido,
 			'id'=> $id,
 			'con_data' => $dtConsulta_inicio,
 			'con_hora' => $horaConsulta,
-			'con_status' => $detalhe['con_status'],
 			'con_data_fim' => $dtConsulta_fim,
-			'con_hora_fim' => $horaConsultaFim,
-			'atestado_motivo' => $detalhe['atestado_motivo'],
-			'atestado_periodo' => $detalhe['atestado_periodo'],
-			'atestado_cid' => $detalhe['atestado_cid'],
-			'anotacao' => $detalhe['anotacao']
+			'con_hora_fim' => $horaConsultaFim
 		);
 
 		if( !empty($detalhe) ) {
@@ -217,6 +225,24 @@ class consultasController extends Controller {
 
 			}
 
+			// não se a consulta por "realizada", "ausente" ou "cancelada"
+			if($statusConsulta == "2" || $statusConsulta == "3"  || $statusConsulta == "4") {
+				$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
+				$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
+				header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
+			} elseif ($statusConsulta == "1") {
+				if($consulta->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
+					$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
+					$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
+					header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
+				}  else {
+					$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
+					header('Location:'. BASE_URL.'consultas/editar/'.$id.'?msgError='.urlencode($msgMarcarConsultaNOTOK));
+				}
+
+			}
+/*
+
 			if($consulta->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
 				$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
 				$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
@@ -225,7 +251,7 @@ class consultasController extends Controller {
 				$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
 				header('Location:'. BASE_URL.'consultas/marcar?msgError='.urlencode($msgMarcarConsultaNOTOK));
 			}
-
+*/
 
 		}
 

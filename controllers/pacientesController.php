@@ -93,7 +93,7 @@ class pacientesController extends Controller {
 		$consultas = new Consultas();
 
 		$ficha = $pacientes->fichaPaciente($id);
-		$consultaPac = $consultas->listarConsultasPaciente($id);
+		$consulta = $consultas->listarConsultasPaciente($id);
 
 		$dataNascimento = explode('-', addslashes($ficha['data_nasc']));
 		$dataNasc = $dataNascimento[2].'/'.$dataNascimento[1].'/'.$dataNascimento[0];
@@ -107,7 +107,7 @@ class pacientesController extends Controller {
 		$dados = array(
 			'titulo_pagina' => 'Ficha paciente n. '.$id,
 			'ficha' => $ficha,
-			'consulta' => $consultaPac,
+			'consulta' => $consulta,
 			'id'=> $id,
 			'idade'=> $idade,
 			'nome' => $ficha['nome'],

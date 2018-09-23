@@ -57,7 +57,7 @@
 				<span>Agenda</span>
 			</a>
 		</li>
-		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas')) { echo "active"; } ?>">
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'consultas') || strpos($_SERVER['REQUEST_URI'], 'medicamentos/adicionar')) { echo "active"; } ?>">
 			<a class="nav-link" href="<?php echo BASE_URL; ?>consultas">
 				<i class="far fa-calendar-check mr-1"></i>
 				<span>Consultas</span>
@@ -81,6 +81,18 @@
 				<span>Usuários</span>
 			</a>
 		</li>
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'medicamentos')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>medicamentos">
+				<i class="fas fa-pills mr-1"></i>
+				<span>Medicamentos</span>
+			</a>
+		</li>
+		<li class="nav-item <?php if(strpos($_SERVER['REQUEST_URI'], 'exames')) { echo "active"; } ?>">
+			<a class="nav-link" href="<?php echo BASE_URL; ?>exames">
+				<i class="fas fa-prescription mr-1"></i>
+				<span>Exames</span>
+			</a>
+		</li>
 	</ul>
 
 	<!-- Conteúdo -->
@@ -95,6 +107,8 @@
 			<div class="container my-auto">
 				<div class="text-center">
 					<p class="text-dark"><strong><?php echo NOME_CLINICA; ?></strong><br>
+					<?php echo EMAIL_CLINICA; ?><br>
+					<?php echo FONE_CLINICA; ?><br>
 					<?php echo END_CLINICA; ?></p>
 				</div>
 				<div class="copyright text-center">
@@ -108,7 +122,7 @@
 </div><!-- #wrapper -->
 
 	<!-- Bootstrap -->
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 

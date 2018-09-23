@@ -88,17 +88,22 @@
 					<label class="form-check-label text-danger" for="statusConsulta1"><i class='fas fa-ban mr-1'></i> Indisponibilidade (0)</label>
 				</div>
 	<?php else :?>
-				<div class="form-check">
-					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta1" value="1" <?php if($con_status == '1') { echo "checked"; }; ?>>
+				<!--<div class="form-check">
+					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta1" value="1" <?php //if($con_status == '1') { echo "checked"; }; ?>>
 					<label class="form-check-label text-primary" for="statusConsulta1"><i class='far fa-calendar-check mr-1'></i> Marcada (1)</label>
+				</div>-->
+			<?php if($con_status == "1"): ?>
+				<div class="form-check">
+					<input type="hidden" id="statusConsulta1" name="statusConsulta" value="1">
+					<strong class="text-primary"><i class="far fa-calendar-check mr-1"></i> Marcada (1)</strong>
 				</div>
+			<?php endif; ?>
+
 				<div class="form-check">
 					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta2" value="2" <?php if($con_status == '2') { echo "checked"; }; ?>>
 					<label class="form-check-label text-success" for="statusConsulta2"><i class='fas fa-check mr-1'></i> Realizada (2)</label>
 				</div>
-			</div>
-			<div class="form-group col-md-6 col-lg-4">
-				<div class="form-check">
+				<div class="form-check mt-2 mb-2">
 					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta3" value="3" <?php if($con_status == '3') { echo "checked"; }; ?>>
 					<label class="form-check-label text-secondary" for="statusConsulta3"><i class='far fa-user mr-1'></i> Ausente (3)</label>
 				</div>

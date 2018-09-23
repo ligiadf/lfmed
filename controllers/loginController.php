@@ -19,7 +19,7 @@ class loginController extends Controller {
 			if($login->fazerLogin($email, $senha)) {
 				header('Location:'. BASE_URL);
 			} else {
-				$msgError = "Usuário e/ou senha errados.";
+				$msgError = "E-mail e senha não conferem.";
 			}
 		}
 		$dados = array(

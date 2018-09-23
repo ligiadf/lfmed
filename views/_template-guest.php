@@ -41,6 +41,8 @@
 			<div class="container my-auto">
 				<div class="text-center">
 					<p class="text-dark"><strong><?php echo NOME_CLINICA; ?></strong><br>
+					<?php echo EMAIL_CLINICA; ?><br>
+					<?php echo FONE_CLINICA; ?><br>
 					<?php echo END_CLINICA; ?></p>
 				</div>
 				<div class="copyright text-center">

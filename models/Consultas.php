@@ -2,7 +2,7 @@
 
 class Consultas extends Model {
 
-	public function listarConsultas($offset, $limite, $md, $st) {
+	public function listarConsultas($offset, $limite, $md, $st, $di, $df) {
 		$array = array();
 
 		if(empty($_GET['md'])) { $md = ''; }
@@ -11,11 +11,25 @@ class Consultas extends Model {
 		if(empty($_GET['st'])) { $st = ''; }
 			else { $st = $_GET['st']; }
 
+		if(empty($_GET['di'])) { $di = ''; }
+			else { $di = $_GET['di']; }
+
+		if(empty($_GET['df'])) { $df = ''; }
+			else { $df = $_GET['df']; }
+
 		// array vazio dá erro no SQL, então 1=1
 		$filtroString = array('1=1');
 
 		if(!empty($md)){
 			$filtroString[] = 'usuarios.id = :med_id';
+		}
+		if(!empty($di)){
+			$di = implode("-", array_reverse(explode("-", $_GET['di']))).' 00:00:00';
+			$filtroString[] = 'con_inicio >= :d_inicio';
+		}
+		if(!empty($df)){
+			$df = implode("-", array_reverse(explode("-", $_GET['df']))).' 23:59:59';
+			$filtroString[] = 'con_fim <= :d_fim';
 		}
 		switch ($st) {
 			case 'm':
@@ -42,16 +56,22 @@ class Consultas extends Model {
 				WHERE ".implode(' AND ', $filtroString)."
 				ORDER BY con_inicio
 				LIMIT $offset, $limite";
-		if(empty($md) && empty($st)){
+		if(empty($md) && empty($st) && empty($di) && empty($df)){
 			$sql = $this->pdo->query($sql);
 		}
 
-		if(!empty($md) || !empty($st)){
+		if(!empty($md) || !empty($st) || !empty($di) || !empty($df)){
 			$sql = $this->pdo->prepare($sql);
 			if(!empty($md)) {
 				$sql->bindValue(":med_id", $md);
 			}
-			$sql->execute();
+			if(!empty($di)) {
+				$sql->bindValue(":d_inicio", $di);
+			}
+			if(!empty($df)) {
+				$sql->bindValue(":d_fim", $df);
+			}
+			//$sql->execute();
 		}
 
 		$sql->execute();
@@ -106,7 +126,7 @@ class Consultas extends Model {
 		return $array;
 	}
 
-	public function totalConsultas($md, $st) {
+	public function totalConsultas($md, $st, $di, $df) {
 
 		if(empty($_GET['md'])) { $md = ''; }
 			else { $md = $_GET['md']; }
@@ -114,12 +134,25 @@ class Consultas extends Model {
 		if(empty($_GET['st'])) { $st = ''; }
 			else { $st = $_GET['st']; }
 
+		if(empty($_GET['di'])) { $di = ''; }
+			else { $di = $_GET['di']; }
+
+		if(empty($_GET['df'])) { $df = ''; }
+			else { $df = $_GET['df']; }
+
 		// array vazio dá erro no SQL, então 1=1
 		$filtroString = array('1=1');
 		if(!empty($md)){
 			$filtroString[] = 'usuarios.id = :med_id';
 		}
-
+		if(!empty($di)){
+			$di = implode("-", array_reverse(explode("-", $_GET['di']))).' 00:00:00';
+			$filtroString[] = 'con_inicio >= :d_inicio';
+		}
+		if(!empty($df)){
+			$df = implode("-", array_reverse(explode("-", $_GET['df']))).' 23:59:59';
+			$filtroString[] = 'con_fim <= :d_fim';
+		}
 		switch ($st) {
 			case 'm':
 				$filtroString[] = 'consultas.con_status = 1';
@@ -143,14 +176,20 @@ class Consultas extends Model {
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
 				WHERE ".implode(' AND ', $filtroString)."";
 
-		if(empty($md) && empty($st)){
+		if(empty($md) && empty($st) && empty($di) && empty($df)){
 			$sql = $this->pdo->query($sql);
 		}
 
-		if(!empty($md) || !empty($st)){
+		if(!empty($md) || !empty($st) || !empty($di) || !empty($df)){
 			$sql = $this->pdo->prepare($sql);
 			if(!empty($md)) {
 				$sql->bindValue(":med_id", $md);
+			}
+			if(!empty($di)) {
+				$sql->bindValue(":d_inicio", $di);
+			}
+			if(!empty($df)) {
+				$sql->bindValue(":d_fim", $df);
 			}
 			$sql->execute();
 		}

@@ -13,12 +13,12 @@ class consultasController extends Controller {
 		// filtro
 			$md = '';
 			$st = '';
-			if(isset($_GET['md'])) {
-				$md = $_GET['md'];
-			}
-			if(isset($_GET['st'])) {
-				$st = $_GET['st'];
-			}
+			$di = '';
+			$df = '';
+			if(isset($_GET['md'])) { $md = $_GET['md']; }
+			if(isset($_GET['st'])) { $st = $_GET['st']; }
+			if(isset($_GET['di'])) { $di = $_GET['di']; }
+			if(isset($_GET['df'])) { $df = $_GET['df']; }
 
 	// paginação
 		$offset = 0;
@@ -26,8 +26,10 @@ class consultasController extends Controller {
 
 		$dados['md'] = $md;
 		$dados['st'] = $st;
+		$dados['di'] = $di;
+		$dados['df'] = $df;
 
-		$dados['quantidade'] = $consultas->totalConsultas($md, $st);
+		$dados['quantidade'] = $consultas->totalConsultas($md, $st, $di, $df);
 		$quantidade = $dados['quantidade'];
 
 		$dados['paginas'] = ceil($quantidade/$limite);
@@ -39,12 +41,11 @@ class consultasController extends Controller {
 		}
 		$offset = ($dados['pagina_atual'] * $limite) - $limite;
 
-		$dados['consultas'] = $consultas->listarConsultas($offset, $limite, $md, $st);
+		$dados['consultas'] = $consultas->listarConsultas($offset, $limite, $md, $st, $di, $df);
 
 		$dados['medicos'] = $medicos->listarMedicosAtivos($offset=0, $limite=10);
 
 		$dados['titulo_pagina'] = 'Consultas';
-
 
 		$this->loadTemplate('consulta-listar', $dados);
 	}

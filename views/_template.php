@@ -135,7 +135,7 @@
 	<?php endif; ?>
 
 	<?php if(strpos($_SERVER['REQUEST_URI'], 'agenda') || strpos($_SERVER['REQUEST_URI'], 'consultas') ): ?>
-	<script src="<?php //echo BASE_URL?>assets/js/valida-filtro.js?v=<?php //echo rand(1,99) ?>"></script>
+	<script src="<?php echo BASE_URL?>assets/js/valida-filtro.js?v=<?php echo rand(1,99) ?>"></script>
 	<?php endif; ?>
 
 </script>

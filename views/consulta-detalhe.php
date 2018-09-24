@@ -96,7 +96,8 @@
 			<p class="card-text text-center">
 				<?php if(!empty($detalhe['atestado_periodo'])): ?>
 					<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
-					<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-5"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
+					<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
+					<a href="<?php echo BASE_URL ?>atestados/deletar/<?php echo $id; ?>" class="btn btn-danger btn-sm ml-3" title="Apagar atestado"><i class="far fa-trash-alt mr-1"></i> Excluir</a>
 				<?php else: ?>
 					<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 				<?php endif; ?>
@@ -117,9 +118,12 @@
 			<p class="card-text text-center">
 				<?php if(!empty($detalhe['anotacao'])): ?>
 					<a href="<?php echo BASE_URL ?>anotacoes/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+
+					<a href="<?php echo BASE_URL ?>anotacoes/deletar/<?php echo $id; ?>" class="btn btn-danger btn-sm ml-3" title="Apagar anotação"><i class="far fa-trash-alt mr-1"></i> Excluir</a>
 				<?php else: ?>
 					<a href="<?php echo BASE_URL ?>anotacoes/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
 				<?php endif; ?>
+
 			</p>
 
 		</div>
@@ -134,7 +138,7 @@
 				<?php foreach ($receita as $item): ?>
 					<li class="list-group-item border-top-0 border-bottom-0">
 						<?php echo $item['nome_comercial']." ".$item['apresentacao']."<br>".$item['posologia']; ?>
-						<a href="<?php echo BASE_URL ?>medicamentos/deletar/<?php echo $id; ?>/<?php echo $item['id_presc']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome_comercial']." ".$item['apresentacao']." &ndash; ".$item['posologia']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_presc']." "; ?></a>
+						<a href="<?php echo BASE_URL ?>medicamentos/deletar/<?php echo $id; ?>/<?php echo $item['id_presc']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome_comercial']." ".$item['apresentacao']." &ndash; ".$item['posologia']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_presc']; ?></a>
 					</li>
 				<?php endforeach; ?>
 				</ul>
@@ -170,7 +174,7 @@
 							echo " CID-10:  ".$item['cid'];
 						}
 						?>
-						<a href="<?php echo BASE_URL ?>exames/deletar/<?php echo $id; ?>/<?php echo $item['id_req']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome']." &ndash; ".$item['observacao']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_req']." "; ?></a>
+						<a href="<?php echo BASE_URL ?>exames/deletar/<?php echo $id; ?>/<?php echo $item['id_req']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome']." &ndash; ".$item['observacao']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_req']; ?></a>
 					</li>
 				<?php endforeach; ?>
 				</ul>

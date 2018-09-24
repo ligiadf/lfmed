@@ -159,7 +159,7 @@ class examesController extends Controller {
 
 		$exames = $exames->deletarExame($id_req);
 
-		$msgOK = "Exame deletado com sucesso da requisição.";
+		$msgOK = "Exame excluído com sucesso da requisição.";
 		header('Location:'. BASE_URL.'consultas/detalhe/'.$id_con.'?msgOK='.urlencode($msgOK));
 	}
 
@@ -366,7 +366,7 @@ class examesController extends Controller {
 
 		$exames = $exames->deletarResultadoExame($id_req);
 
-		$msgOK = "Resultado de exame deletado com sucesso.";
+		$msgOK = "Resultado de exame excluído com sucesso.";
 		header('Location:'. BASE_URL.'exames/paciente/'.$pac_id.'?msgOK='.urlencode($msgOK));
 	}
 

@@ -147,7 +147,7 @@ class medicamentosController extends Controller {
 
 		$receita = $medicamentos->deletarReceita($id_presc);
 
-		$msgOK = "Medicamento deletado com sucesso da receita.";
+		$msgOK = "Medicamento excluído com sucesso da receita.";
 		header('Location:'. BASE_URL.'consultas/detalhe/'.$id_con.'?msgOK='.urlencode($msgOK));
 	}
 

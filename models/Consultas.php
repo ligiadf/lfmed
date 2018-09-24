@@ -290,6 +290,15 @@ class Consultas extends Model {
 		$sql->execute();
 	}
 
+	public function deletarAtestado($id) {
+		$sql = "UPDATE consultas
+				SET atestado_periodo = NULL, atestado_motivo = NULL, atestado_cid = NULL
+				WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
+		$sql->execute();
+	}
+
 	public function adicionarAnotacao($id, $anotacao) {
 		$sql = "UPDATE consultas
 				SET anotacao = :anotacao
@@ -297,6 +306,15 @@ class Consultas extends Model {
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":id", $id);
 		$sql->bindValue(":anotacao", $anotacao);
+		$sql->execute();
+	}
+
+	public function deletarAnotacao($id) {
+		$sql = "UPDATE consultas
+				SET anotacao = NULL
+				WHERE id = :id";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id", $id);
 		$sql->execute();
 	}
 

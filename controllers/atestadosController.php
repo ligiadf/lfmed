@@ -24,11 +24,11 @@ class atestadosController extends Controller {
 		$dtConsulta_fim = $dataConsultaFim[2].'/'.$dataConsultaFim[1].'/'.$dataConsultaFim[0]; // DD/MM/AAA
 
 		if(!empty($_POST['atestadoPeriodo']) && !empty($_POST['atestadoMotivo'])) {
-			$atestadoPeriodo = addslashes($_POST['atestadoPeriodo']);
-			$atestadoMotivo = addslashes($_POST['atestadoMotivo']);
+			$atestadoPeriodo = strip_tags(addslashes($_POST['atestadoPeriodo']));
+			$atestadoMotivo = strip_tags(addslashes($_POST['atestadoMotivo']));
 
-			if(!empty($atestadoCID)) {
-				$atestadoCID = addslashes($_POST['atestadoCID']);
+			if(!empty($_POST['atestadoCID'])) {
+				$atestadoCID = strip_tags(addslashes($_POST['atestadoCID']));
 			}
 
 			$consulta->adicionarAtestado($id, $atestadoPeriodo, $atestadoMotivo, $atestadoCID);
@@ -75,11 +75,11 @@ class atestadosController extends Controller {
 		$pacienteSelecionadoID = $detalhe['pac_id'];
 
 		if(!empty($_POST['atestadoPeriodo']) && !empty($_POST['atestadoMotivo'])) {
-			$atestadoPeriodo = addslashes($_POST['atestadoPeriodo']);
-			$atestadoMotivo = addslashes($_POST['atestadoMotivo']);
+			$atestadoPeriodo = strip_tags(addslashes($_POST['atestadoPeriodo']));
+			$atestadoMotivo = strip_tags(addslashes($_POST['atestadoMotivo']));
 
 			if(!empty($_POST['atestadoCID'])) {
-				$atestadoCID = addslashes($_POST['atestadoCID']);
+				$atestadoCID = strip_tags(addslashes($_POST['atestadoCID']));
 			}
 
 			$consulta->adicionarAtestado($id, $atestadoPeriodo, $atestadoMotivo, $atestadoCID);
@@ -212,6 +212,16 @@ class atestadosController extends Controller {
 
 	}
 
+	# URL: /atestados/deletar
+	public function deletar($id) {
+
+		$consulta = new Consultas();
+
+		$consulta = $consulta->deletarAtestado($id);
+
+		$msgOK = "Atestado excluído com sucesso.";
+		header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
+	}
 }
 
 ?>

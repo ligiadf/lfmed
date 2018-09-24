@@ -24,7 +24,7 @@ class anotacoesController extends Controller {
 		$dtConsulta_fim = $dataConsultaFim[2].'/'.$dataConsultaFim[1].'/'.$dataConsultaFim[0]; // DD/MM/AAA
 
 		if(!empty($_POST['anotacao'])) {
-			$anotacao = addslashes($_POST['anotacao']);
+			$anotacao = strip_tags(addslashes($_POST['anotacao']));
 
 			$consulta->adicionarAnotacao($id, $anotacao);
 			$msgOK = "Anotação adicionada com sucesso.";
@@ -102,7 +102,17 @@ class anotacoesController extends Controller {
 			);
 			$this->loadTemplate('404', $dados404);
 		}
+	}
 
+	# URL: /anotacoes/deletar/id
+	public function deletar($id) {
+
+		$consulta = new Consultas();
+
+		$consulta = $consulta->deletarAnotacao($id);
+
+		$msgOK = "Anotação excluída com sucesso.";
+		header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
 	}
 
 }

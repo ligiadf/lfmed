@@ -94,7 +94,10 @@ class agendaController extends Controller {
 		} else {
 			$data = $_GET['d'];
 		}
-
+		
+		$md = '';
+		$st = '';
+		
 		$mes_atual_extenso = substr($data, 5);
 
 		$ano_atual = substr($data, 0, 4);
@@ -140,7 +143,9 @@ class agendaController extends Controller {
 			'dias' => $dias,
 			'linhas' => $linhas,
 			'data_inicio' => $data_inicio,
-			'data_fim' => $data_fim
+			'data_fim' => $data_fim,
+			'md' => $md,
+			'st' => $st
 		);
 
 		$this->loadTemplate('agenda-mensal', $dados);

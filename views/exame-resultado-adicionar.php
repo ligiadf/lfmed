@@ -1,3 +1,10 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'exames'; ?>">Exames</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'exames/pacientes'; ?>">Buscar paciente</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'exames/paciente/'.$ficha['id']; ?>">Exames do paciente <?php echo $ficha['nome']; ?></a></li>
+	<li class="breadcrumb-item active">Adicionar resultado de exame</li>
+</ol>
+
 <div class="row justify-content-center">
 	<div class="col-md-10">
 

@@ -9,33 +9,10 @@ class Usuarios extends Model {
 	private $perfil;
 	private $status;
 	protected $pdo;
-/*
-	public function __construct($i='') {
-
-		global $pdo;
-		$this->pdo = $pdo;
-
-		if(!empty($i)) {
-			$sql = "SELECT * FROM usuarios WHERE id = ?";
-			$sql = $this->pdo->prepare($sql);
-			$sql->execute( array($i) );
-
-			if($sql->rowCount() > 0) {
-				$user = $sql->fetch();
-				$this->id     = $user['id'];
-				$this->email  = $user['email'];
-				$this->senha  = $user['senha'];
-				$this->nome   = $user['nome'];
-				$this->perfil = $user['perfil'];
-				$this->status = $user['status'];
-			}
-		}
-
-	}
-*/
 
 	public function totalUsuarios() {
-		$sql = "SELECT COUNT(*) as c FROM usuarios";
+		$sql = "SELECT COUNT(*) as c
+				FROM usuarios";
 		$sql = $this->pdo->query($sql);
 
 		if($sql->rowCount() > 0) {
@@ -67,7 +44,8 @@ class Usuarios extends Model {
 	}
 
 	public function adicionarUsuario($nome_usuario, $email, $senha, $perfil, $status, $especialidade='', $crm='') {
-		$sql = "INSERT INTO usuarios (nome, perfil, senha, email, status, especialidade, crm) VALUES (:nome, :perfil, :senha, :email, :status, :especialidade, :crm)";
+		$sql = "INSERT INTO usuarios (nome, perfil, senha, email, status, especialidade, crm)
+				VALUES (:nome, :perfil, :senha, :email, :status, :especialidade, :crm)";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":nome", $nome_usuario);
 		$sql->bindValue(":perfil", $perfil);
@@ -114,7 +92,9 @@ class Usuarios extends Model {
 	}
 
 	public function editarUsuario($id, $email, $senha, $nome_usuario, $perfil, $status, $especialidade='', $crm='') {
-		$sql = "UPDATE usuarios SET email = :email, senha = :senha, nome = :nome, perfil = :perfil, status = :status, especialidade = :especialidade, crm = :crm WHERE id = :id";
+		$sql = "UPDATE usuarios
+				SET email = :email, senha = :senha, nome = :nome, perfil = :perfil, status = :status, especialidade = :especialidade, crm = :crm
+				WHERE id = :id";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":id", $id);
 		$sql->bindValue(":email", $email);
@@ -133,7 +113,11 @@ class Usuarios extends Model {
 	}
 
 	public function fazerLogin($email, $senha) {
-		$sql = "SELECT id FROM usuarios
+
+		//$dado = array();
+
+		$sql = "SELECT usuarios.id, usuarios.nome, usuarios.perfil, perfis.permissoes FROM usuarios
+				LEFT JOIN perfis ON perfis.nome = usuarios.perfil
 				WHERE email = :email
 				AND senha = :senha
 				AND status = '1'";
@@ -144,12 +128,32 @@ class Usuarios extends Model {
 
 		if($sql->rowCount() > 0) {
 			$dado = $sql->fetch();
-			$_SESSION['uLogin'] = $dado['id'];
+			//$_SESSION['uLogin'] = $dado['id'];
+			$_SESSION['uLogin'] = $dado;
 			return true; // usuário existe
 		} 
 		else {
 			return false;
 		}
+	}
+
+	public function verificarPermissoes($perfil) {
+
+		$array = array();
+
+		$sql = "SELECT usuarios.perfil, permissoes FROM perfis
+				LEFT JOIN usuarios ON usuarios.perfil = perfis.nome
+				WHERE perfis.nome = :perfil";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":perfil", $perfil);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetch();
+		}
+
+		return $array;
+
 	}
 
 }

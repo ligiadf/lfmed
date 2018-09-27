@@ -1,8 +1,13 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item active">Listar consultas</li>
+</ol>
+
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
 		<header class="mt-4 mb-4">
-			<h1>Consultas <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a></small></h1>
+			<h1>Consultas <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a></small></h1>
 		</header>
 
 		<div class="row">
@@ -39,7 +44,7 @@
 						</div>
 						<div class="form-group col-12 col-lg-3">
 							<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-2 mt-0"><i class="fas fa-filter"></i> Filtrar</button>
-							<small class="d-inline-block mt-lg-4 pt-3"><a class="ml-4 text-secondary" href="<?php echo BASE_URL.'consultas' ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
+							<small class="d-inline-block mt-lg-4 pt-3"><a class="ml-4 text-secondary" href="<?php echo BASE_URL.'consultas/listar' ?>"><i class="fas fa-times mr-1"></i> Limpar</a></small>
 						</div>
 					</div>
 				</form>
@@ -117,7 +122,7 @@
 		<div class="row text-center mt-3">
 			<div class="col-12">
 			<?php for($p=1; $p<=$paginas; $p++): ?>
-				<a class="btn btn-secondary <?php if($pagina_atual == $p) { echo "active"; } ?>" role="button" href="<?php echo BASE_URL.'consultas?p='.$p; if(!empty($_GET['md'])) { echo "&md=".$_GET['md']; } if(!empty($_GET['st'])) { echo "&st=".$_GET['st']; } if(!empty($_GET['di'])) { echo "&di=".$_GET['di']; } if(!empty($_GET['df'])) { echo "&df=".$_GET['df']; } ?>"><?php echo $p; ?></a>
+				<a class="btn btn-secondary <?php if($pagina_atual == $p) { echo "active"; } ?>" role="button" href="<?php echo BASE_URL.'consultas/listar?p='.$p; if(!empty($_GET['md'])) { echo "&md=".$_GET['md']; } if(!empty($_GET['st'])) { echo "&st=".$_GET['st']; } if(!empty($_GET['di'])) { echo "&di=".$_GET['di']; } if(!empty($_GET['df'])) { echo "&df=".$_GET['df']; } ?>"><?php echo $p; ?></a>
 			<?php endfor; ?>
 			<p class="text-muted mt-2">Total: <?php echo $quantidade; ?></p>
 			</div>

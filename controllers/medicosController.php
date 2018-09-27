@@ -27,8 +27,27 @@ class medicosController extends Controller {
 
 		$dados['titulo_pagina'] = 'Médicos(as)';
 
-		$this->loadTemplate('medico-listar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'M01') !== false ) {
+			$this->loadTemplate('medico-listar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
+
 }
 
 ?>

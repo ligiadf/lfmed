@@ -7,7 +7,6 @@ class loginController extends Controller {
 
 		$login = new Usuarios();
 
-		//$dados = array();
 		$email = '';
 		$senha = '';
 		$msgError = '';
@@ -34,7 +33,7 @@ class loginController extends Controller {
 
 	# URL: /login/sair
 	public function sair() {
-		
+
 		unset($_SESSION['uLogin']);
 		$msgOK = 'Você saiu com sucesso do sistema.';
 		header('Location:'. BASE_URL.'login?msgOK='.urlencode($msgOK));

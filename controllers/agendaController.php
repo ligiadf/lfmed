@@ -7,6 +7,7 @@ class agendaController extends Controller {
 
 		$agenda = new Agenda();
 		$medicos = new Medicos();
+		$usuarios = new Usuarios();
 
 		// data atual: AAAA-MM-DD
 		if(empty($_GET['d'])) {
@@ -65,7 +66,7 @@ class agendaController extends Controller {
 			}
 
 		$dados = array(
-			'titulo_pagina' => 'Calendário semanal',
+			'titulo_pagina' => 'Agenda semanal',
 			'medicos' => $medicos->listarMedicosAtivos($offset=0, $limite=10),
 			'agenda' => $agenda->mostrarAgenda($data_inicio, $data_fim, $md, $st),
 			'data' => $data,
@@ -81,12 +82,31 @@ class agendaController extends Controller {
 			'st' => $st
 		);
 
-		$this->loadTemplate('agenda-semanal', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'A01') !== false ) {
+			$this->loadTemplate('agenda-semanal', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	public function mensal() {
 
 		$agenda = new Agenda();
+		$usuarios = new Usuarios();
 
 		// data atual: AAAA-MM
 		if(empty($_GET['d'])) {
@@ -135,6 +155,7 @@ class agendaController extends Controller {
 		$data_fim = date('Y-m-d', strtotime( (- $dia1 + ($linhas*7) - 1 ).' days', strtotime($data)));
 
 		$dados = array(
+			'titulo_pagina' => 'Agenda mensal',
 			'agenda' => $agenda->mostrarAgenda($data_inicio, $data_fim, $md, $st),
 			'data' => $data,
 			'mes_atual_extenso' => $mes_atual_extenso,
@@ -148,7 +169,25 @@ class agendaController extends Controller {
 			'st' => $st
 		);
 
-		$this->loadTemplate('agenda-mensal', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'A02') !== false ) {
+			$this->loadTemplate('agenda-mensal', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 }
 

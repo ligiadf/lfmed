@@ -8,6 +8,7 @@ class atestadosController extends Controller {
 		$consulta = new Consultas();
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 
@@ -52,9 +53,26 @@ class atestadosController extends Controller {
 			'con_hora_fim' => $horaConsultaFim
 		);
 
-		$this->loadTemplate('atestado-adicionar', $dados);
-	}
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
 
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			$this->loadTemplate('atestado-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
+	}
 
 	# URL: /atestados/editar/id
 	public function editar($id) {
@@ -62,6 +80,7 @@ class atestadosController extends Controller {
 		$consulta = new Consultas();
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 
@@ -104,15 +123,32 @@ class atestadosController extends Controller {
 			'atestadoCID' => $detalhe['atestado_cid']
 		);
 
-		if( !empty($detalhe) ) {
-			$this->loadTemplate('atestado-editar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			if( !empty($detalhe) ) {
+				$this->loadTemplate('atestado-editar', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Consulta não existe:',
+					'msglink404' => 'deseja marcar uma nova?',
+					'link404' => BASE_URL.'consultas/marcar'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
 		} else {
-			$dados404 = array (
-				'msg404' => 'Consulta não existe:',
-				'msglink404' => 'deseja marcar uma nova?',
-				'link404' => BASE_URL.'consultas/marcar'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}
@@ -121,6 +157,7 @@ class atestadosController extends Controller {
 	public function imprimir($id) {
 
 		$consultas = new Consultas();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consultas->detalheConsulta($id);
 
@@ -134,8 +171,21 @@ class atestadosController extends Controller {
 
 		$data_atual = date('d/m/Y');
 
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		// se não tem permissão
+		elseif ( strpos($_SESSION['uLogin']['permissoes'], 'C04') != true ) {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 		// id inválido
-		if( empty($detalhe) ) {
+		elseif( empty($detalhe) ) {
 			$dados404 = array (
 				'msg404' => 'Consulta não existe:',
 				'msglink404' => 'deseja marcar uma nova?',
@@ -216,11 +266,30 @@ class atestadosController extends Controller {
 	public function deletar($id) {
 
 		$consulta = new Consultas();
+		$usuarios = new Usuarios();
 
-		$consulta = $consulta->deletarAtestado($id);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
 
-		$msgOK = "Atestado excluído com sucesso.";
-		header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C01') !== false ) {
+			$consulta = $consulta->deletarAtestado($id);
+
+			$msgOK = "Atestado excluído com sucesso.";
+			header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 }
 

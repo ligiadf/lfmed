@@ -6,8 +6,15 @@ class pacientesController extends Controller {
 	public function index() {
 
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$dados = array();
+
+	// filtro
+		$pc = '';
+		if(isset($_GET['pc'])) {
+			$pc = $_GET['pc'];
+		}
 
 	// paginação
 		$offset = 0;
@@ -25,18 +32,42 @@ class pacientesController extends Controller {
 		}
 		$offset = ($dados['pagina_atual'] * $limite) - $limite;
 
-		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite);
+		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite, $pc);
+
+		if($pacientes->listarPacientes($offset, $limite, $pc) == false) {
+			$dados['msgSemResultado'] = 'Não há resultados. Deseja <a href="'.BASE_URL.'pacientes/cadastrar'.'">cadastrar um paciente</a>?';
+		} else {
+			$dados['msgSemResultado'] = '';
+		}
 
 		$dados['titulo_pagina'] = 'Pacientes';
 
-		$this->loadTemplate('paciente-listar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'P01') !== false ) {
+			$this->loadTemplate('paciente-listar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /pacientes/cadastrar
 	public function cadastrar() {
 
 		$pacientes = new Pacientes();
-		$verificacao = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$nome_paciente = '';
 		$data_nasc = '';
@@ -58,7 +89,7 @@ class pacientesController extends Controller {
 			// AAAA-MM-DD
 			$data_nasc = $data_nascimento[2].'-'.$data_nascimento[1].'-'.$data_nascimento[0];
 
-			if($verificacao->verificarPaciente($cpf)) {
+			if($pacientes->verificarPaciente($cpf)) {
 				$pacientes->cadastrarPaciente($nome_paciente, $data_nasc, $email, $telefone, $cpf, $plano_saude);
 				$msgCadastrarPacienteOK = "Paciente cadastrado com sucesso: ".$nome_paciente;
 				header('Location:'. BASE_URL.'pacientes/cadastrar?msgOK='.urlencode($msgCadastrarPacienteOK));
@@ -81,16 +112,33 @@ class pacientesController extends Controller {
 			'msgCadastrarPacienteNOTOK' => $msgCadastrarPacienteNOTOK
 		);
 
-		$this->loadTemplate('paciente-adicionar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'P02') !== false ) {
+			$this->loadTemplate('paciente-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 
 	}
 
-
-	# URL: /pacientes/ficha/[id]
+	# URL: /pacientes/ficha/id
 	public function ficha($id) {
 
 		$pacientes = new Pacientes();
 		$consultas = new Consultas();
+		$usuarios = new Usuarios();
 
 		$ficha = $pacientes->fichaPaciente($id);
 		$consulta = $consultas->listarConsultasPaciente($id);
@@ -117,23 +165,42 @@ class pacientesController extends Controller {
 			'plano_saude' => $ficha['plano_saude']
 		);
 
-		if( !empty($ficha) ) {
-			$this->loadTemplate('paciente-ficha', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'P03') !== false ) {
+
+			if( !empty($ficha) ) {
+				$this->loadTemplate('paciente-ficha', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Paciente não existe:',
+					'msglink404' => 'ver todos os pacientes',
+					'link404' => BASE_URL.'pacientes'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
 		} else {
-			$dados404 = array (
-				'msg404' => 'Paciente não existe:',
-				'msglink404' => 'ver todos os pacientes',
-				'link404' => BASE_URL.'pacientes'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}
 
-	# URL: /pacientes/editar/[id]
+	# URL: /pacientes/editar/id
 	public function editar($id) {
 
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		if( !empty($_POST['nomePaciente']) && !empty($_POST['dataNascimento']) && !empty($_POST['email']) && !empty($_POST['telefone']) && !empty($_POST['cpf']) && !empty($_POST['planoSaude']) ) {
 			$nome_paciente = addslashes($_POST['nomePaciente']);
@@ -162,15 +229,34 @@ class pacientesController extends Controller {
 			'data_nasc' => $dataNasc
 		);
 
-		if( !empty($info) ) {
-			$this->loadTemplate('paciente-editar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'P02') !== false ) {
+
+			if( !empty($info) ) {
+				$this->loadTemplate('paciente-editar', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Paciente não existe:',
+					'msglink404' => 'deseja cadastrar um novo?',
+					'link404' => BASE_URL.'pacientes/cadastrar'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
+
 		} else {
-			$dados404 = array (
-				'msg404' => 'Paciente não existe:',
-				'msglink404' => 'deseja cadastrar um novo?',
-				'link404' => BASE_URL.'pacientes/cadastrar'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}

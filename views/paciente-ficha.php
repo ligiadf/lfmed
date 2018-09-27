@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'pacientes'; ?>">Pacientes</a></li>
+	<li class="breadcrumb-item active">Ficha do paciente</li>
+</ol>
+
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
@@ -48,7 +53,7 @@
 	</header>
 
 	<p class="mt-2">
-		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$id; ?>"><i class="far fa-calendar-check mr-1"></i> Marcar consulta</a>
+		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$id; ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
 	</p>
 
 	<div class="row">

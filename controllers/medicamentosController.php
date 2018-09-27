@@ -6,6 +6,7 @@ class medicamentosController extends Controller {
 	public function index() {
 
 		$medicamentos = new Medicamentos();
+		$usuarios = new Usuarios();
 
 		$dados = array();
 
@@ -45,7 +46,24 @@ class medicamentosController extends Controller {
 
 		$dados['titulo_pagina'] = 'Medicamentos';
 
-		$this->loadTemplate('medicamento-listar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'M01') !== false ) {
+			$this->loadTemplate('medicamento-listar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 	}
 
 	# URL: /medicamentos/adicionar
@@ -55,6 +73,7 @@ class medicamentosController extends Controller {
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
 		$medicamentos = new Medicamentos();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 		$receita = $medicamentos->prescricoesMedicamentos($id);
@@ -71,11 +90,11 @@ class medicamentosController extends Controller {
 		$dataConsultaFim = explode('-', addslashes($diaMesConsultaFim));
 		$dtConsulta_fim = $dataConsultaFim[2].'/'.$dataConsultaFim[1].'/'.$dataConsultaFim[0]; // DD/MM/AAA
 
-		// filtro
-			$rem = '';
-			if(isset($_GET['rem'])) {
-				$rem = $_GET['rem'];
-			}
+	// filtro
+		$rem = '';
+		if(isset($_GET['rem'])) {
+			$rem = $_GET['rem'];
+		}
 
 	// paginação
 		$offset = 0;
@@ -137,18 +156,49 @@ class medicamentosController extends Controller {
 			'quantidade' => $quantidade
 		);
 
-		$this->loadTemplate('medicamento-adicionar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			$this->loadTemplate('medicamento-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 	}
 
 	# URL: /medicamentos/deletar/id
 	public function deletar($id_con,$id_presc) {
 
 		$medicamentos = new Medicamentos();
+		$usuarios = new Usuarios();
 
-		$receita = $medicamentos->deletarReceita($id_presc);
+		$perfil = $_SESSION['uLogin']['perfil'];
 
-		$msgOK = "Medicamento excluído com sucesso da receita.";
-		header('Location:'. BASE_URL.'consultas/detalhe/'.$id_con.'?msgOK='.urlencode($msgOK));
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			$receita = $medicamentos->deletarReceita($id_presc);
+
+			$msgOK = "Medicamento excluído com sucesso da receita.";
+			header('Location:'. BASE_URL.'consultas/detalhe/'.$id_con.'?msgOK='.urlencode($msgOK));
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /medicamentos/imprimir/id
@@ -156,6 +206,7 @@ class medicamentosController extends Controller {
 
 		$consultas = new Consultas();
 		$medicamentos = new Medicamentos();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consultas->detalheConsulta($id);
 		$receita = $medicamentos->prescricoesMedicamentos($id);
@@ -170,8 +221,21 @@ class medicamentosController extends Controller {
 
 		$data_atual = date('d/m/Y');
 
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		// se não tem permissão
+		elseif ( strpos($_SESSION['uLogin']['permissoes'], 'C04') != true ) {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 		// id inválido
-		if( empty($detalhe) ) {
+		elseif( empty($detalhe) ) {
 			$dados404 = array (
 				'msg404' => 'Consulta não existe:',
 				'msglink404' => 'deseja marcar uma nova?',

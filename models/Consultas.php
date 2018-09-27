@@ -318,6 +318,49 @@ class Consultas extends Model {
 		$sql->execute();
 	}
 
+	public function estatisticasConsultas($con_status) {
+
+		$array = array();
+
+		$sql = "SELECT EXTRACT(year from con_inicio) as ano, EXTRACT(month from con_inicio) as mes,
+				COUNT(*) as total
+				FROM consultas
+				WHERE con_status = :con_status
+				GROUP BY EXTRACT(year from con_inicio), EXTRACT(month from con_inicio)
+				ORDER BY ano, mes";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":con_status", $con_status);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
+	public function estatisticasConsultasMedico($id_med) {
+
+		$array = array();
+
+		$sql = "SELECT EXTRACT(year from con_inicio) as ano, EXTRACT(month from con_inicio) as mes, usuarios.nome as medico, con_status as situacao,
+				COUNT(*) as total
+				FROM consultas
+				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
+				WHERE id_med = :id_med
+				GROUP BY EXTRACT(year from con_inicio), EXTRACT(month from con_inicio), con_status
+				ORDER BY ano, mes, situacao";
+		$sql = $this->pdo->prepare($sql);
+		$sql->bindValue(":id_med", $id_med);
+		$sql->execute();
+
+		if($sql->rowCount() > 0) {
+			$array = $sql->fetchAll();
+		}
+
+		return $array;
+	}
+
 }
 
 ?>

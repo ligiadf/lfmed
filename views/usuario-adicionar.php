@@ -38,7 +38,7 @@
 		<div class="form-group">
 			<label for="perfil"><i class="fas fa-user-cog mr-1"></i> Perfil:</label><br>
 			<div class="form-check form-check-inline">
-				<input class="form-check-input" type="radio" name="perfil" id="perfil1" value="MED">
+				<input class="form-check-input" type="radio" name="perfil" id="perfil1" value="MED" <?php if(isset($_GET['pf']) && $_GET['pf'] == 'md') { echo 'checked'; } ?>>
 				<label class="form-check-label" for="perfil1">Médico</label>
 			</div>
 			<div class="form-check form-check-inline">

@@ -5,20 +5,47 @@ class consultasController extends Controller {
 	# URL: /consultas
 	public function index() {
 
+		$usuarios = new Usuarios();
+
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C01') !== false ) {
+			$this->loadTemplate('consulta');
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
+	}
+
+	# URL: /consultas/listar
+	public function listar() {
+
 		$consultas = new Consultas();
 		$medicos = new Medicos();
+		$usuarios = new Usuarios();
 
 		$dados = array();
 
-		// filtro
-			$md = '';
-			$st = '';
-			$di = '';
-			$df = '';
-			if(isset($_GET['md'])) { $md = $_GET['md']; }
-			if(isset($_GET['st'])) { $st = $_GET['st']; }
-			if(isset($_GET['di'])) { $di = $_GET['di']; }
-			if(isset($_GET['df'])) { $df = $_GET['df']; }
+	// filtro
+		$md = '';
+		$st = '';
+		$di = '';
+		$df = '';
+		if(isset($_GET['md'])) { $md = $_GET['md']; }
+		if(isset($_GET['st'])) { $st = $_GET['st']; }
+		if(isset($_GET['di'])) { $di = $_GET['di']; }
+		if(isset($_GET['df'])) { $df = $_GET['df']; }
 
 	// paginação
 		$offset = 0;
@@ -47,7 +74,25 @@ class consultasController extends Controller {
 
 		$dados['titulo_pagina'] = 'Consultas';
 
-		$this->loadTemplate('consulta-listar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C01') !== false ) {
+			$this->loadTemplate('consulta-listar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /consultas/marcar
@@ -57,19 +102,20 @@ class consultasController extends Controller {
 		$verificacao = new Consultas();
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$offset = 0;
 		$limite = 100;
 
-		// filtro
-			$md = '';
-			$pc = '';
-			if(isset($_GET['md'])) {
-				$md = $_GET['md'];
-			}
-			if(isset($_GET['pc'])) {
-				$pc = $_GET['pc'];
-			}
+	// filtro
+		$md = '';
+		$pc = '';
+		if(isset($_GET['md'])) {
+			$md = $_GET['md'];
+		}
+		if(isset($_GET['pc'])) {
+			$pc = $_GET['pc'];
+		}
 
 		$dtConsulta_fim = '';
 		$dtConsulta_inicio = '';
@@ -105,7 +151,7 @@ class consultasController extends Controller {
 		$dados = array(
 			'titulo_pagina' => 'Marcar consulta',
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
-			'pacientes' => $pacientes->listarPacientes($offset, $limite),
+			'pacientes' => $pacientes->listarPacientes($offset, $limite, $pc),
 			'id_medico' => $id_medico,
 			'paciente' => $paciente,
 			'statusConsulta' => $statusConsulta,
@@ -117,7 +163,24 @@ class consultasController extends Controller {
 			'pc' => $pc
 		);
 
-		$this->loadTemplate('consulta-marcar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ) {
+			$this->loadTemplate('consulta-marcar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /consultas/detalhe/[id]
@@ -126,6 +189,7 @@ class consultasController extends Controller {
 		$consultas = new Consultas();
 		$medicamentos = new Medicamentos();
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consultas->detalheConsulta($id);
 		$receita = $medicamentos->prescricoesMedicamentos($id);
@@ -156,15 +220,34 @@ class consultasController extends Controller {
 			'con_hora_fim' => $horaConsultaFim
 		);
 
-		if( !empty($detalhe) ) {
-			$this->loadTemplate('consulta-detalhe', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C03') !== false ) {
+
+			if( !empty($detalhe) ) {
+				$this->loadTemplate('consulta-detalhe', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Consulta não existe:',
+					'msglink404' => 'ver todas as consultas.',
+					'link404' => BASE_URL.'consultas'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
+
 		} else {
-			$dados404 = array (
-				'msg404' => 'Consulta não existe:',
-				'msglink404' => 'ver todas as consultas.',
-				'link404' => BASE_URL.'consultas'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}
@@ -175,12 +258,23 @@ class consultasController extends Controller {
 		$consulta = new Consultas();
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 
 		$offset = 0;
 		$limite = 100;
 
+	// filtro
+		$md = '';
+		$pc = '';
+		if(isset($_GET['md'])) {
+			$md = $_GET['md'];
+		}
+		if(isset($_GET['pc'])) {
+			$pc = $_GET['pc'];
+		}
+		
 		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
 		$horaConsulta = substr($detalhe['con_inicio'], 11, 5); // HH:ii
 
@@ -242,17 +336,6 @@ class consultasController extends Controller {
 				}
 
 			}
-/*
-
-			if($consulta->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
-				$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
-				$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
-				header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
-			} else {
-				$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
-				header('Location:'. BASE_URL.'consultas/marcar?msgError='.urlencode($msgMarcarConsultaNOTOK));
-			}
-*/
 
 		}
 
@@ -260,7 +343,7 @@ class consultasController extends Controller {
 			'titulo_pagina' => 'Editar consulta n. '.$id,
 			'detalhe' => $detalhe,
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
-			'pacientes' => $pacientes->listarPacientes($offset, $limite),
+			'pacientes' => $pacientes->listarPacientes($offset, $limite, $pc),
 			'med_id' => $detalhe['med_id'],
 			'med_nome' => $detalhe['med_nome'],
 			'especialidade' => $detalhe['especialidade'],
@@ -276,15 +359,34 @@ class consultasController extends Controller {
 			'pacienteSelecionadoID' => $pacienteSelecionadoID
 		);
 
-		if( !empty($detalhe) ) {
-			$this->loadTemplate('consulta-editar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ) {
+
+			if( !empty($detalhe) ) {
+				$this->loadTemplate('consulta-editar', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Consulta não existe:',
+					'msglink404' => 'ver todas as consultas.',
+					'link404' => BASE_URL.'consultas'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
+
 		} else {
-			$dados404 = array (
-				'msg404' => 'Consulta não existe:',
-				'msglink404' => 'deseja marcar uma nova?',
-				'link404' => BASE_URL.'consultas/marcar'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}
@@ -293,6 +395,7 @@ class consultasController extends Controller {
 	public function comprovante($id) {
 
 		$consultas = new Consultas();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consultas->detalheConsulta($id);
 
@@ -306,8 +409,25 @@ class consultasController extends Controller {
 
 		$data_atual = date('d/m/Y');
 
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		// se não tem permissão
+		elseif ( strpos($_SESSION['uLogin']['permissoes'], 'C03') != true ) {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 		// id inválido
-		if( empty($detalhe) ) {
+		elseif( empty($detalhe) && strpos($_SESSION['uLogin']['permissoes'], 'C03') !== false ) {
 			$dados404 = array (
 				'msg404' => 'Consulta não existe:',
 				'msglink404' => 'deseja marcar uma nova?',
@@ -315,17 +435,16 @@ class consultasController extends Controller {
 			);
 			$this->loadTemplate('404', $dados404);
 		}
+			// id de consulta que não foi realizada
+			elseif( $detalhe['con_status'] != 2 ) {
+				$dados404 = array (
+					'id' => $id,
+					'msg404' => 'Não é possível emitir comprovante para a consulta, pois ela não foi realizada.'
+				);
+				$this->loadTemplate('404', $dados404);
 
-		// id de consulta que não foi realizada
-		elseif( $detalhe['con_status'] != 2 ) {
-			$dados404 = array (
-				'id' => $id,
-				'msg404' => 'Não é possível emitir comprovante para a consulta, pois ela não foi realizada.'
-			);
-			$this->loadTemplate('404', $dados404);
-
-		// id de consulta realizada
-		} else {
+			// id de consulta realizada
+			} else {
 			ob_start();
 			require ("assets/fpdf/fpdf.php");
 			require ("assets/tfpdf/tfpdf.php");
@@ -371,6 +490,7 @@ class consultasController extends Controller {
 
 		$consultas = new Consultas();
 		$medicos = new Medicos();
+		$usuarios = new Usuarios();
 
 		$offset = 0;
 		$limite = 100;
@@ -423,7 +543,74 @@ class consultasController extends Controller {
 			'medicoSelecionadoID' => $medicoSelecionadoID
 		);
 
-		$this->loadTemplate('consulta-indisponibilidade', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ) {
+			$this->loadTemplate('consulta-indisponibilidade', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
+	}
+
+	public function estatisticas() {
+
+		$consultas = new Consultas();
+		$usuarios = new Usuarios();
+
+		$stats0 = $consultas->estatisticasConsultas(0);
+		$stats1 = $consultas->estatisticasConsultas(1);
+		$stats2 = $consultas->estatisticasConsultas(2);
+		$stats3 = $consultas->estatisticasConsultas(3);
+		$stats4 = $consultas->estatisticasConsultas(4);
+
+		$statsMed4 = $consultas->estatisticasConsultasMedico(4);
+		$statsMed5 = $consultas->estatisticasConsultasMedico(5);
+		$statsMed9 = $consultas->estatisticasConsultasMedico(9);
+		$statsMed10 = $consultas->estatisticasConsultasMedico(10);
+
+		$dados = array(
+			'titulo_pagina' => 'Estatísticas de atendimento',
+			'stats0' => $stats0,
+			'stats1' => $stats1,
+			'stats2' => $stats2,
+			'stats3' => $stats3,
+			'stats4' => $stats4,
+			'statsMed4' => $statsMed4,
+			'statsMed5' => $statsMed5,
+			'statsMed9' => $statsMed9,
+			'statsMed10' => $statsMed10
+		);
+
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C05') !== false ) {
+			$this->loadTemplate('estatistica', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 
 	}
 

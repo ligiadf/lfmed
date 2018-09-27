@@ -5,15 +5,42 @@ class examesController extends Controller {
 	# URL: /exames
 	public function index() {
 
+		$usuarios = new Usuarios();
+
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'E01') !== false ) {
+			$this->loadTemplate('exame');
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
+	}
+
+	# URL: /exames/listar
+	public function listar() {
+
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
 		$dados = array();
 
-		// filtro
-			$ex = '';
-			if(isset($_GET['ex'])) {
-				$ex = $_GET['ex'];
-			}
+	// filtro
+		$ex = '';
+		if(isset($_GET['ex'])) {
+			$ex = $_GET['ex'];
+		}
 
 	// paginação
 		$offset = 0;
@@ -45,7 +72,24 @@ class examesController extends Controller {
 
 		$dados['titulo_pagina'] = 'Exames';
 
-		$this->loadTemplate('exame-listar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'E01') !== false ) {
+			$this->loadTemplate('exame-listar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 	}
 
 	# URL: /exames/adicionar
@@ -55,6 +99,7 @@ class examesController extends Controller {
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 		$pedido = $exames->requisicoesExames($id);
@@ -71,11 +116,11 @@ class examesController extends Controller {
 		$dataConsultaFim = explode('-', addslashes($diaMesConsultaFim));
 		$dtConsulta_fim = $dataConsultaFim[2].'/'.$dataConsultaFim[1].'/'.$dataConsultaFim[0]; // DD/MM/AAA
 
-		// filtro
-			$ex = '';
-			if(isset($_GET['ex'])) {
-				$ex = $_GET['ex'];
-			}
+	// filtro
+		$ex = '';
+		if(isset($_GET['ex'])) {
+			$ex = $_GET['ex'];
+		}
 
 	// paginação
 		$offset = 0;
@@ -109,14 +154,10 @@ class examesController extends Controller {
 
 			if(!empty($_POST['observacao'])) {
 				$observacao = addslashes($_POST['observacao']);
-			//} else {
-			//	$observacao = '';
 			}
 
 			if(!empty($_POST['cid'])) {
 				$cid = addslashes($_POST['cid']);
-			//} else {
-			//	$cid = '';
 			}
 
 			$exames->adicionarExame($id, $id_pac, $id_exa, $observacao, $cid);
@@ -149,18 +190,54 @@ class examesController extends Controller {
 			'quantidade' => $quantidade
 		);
 
-		$this->loadTemplate('exame-adicionar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			$this->loadTemplate('exame-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 	}
 
 	# URL: /exames/deletar/id_consulta/id_requisicao
 	public function deletar($id_con,$id_req) {
 
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
-		$exames = $exames->deletarExame($id_req);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
 
-		$msgOK = "Exame excluído com sucesso da requisição.";
-		header('Location:'. BASE_URL.'consultas/detalhe/'.$id_con.'?msgOK='.urlencode($msgOK));
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C01') !== false ) {
+			$exames = $exames->deletarExame($id_req);
+
+			$msgOK = "Exame excluído com sucesso da requisição.";
+			header('Location:'. BASE_URL.'consultas/detalhe/'.$id_con.'?msgOK='.urlencode($msgOK));
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /exames/imprimir/id
@@ -168,6 +245,7 @@ class examesController extends Controller {
 
 		$consultas = new Consultas();
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consultas->detalheConsulta($id);
 		$exames = $exames->requisicoesExames($id);
@@ -182,8 +260,21 @@ class examesController extends Controller {
 
 		$data_atual = date('d/m/Y');
 
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		// se não tem permissão
+		elseif ( strpos($_SESSION['uLogin']['permissoes'], 'C04') != true ) {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 		// id inválido
-		if( empty($detalhe) ) {
+		elseif( empty($detalhe) ) {
 			$dados404 = array (
 				'msg404' => 'Consulta não existe:',
 				'msglink404' => 'deseja marcar uma nova?',
@@ -269,11 +360,74 @@ class examesController extends Controller {
 		}
 	}
 
+	# URL: /exames/pacientes
+	public function pacientes() {
+
+		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
+
+		$dados = array();
+
+	// filtro
+		$pc = '';
+		if(isset($_GET['pc'])) {
+			$pc = $_GET['pc'];
+		}
+
+	// paginação
+		$offset = 0;
+		$limite = 10;
+
+		$dados['quantidade'] = $pacientes->totalPacientes();
+		$quantidade = $dados['quantidade'];
+
+		$dados['paginas'] = ceil($quantidade/$limite);
+
+		$dados['pagina_atual'] = 1;
+		
+		if(!empty($_GET['p'])) {
+			$dados['pagina_atual'] = intval($_GET['p']);
+		}
+		$offset = ($dados['pagina_atual'] * $limite) - $limite;
+
+		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite, $pc);
+
+		if($pacientes->listarPacientes($offset, $limite, $pc) == false) {
+			$dados['msgSemResultado'] = 'Não há resultados. Deseja <a href="'.BASE_URL.'pacientes/cadastrar'.'">cadastrar um paciente</a>?';
+		} else {
+			$dados['msgSemResultado'] = '';
+		}
+
+		$dados['titulo_pagina'] = 'Pacientes';
+
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'E02') !== false ) {
+			$this->loadTemplate('exame-buscar-pacientes', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
+	}
+
+
 	# URL: /exames/paciente/id
 	public function paciente($pac_id) {
 
 		$pacientes = new Pacientes();
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
 		$ficha = $pacientes->fichaPaciente($pac_id);
 		$pedido = $exames->listarExamesPaciente($pac_id);
@@ -285,7 +439,29 @@ class examesController extends Controller {
 
 		$dados['titulo_pagina'] = 'Exames do paciente '.$ficha['nome'];
 
-		$this->loadTemplate('exame-paciente', $dados);
+		if(!$pedido) {
+			$dados['msgSemResultado'] = 'Não há requisição de exame para este paciente';
+		}
+
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'E02') !== false ) {
+			$this->loadTemplate('exame-paciente', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /exames/resultado_adicionar/id_paciente/id_requisicao
@@ -293,6 +469,7 @@ class examesController extends Controller {
 
 		$pacientes = new Pacientes();
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
 		$ficha = $pacientes->fichaPaciente($pac_id);
 
@@ -355,7 +532,24 @@ class examesController extends Controller {
 
 		$dados['titulo_pagina'] = 'Enviar resultado de exames do paciente '.$ficha['nome'];
 
-		$this->loadTemplate('exame-resultado-adicionar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'E03') !== false ) {
+			$this->loadTemplate('exame-resultado-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 
 	}
 
@@ -363,11 +557,30 @@ class examesController extends Controller {
 	public function resultado_deletar($pac_id,$id_req) {
 
 		$exames = new Exames();
+		$usuarios = new Usuarios();
 
-		$exames = $exames->deletarResultadoExame($id_req);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
 
-		$msgOK = "Resultado de exame excluído com sucesso.";
-		header('Location:'. BASE_URL.'exames/paciente/'.$pac_id.'?msgOK='.urlencode($msgOK));
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'E03') !== false ) {
+			$exames = $exames->deletarResultadoExame($id_req);
+
+			$msgOK = "Resultado de exame excluído com sucesso.";
+			header('Location:'. BASE_URL.'exames/paciente/'.$pac_id.'?msgOK='.urlencode($msgOK));
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 }

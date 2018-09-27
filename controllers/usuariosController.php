@@ -26,7 +26,25 @@ class usuariosController extends Controller {
 
 		$dados['titulo_pagina'] = 'Usuários';
 
-		$this->loadTemplate('usuario-listar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'U01') !== false ) {
+			$this->loadTemplate('usuario-listar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /usuarios/adicionar
@@ -79,7 +97,19 @@ class usuariosController extends Controller {
 			'msgAdicionarUsuarioNOTOK' => $msgAdicionarUsuarioNOTOK
 		);
 
-		$this->loadTemplate('usuario-adicionar', $dados);
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'U02') !== false ) {
+			$this->loadTemplate('usuario-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 
 	}
 
@@ -117,15 +147,27 @@ class usuariosController extends Controller {
 			'crm' => $ficha['crm']
 		);
 
-		if( !empty($ficha) ) {
-			$this->loadTemplate('usuario-ficha', $dados);
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'U03') !== false ) {
+			if( !empty($ficha) ) {
+				$this->loadTemplate('usuario-ficha', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Usuário não existe:',
+					'msglink404' => 'ver todos os usuários.',
+					'link404' => BASE_URL.'usuarios'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
 		} else {
-			$dados404 = array (
-				'msg404' => 'Usuário não existe:',
-				'msglink404' => 'ver todos os usuários.',
-				'link404' => BASE_URL.'usuarios'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}
@@ -157,15 +199,27 @@ class usuariosController extends Controller {
 			'info' => $info
 		);
 
-		if( !empty($info) ) {
-			$this->loadTemplate('usuario-editar', $dados);
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'U02') !== false ) {
+			if( !empty($ficha) ) {
+				$this->loadTemplate('usuario-ficha', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Usuário não existe:',
+					'msglink404' => 'ver todos os usuários.',
+					'link404' => BASE_URL.'usuarios'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
 		} else {
-			$dados404 = array (
-				'msg404' => 'Usuário não existe:',
-				'msglink404' => 'deseja adicionar um novo?',
-				'link404' => BASE_URL.'usuarios/adicionar'
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
 			);
-			$this->loadTemplate('404', $dados404);
+			$this->loadTemplate('403', $dados403);
 		}
 
 	}

@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'exames'; ?>">Exames</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'exames/pacientes'; ?>">Buscar paciente</a></li>
+	<li class="breadcrumb-item active">Exames do paciente</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
@@ -15,14 +20,27 @@
 
 		<header class="mt-4 mb-4">
 			<h1>
-				Exames do paciente
+				Exames de <?php echo $ficha['nome']; ?>
 				<small style="font-size: 40%;" class="badge badge-pill badge-light"><?php echo $ficha['id']; ?></small>
 			</h1>
 		</header>
 
-<h4 class="mt-4">
-	<i class="fas fa-user mr-1"></i> <a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $ficha['id']; ?>" title="Ver ficha do paciente"><?php echo $ficha['nome']; ?></a>
-</h4>
+<div class="mt-4">
+	<p><span class="mr-2"><i class="fas fa-phone mr-1"></i> Telefone: <?php echo $ficha['telefone']; ?></span>
+	<span><i class="fas fa-id-card mr-1"></i> CPF <?php echo $ficha['cpf']; ?></p>
+	
+	<p><i class="fas fa-briefcase-medical mr-1"></i> Plano de saúde: <?php echo $ficha['plano_saude']; ?></p>
+</div>
+
+
+
+		<?php if(!$pedido):
+				if( $msgSemResultado != '' ): ?>
+					<div class="alert alert-warning col-12 col-md-6 mt-4">
+						<?php echo $msgSemResultado; ?>
+					</div>
+		<?php endif; endif; ?>
+
 
 	<?php if($pedido): ?>
 		<div class="list-group list-group-flush mt-4">

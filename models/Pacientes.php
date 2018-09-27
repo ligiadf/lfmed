@@ -10,28 +10,67 @@ class Pacientes extends Model {
 	private $cpf;
 	private $plano_saude;
 
-	public function listarPacientes($offset, $limite) {
+	public function listarPacientes($offset, $limite, $pc) {
 
 		$array = array();
 
+		if(empty($_GET['pc'])) { $pc = ''; }
+			else { $pc = $_GET['pc']; }
+
+		// array vazio dá erro no SQL, então 1=1
+		$filtroString = array('1=1');
+
+		if(!empty($pc)){
+			$filtroString[] = 'nome LIKE :pc OR cpf LIKE :pc';
+		}
+
 		$sql = "SELECT *
 				FROM pacientes
+				WHERE ".implode(' AND ', $filtroString)."
 				ORDER BY nome
 				LIMIT $offset, $limite";
-		$sql = $this->pdo->query($sql);
+		if(empty($pc)){
+			$sql = $this->pdo->query($sql);
+		}
+
+		if(!empty($pc)) {
+			$sql = $this->pdo->prepare($sql);
+			$sql->bindValue(":pc", '%'.$pc.'%');
+			$sql->execute();
+		}
 
 		if($sql->rowCount() > 0) {
 			$array = $sql->fetchAll();
 		}
-		//else echo "Não há pacientes";
 
 		return $array;
 
 	}
 
 	public function totalPacientes() {
-		$sql = "SELECT COUNT(*) as c FROM pacientes";
-		$sql = $this->pdo->query($sql);
+
+		if(empty($_GET['pc'])) { $pc = ''; }
+			else { $pc = $_GET['pc']; }
+
+		// array vazio dá erro no SQL, então 1=1
+		$filtroString = array('1=1');
+
+		if(!empty($pc)){
+			$filtroString[] = 'nome LIKE :pc OR cpf LIKE :pc';
+		}
+
+		$sql = "SELECT COUNT(*) as c
+				FROM pacientes
+				WHERE ".implode(' AND ', $filtroString)."";
+		if(empty($pc)){
+			$sql = $this->pdo->query($sql);
+		}
+
+		if(!empty($pc)) {
+			$sql = $this->pdo->prepare($sql);
+			$sql->bindValue(":pc", '%'.$pc.'%');
+			$sql->execute();
+		}
 
 		if($sql->rowCount() > 0) {
 			$sql = $sql->fetch();

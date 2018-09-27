@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item active">Editar</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-10">
 	<header class="mt-4 mb-4">

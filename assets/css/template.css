@@ -3,12 +3,14 @@ label {
 }
 
 a {
+	color: #008080;
+}
+a:hover {
 	color: #D56100;
 }
 
 /* Ajustes sb-admin
 -------------------------------------------------- */
-
 
 .navbar-nav .nav-item.active .nav-link {
 	background-color: #008080;

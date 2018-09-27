@@ -8,6 +8,7 @@ class anotacoesController extends Controller {
 		$consulta = new Consultas();
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 
@@ -47,7 +48,24 @@ class anotacoesController extends Controller {
 			'con_hora_fim' => $horaConsultaFim
 		);
 
-		$this->loadTemplate('anotacao-adicionar', $dados);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			$this->loadTemplate('anotacao-adicionar', $dados);
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
 	}
 
 
@@ -57,6 +75,7 @@ class anotacoesController extends Controller {
 		$consulta = new Consultas();
 		$medicos = new Medicos();
 		$pacientes = new Pacientes();
+		$usuarios = new Usuarios();
 
 		$detalhe = $consulta->detalheConsulta($id);
 
@@ -92,27 +111,66 @@ class anotacoesController extends Controller {
 			'anotacao' => $detalhe['anotacao']
 		);
 
-		if( !empty($detalhe) ) {
-			$this->loadTemplate('anotacao-editar', $dados);
-		} else {
-			$dados404 = array (
-				'msg404' => 'Consulta não existe:',
-				'msglink404' => 'deseja marcar uma nova?',
-				'link404' => BASE_URL.'consultas/marcar'
-			);
-			$this->loadTemplate('404', $dados404);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
 		}
+
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+			if( !empty($detalhe) ) {
+				$this->loadTemplate('anotacao-editar', $dados);
+			} else {
+				$dados404 = array (
+					'msg404' => 'Consulta não existe:',
+					'msglink404' => 'deseja marcar uma nova?',
+					'link404' => BASE_URL.'consultas/marcar'
+				);
+				$this->loadTemplate('404', $dados404);
+			}
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 	# URL: /anotacoes/deletar/id
 	public function deletar($id) {
 
 		$consulta = new Consultas();
+		$usuarios = new Usuarios();
 
-		$consulta = $consulta->deletarAnotacao($id);
+		// se não está logado
+		if( !isset($_SESSION['uLogin']) && empty($_SESSION['uLogin']) ) {
+			header('Location:'. BASE_URL.'login');
+		}
 
-		$msgOK = "Anotação excluída com sucesso.";
-		header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
+		$perfil = $_SESSION['uLogin']['perfil'];
+
+		$usuarios->verificarPermissoes($perfil);
+
+		// se tem permissão
+		if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ) {
+
+			$consulta = $consulta->deletarAnotacao($id);
+
+			$msgOK = "Anotação excluída com sucesso.";
+			header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
+
+		} else {
+			$dados403 = array (
+				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',
+			);
+			$this->loadTemplate('403', $dados403);
+		}
+
 	}
 
 }

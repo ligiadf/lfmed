@@ -1,3 +1,8 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item active">Detalhes da consulta</li>
+</ol>
+
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
@@ -75,122 +80,127 @@
 <?php if($detalhe['con_status'] == '2'): ?>
 	<p><a class="btn btn-info" href="<?php echo BASE_URL ?>consultas/comprovante/<?php echo $id; ?>" target="_blank"><i class="fas fa-file-contract mr-1"></i> Comprovante</a></p>
 
-<div class="card-deck">
-	<div class="card border-light mt-3">
-		<div class="card-header"><i class="fas fa-file-signature mr-1"></i> Atestado</div>
-		<div class="card-body">
-			<p class="card-text">
-				<?php
-					if(!empty($detalhe['atestado_periodo'])){
-						echo "Atestado ".$detalhe['atestado_periodo']." por ".$detalhe['atestado_motivo'];
-						if(!empty($detalhe['atestado_cid'])) {
-							echo " (".$detalhe['atestado_cid'].")";
+<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C04') !== false ): ?>
+
+	<h3>Histórico</h3>
+
+	<div class="card-deck">
+		<div class="card border-light mt-3">
+			<div class="card-header"><i class="fas fa-file-signature mr-1"></i> Atestado</div>
+			<div class="card-body">
+				<p class="card-text">
+					<?php
+						if(!empty($detalhe['atestado_periodo'])){
+							echo "Atestado ".$detalhe['atestado_periodo']." por ".$detalhe['atestado_motivo'];
+							if(!empty($detalhe['atestado_cid'])) {
+								echo " (".$detalhe['atestado_cid'].")";
+							}
+							echo ".";
+						} else {
+							echo "Não há atestado vinculado a esta consulta.";
 						}
-						echo ".";
-					} else {
-						echo "Não há atestado vinculado a esta consulta.";
-					}
-				?>
-			</p>
+					?>
+				</p>
 
-			<p class="card-text text-center">
-				<?php if(!empty($detalhe['atestado_periodo'])): ?>
-					<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
-					<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
-					<a href="<?php echo BASE_URL ?>atestados/deletar/<?php echo $id; ?>" class="btn btn-danger btn-sm ml-3" title="Apagar atestado"><i class="far fa-trash-alt mr-1"></i> Excluir</a>
-				<?php else: ?>
-					<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
-				<?php endif; ?>
-			</p>
+				<p class="card-text text-center">
+					<?php if(!empty($detalhe['atestado_periodo'])): ?>
+						<a href="<?php echo BASE_URL ?>atestados/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+						<a href="<?php echo BASE_URL ?>atestados/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3"><i class="fas fa-file-pdf mr-1"></i></i> Imprimir</a>
+						<a href="<?php echo BASE_URL ?>atestados/deletar/<?php echo $id; ?>" class="btn btn-danger btn-sm ml-3" title="Apagar atestado"><i class="far fa-trash-alt mr-1"></i> Excluir</a>
+					<?php else: ?>
+						<a href="<?php echo BASE_URL ?>atestados/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+					<?php endif; ?>
+				</p>
 
+			</div>
+		</div>
+
+		<div class="card border-light mt-3">
+			<div class="card-header"><i class="fas fa-file-medical mr-1"></i> Anotações</div>
+			<div class="card-body">
+				<p class="card-text">
+					<?php
+						if(!empty($detalhe['anotacao'])){ echo $detalhe['anotacao']; }
+						else { echo "Não há anotação vinculada a esta consulta."; }
+					?>
+				</p>
+				<p class="card-text text-center">
+					<?php if(!empty($detalhe['anotacao'])): ?>
+						<a href="<?php echo BASE_URL ?>anotacoes/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
+
+						<a href="<?php echo BASE_URL ?>anotacoes/deletar/<?php echo $id; ?>" class="btn btn-danger btn-sm ml-3" title="Apagar anotação"><i class="far fa-trash-alt mr-1"></i> Excluir</a>
+					<?php else: ?>
+						<a href="<?php echo BASE_URL ?>anotacoes/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
+					<?php endif; ?>
+
+				</p>
+
+			</div>
 		</div>
 	</div>
+	<div class="card-deck">
+		<div class="card border-light mt-3">
+			<div class="card-header"><i class="fas fa-pills mr-1"></i> Prescrição de medicamentos</div>
+			<div class="card-body">
+				<p class="card-text">
+					<ul class="list-group list-group-flush">
+					<?php foreach ($receita as $item): ?>
+						<li class="list-group-item border-top-0 border-bottom-0">
+							<?php echo $item['nome_comercial']." ".$item['apresentacao']."<br>".$item['posologia']; ?>
+							<a href="<?php echo BASE_URL ?>medicamentos/deletar/<?php echo $id; ?>/<?php echo $item['id_presc']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome_comercial']." ".$item['apresentacao']." &ndash; ".$item['posologia']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_presc']; ?></a>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+					<?php if(empty($receita)) { echo "Não há receita vinculada a esta consulta."; } ?>
+				</p>
+				<p class="card-text text-center">
+					<a href="<?php echo BASE_URL ?>medicamentos/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm">
+						<i class="fas fa-plus mr-1"></i> Adicionar</a>
+					<?php if(!empty($receita)): ?>
+						<a href="<?php echo BASE_URL ?>medicamentos/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3">
+							<i class="fas fa-file-pdf mr-1"></i> Imprimir</a>
+					<?php endif; ?>
+				</p>
+			</div>
+		</div>
 
-	<div class="card border-light mt-3">
-		<div class="card-header"><i class="fas fa-file-medical mr-1"></i> Anotações</div>
-		<div class="card-body">
-			<p class="card-text">
-				<?php
-					if(!empty($detalhe['anotacao'])){ echo $detalhe['anotacao']; }
-					else { echo "Não há anotação vinculada a esta consulta."; }
-				?>
-			</p>
-			<p class="card-text text-center">
-				<?php if(!empty($detalhe['anotacao'])): ?>
-					<a href="<?php echo BASE_URL ?>anotacoes/editar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-edit mr-1"></i> Editar</a>
-
-					<a href="<?php echo BASE_URL ?>anotacoes/deletar/<?php echo $id; ?>" class="btn btn-danger btn-sm ml-3" title="Apagar anotação"><i class="far fa-trash-alt mr-1"></i> Excluir</a>
-				<?php else: ?>
-					<a href="<?php echo BASE_URL ?>anotacoes/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm"><i class="fas fa-plus mr-1"></i> Adicionar</a>
-				<?php endif; ?>
-
-			</p>
-
+		<div class="card border-light mt-3">
+			<div class="card-header"><i class="fas fa-prescription mr-1"></i> Requisição de exames</div>
+			<div class="card-body">
+				<p class="card-text">
+					<ul class="list-group list-group-flush">
+					<?php foreach ($pedido as $item): ?>
+						<li class="list-group-item border-top-0 border-bottom-0">
+							<?php
+							echo $item['nome'];
+							if(!empty($item['observacao']) || !empty($item['cid'])) {
+								echo "<br>";
+							}
+							if(!empty($item['observacao'])) {
+								echo $item['observacao'];
+							}
+							if(!empty($item['cid'])) {
+								echo " CID-10:  ".$item['cid'];
+							}
+							?>
+							<a href="<?php echo BASE_URL ?>exames/deletar/<?php echo $id; ?>/<?php echo $item['id_req']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome']." &ndash; ".$item['observacao']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_req']; ?></a>
+						</li>
+					<?php endforeach; ?>
+					</ul>
+					<?php if(empty($pedido)) { echo "Não há exame vinculado a esta consulta."; } ?>
+				</p>
+				<p class="card-text text-center">
+					<a href="<?php echo BASE_URL ?>exames/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm">
+						<i class="fas fa-plus mr-1"></i> Adicionar</a>
+					<?php if(!empty($pedido)): ?>
+						<a href="<?php echo BASE_URL ?>exames/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3">
+							<i class="fas fa-file-pdf mr-1"></i> Imprimir</a>
+					<?php endif; ?>
+				</p>
+			</div>
 		</div>
 	</div>
-</div>
-<div class="card-deck">
-	<div class="card border-light mt-3">
-		<div class="card-header"><i class="fas fa-pills mr-1"></i> Prescrição de medicamentos</div>
-		<div class="card-body">
-			<p class="card-text">
-				<ul class="list-group list-group-flush">
-				<?php foreach ($receita as $item): ?>
-					<li class="list-group-item border-top-0 border-bottom-0">
-						<?php echo $item['nome_comercial']." ".$item['apresentacao']."<br>".$item['posologia']; ?>
-						<a href="<?php echo BASE_URL ?>medicamentos/deletar/<?php echo $id; ?>/<?php echo $item['id_presc']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome_comercial']." ".$item['apresentacao']." &ndash; ".$item['posologia']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_presc']; ?></a>
-					</li>
-				<?php endforeach; ?>
-				</ul>
-				<?php if(empty($receita)) { echo "Não há receita vinculada a esta consulta."; } ?>
-			</p>
-			<p class="card-text text-center">
-				<a href="<?php echo BASE_URL ?>medicamentos/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm">
-					<i class="fas fa-plus mr-1"></i> Adicionar</a>
-				<?php if(!empty($receita)): ?>
-					<a href="<?php echo BASE_URL ?>medicamentos/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3">
-						<i class="fas fa-file-pdf mr-1"></i> Imprimir</a>
-				<?php endif; ?>
-			</p>
-		</div>
-	</div>
-
-	<div class="card border-light mt-3">
-		<div class="card-header"><i class="fas fa-prescription mr-1"></i> Requisição de exames</div>
-		<div class="card-body">
-			<p class="card-text">
-				<ul class="list-group list-group-flush">
-				<?php foreach ($pedido as $item): ?>
-					<li class="list-group-item border-top-0 border-bottom-0">
-						<?php
-						echo $item['nome'];
-						if(!empty($item['observacao']) || !empty($item['cid'])) {
-							echo "<br>";
-						}
-						if(!empty($item['observacao'])) {
-							echo $item['observacao'];
-						}
-						if(!empty($item['cid'])) {
-							echo " CID-10:  ".$item['cid'];
-						}
-						?>
-						<a href="<?php echo BASE_URL ?>exames/deletar/<?php echo $id; ?>/<?php echo $item['id_req']; ?>" class="badge badge-danger p-2 ml-2" title="Apagar <?php echo $item['nome']." &ndash; ".$item['observacao']; ?>"><i class="far fa-trash-alt"></i> <?php echo $item['id_req']; ?></a>
-					</li>
-				<?php endforeach; ?>
-				</ul>
-				<?php if(empty($pedido)) { echo "Não há exame vinculado a esta consulta."; } ?>
-			</p>
-			<p class="card-text text-center">
-				<a href="<?php echo BASE_URL ?>exames/adicionar/<?php echo $id; ?>" class="btn btn-secondary btn-sm">
-					<i class="fas fa-plus mr-1"></i> Adicionar</a>
-				<?php if(!empty($pedido)): ?>
-					<a href="<?php echo BASE_URL ?>exames/imprimir/<?php echo $id; ?>" target="_blank" class="btn btn-dark btn-sm ml-3">
-						<i class="fas fa-file-pdf mr-1"></i> Imprimir</a>
-				<?php endif; ?>
-			</p>
-		</div>
-	</div>
-</div>
-<?php endif; ?>
+	<?php endif; ?>
+<?php endif; ?> <!-- sessão -->
 	</div><!-- col-md-6 -->
 </div><!-- row -->

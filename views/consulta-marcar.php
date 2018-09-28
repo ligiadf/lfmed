@@ -1,5 +1,6 @@
 <ol class="breadcrumb">
-	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Listar consultas</a></li>
 	<li class="breadcrumb-item active">Marcar</li>
 </ol>
 <div class="row justify-content-center">

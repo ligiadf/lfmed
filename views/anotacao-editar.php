@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Listar consultas</a></li>
+	<li class="breadcrumb-item"><A HREF="<?php echo BASE_URL.'consultas/detalhe/'.$id ?>">Detalhes da consulta</a></li>
+	<li class="breadcrumb-item active">Editar anotação</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-10">
 

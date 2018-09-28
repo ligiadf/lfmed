@@ -602,7 +602,7 @@ class consultasController extends Controller {
 
 		// se tem permissão
 		if( strpos($_SESSION['uLogin']['permissoes'], 'C05') !== false ) {
-			$this->loadTemplate('estatistica', $dados);
+			$this->loadTemplate('consulta-estatistica', $dados);
 		} else {
 			$dados403 = array (
 				'msg403' => 'Você não tem permissão para acessar esta página. Em caso de dúvidas, fale com o administrador do sistema.',

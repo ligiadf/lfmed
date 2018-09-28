@@ -2,10 +2,8 @@
 	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'pacientes'; ?>">Pacientes</a></li>
 	<li class="breadcrumb-item active">Ver todos</li>
 </ol>
-
 <div class="row justify-content-center">
 	<div class="col-md-10">
-
 		<header class="mt-4 mb-4">
 			<h1>Pacientes <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a></small></h1>
 		</header>

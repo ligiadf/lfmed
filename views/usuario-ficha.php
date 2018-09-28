@@ -1,6 +1,6 @@
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'usuarios'; ?>">Usuários</a></li>
-	<li class="breadcrumb-item active">Ficha</li>
+	<li class="breadcrumb-item active">Ficha do usuário</li>
 </ol>
 <div class="row justify-content-center">
 	<div class="col-md-6 col-lg-5">

@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
 	<div class="col-md-10">
 		<header class="mt-4 mb-4">
-			<h1>Agenda semanal</h1>
+			<h1>Agenda semanal <small><a class="btn btn-sm btn-info ml-2" href="<?php echo BASE_URL.'agenda/mensal'; ?>"><i class="far fa-calendar-alt mr-1"></i> Ver agenda mensal</a></small></h1>
 			<small><i class="far fa-calendar-alt mr-1"></i> Semana do dia: <?php echo $dia_atual." de ".$mes_atual_extenso." de ".$ano_atual; ?></small>
 		</header>
 

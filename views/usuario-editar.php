@@ -1,7 +1,11 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'usuarios'; ?>">Usuários</a></li>
+	<li class="breadcrumb-item active"><a href="<?php echo BASE_URL.'usuarios/ficha/'.$info['id']; ?>">Ficha do usuário</a></li>
+	<li class="breadcrumb-item active">Editar</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-6">
 	<header class="mt-4 mb-4">
-		<p><i class="fas fa-user-edit mr-1"></i> Editar cadastro usuário</p>
 		<h1><?php echo $info['nome']; ?></h1>
 	</header>
 
@@ -98,7 +102,7 @@
 
 		<div class="row">
 			<div class="col-6">
-				<a class="btn btn-link text-danger" href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
+				<a class="btn btn-link text-danger" href="<?php echo BASE_URL.'usuarios/ficha/'.$info['id']; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
 				<button type="submit" class="btn btn-success"><i class="fas fa-check mr-1"></i> Salvar</button>

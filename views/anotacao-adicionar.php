@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Listar consultas</a></li>
+	<li class="breadcrumb-item"><A HREF="<?php echo BASE_URL.'consultas/detalhe/'.$id ?>">Detalhes da consulta</a></li>
+	<li class="breadcrumb-item active">Adicionar anotação</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
@@ -14,7 +20,7 @@
 	<?php endif ?>
 
 	<header class="mt-4 mb-4">
-		<h1>Editar anotação <small style="font-size: 40%;" class="badge badge-pill badge-light"><?php echo $id; ?></small></h1>
+		<h1>Adicionar anotação <small style="font-size: 40%;" class="badge badge-pill badge-light"><?php echo $id; ?></small></h1>
 	</header>
 
 	<?php include_once('_dados-consulta.php'); ?>
@@ -31,10 +37,10 @@
 
 		<div class="row">
 			<div class="col-6">
-				<a class="btn btn-link btn-sm text-danger" href="<?php echo BASE_URL ?>consultas/detalhe/<?php echo $id; ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
+				<a class="btn btn-link btn-sm text-danger" href="<?php echo BASE_URL.'consultas/detalhe/'.$id ?>"><i class="fas fa-times mr-1"></i> Cancelar</a>
 			</div>
 			<div class="col-6 text-right">
-				<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check mr-1"></i> Editar</button>
+				<button type="submit" class="btn btn-success btn-sm"><i class="fas fa-check mr-1"></i> Adicionar</button>
 			</div>
 		</div>
 	</form>

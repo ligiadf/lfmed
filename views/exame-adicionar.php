@@ -1,3 +1,9 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas'; ?>">Consultas</a></li>
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'consultas/listar'; ?>">Listar consultas</a></li>
+	<li class="breadcrumb-item"><A HREF="<?php echo BASE_URL.'consultas/detalhe/'.$id ?>">Detalhes da consulta</a></li>
+	<li class="breadcrumb-item active">Adicionar exame</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-10">
 
@@ -122,7 +128,7 @@
 				<small id="observacaoHelp" class="form-text text-muted">Preencha observação para a realização do exame, se necessário.</small>
 			</div>
 			<div class="form-group col-12 col-md-3">
-				<label for="CID"><i class="fas fa-file-medical mr-1"></i> CID-10:</label>
+				<label for="CID"><i class="fas fa-file-medical mr-1"></i> CID-10: <small>[<a href="http://www.datasus.gov.br/cid10/v2008/cid10.htm" target="_blank" title="Consulte CID-10">Consultar</a>]</small></label>
 				<input type="text" class="form-control" id="CID" name="cid" maxlength="10">
 				<small id="CIDHelp" class="form-text text-muted">Preencha CID-10, se necessário.</small>
 			</div>

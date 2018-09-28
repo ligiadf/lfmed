@@ -2,10 +2,8 @@
 	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'pacientes'; ?>">Pacientes</a></li>
 	<li class="breadcrumb-item active">Ficha do paciente</li>
 </ol>
-
 <div class="row justify-content-center">
 	<div class="col-md-10">
-
 	<?php if(!empty($_GET['msgError'])): ?>
 		<div class="alert alert-danger">
 			<?php echo $_GET['msgError']; ?>

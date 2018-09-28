@@ -128,7 +128,7 @@ class medicamentosController extends Controller {
 
 			$medicamentos->adicionarReceita($id, $id_rem, $posologia);
 
-			$msgOK = "Receita adicionada com sucesso.";
+			$msgOK = "Medicamento adicionado com sucesso.";
 			header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgOK));
 		}
 

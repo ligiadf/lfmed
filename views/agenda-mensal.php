@@ -1,5 +1,5 @@
 <header class="mt-4 mb-4">
-	<h1>Agenda <small><?php echo $mes_atual_extenso." ".$ano_atual; ?></small></h1>
+	<h1>Agenda <small><?php echo $mes_atual_extenso." ".$ano_atual; ?></small> <small><a class="btn btn-sm btn-info ml-2" href="<?php echo BASE_URL.'agenda'; ?>"><i class="far fa-calendar-alt mr-1"></i> Ver agenda semanal</a></small></h1>
 </header>
 
 <div class="row col-12 mt-3 mb-3">

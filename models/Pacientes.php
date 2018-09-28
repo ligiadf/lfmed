@@ -139,30 +139,5 @@ class Pacientes extends Model {
 		$sql->execute();
 	}
 
-
-	public function getNome() {
-		return $this->nome;
-	}
-
-	public function getDataNasc() {
-		return $this->data_nasc;
-	}
-
-	public function getEmail() {
-		return $this->email;
-	}
-
-	public function getTelefone() {
-		return $this->telefone;
-	}
-
-	public function getCPF() {
-		return $this->cpf;
-	}
-
-	public function getPlanoSaude() {
-		return $this->plano_saude;
-	}
-
 }
 ?>

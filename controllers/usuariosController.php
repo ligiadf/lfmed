@@ -51,7 +51,6 @@ class usuariosController extends Controller {
 	public function adicionar() {
 
 		$usuarios = new Usuarios();
-		$verificacao = new Usuarios();
 
 		$nome_usuario = '';
 		$email = '';
@@ -73,7 +72,7 @@ class usuariosController extends Controller {
 			$especialidade = addslashes($_POST['especialidade']);
 			$crm = addslashes($_POST['crm']);
 
-			if($verificacao->verificarUsuario($email)) {
+			if($usuarios->verificarUsuario($email)) {
 				$usuarios->adicionarUsuario($nome_usuario, $email, $senha, $perfil, $status, $especialidade, $crm);
 				$msgAdicionarUsuarioOK = "Usuário cadastrado com sucesso: ".$nome_usuario;
 				header('Location:'. BASE_URL.'usuarios/adicionar?msgOK='.urlencode($msgAdicionarUsuarioOK));
@@ -176,7 +175,6 @@ class usuariosController extends Controller {
 	public function editar($id) {
 
 		$usuarios = new Usuarios();
-		$verificacao = new Usuarios();
 
 		$info = $usuarios->fichaUsuario($id);
 
@@ -205,8 +203,8 @@ class usuariosController extends Controller {
 
 		// se tem permissão
 		if( strpos($_SESSION['uLogin']['permissoes'], 'U02') !== false ) {
-			if( !empty($ficha) ) {
-				$this->loadTemplate('usuario-ficha', $dados);
+			if( !empty($info) ) {
+				$this->loadTemplate('usuario-editar', $dados);
 			} else {
 				$dados404 = array (
 					'msg404' => 'Usuário não existe:',

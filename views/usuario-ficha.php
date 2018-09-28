@@ -1,3 +1,7 @@
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'usuarios'; ?>">Usuários</a></li>
+	<li class="breadcrumb-item active">Ficha</li>
+</ol>
 <div class="row justify-content-center">
 	<div class="col-md-6 col-lg-5">
 
@@ -14,7 +18,6 @@
 	<?php endif ?>
 
 	<header class="mt-4 mb-4">
-		<p><i class="fas fa-users-cog mr-1"></i> Ficha do usuário</p>
 		<h1>
 			<?php echo $nome; ?>
 			<small style="font-size: 40%;" class="badge badge-pill  badge-light"><?php echo $id; ?></small>

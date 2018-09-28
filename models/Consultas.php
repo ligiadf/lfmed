@@ -348,6 +348,7 @@ class Consultas extends Model {
 				FROM consultas
 				LEFT JOIN usuarios ON usuarios.id = consultas.id_med
 				WHERE id_med = :id_med
+				AND con_status = '2'
 				GROUP BY EXTRACT(year from con_inicio), EXTRACT(month from con_inicio), con_status
 				ORDER BY ano, mes, situacao";
 		$sql = $this->pdo->prepare($sql);

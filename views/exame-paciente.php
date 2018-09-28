@@ -45,13 +45,13 @@
 	<?php if($pedido): ?>
 		<div class="list-group list-group-flush mt-4">
 			<div class="row mb-3">
-				<div class="col-12 col-md-1 font-weight-bold">
+				<div class="col-12 col-md-2 font-weight-bold">
 					<i class="far fa-calendar-alt mr-1"></i> Data
 				</div>
 				<div class="col-12 col-md-5 font-weight-bold">
 					<i class="fas fa-prescription mr-1"></i> Nome
 				</div>
-				<div class="col-12 col-md-3 font-weight-bold">
+				<div class="col-12 col-md-2 font-weight-bold">
 					<i class="fas fa-file-signature mr-1"></i> Observação
 				</div>
 				<div class="col-12 col-md-1 font-weight-bold">
@@ -69,7 +69,7 @@
 					$dataConsulta = $dataConsulta[2].'/'.$dataConsulta[1].'/'.$dataConsulta[0]; // DD/MM/AAA
 				?>
 				<div class="row text-secondary mb-3">
-					<div class="col-12 col-md-1 pb-2">
+					<div class="col-12 col-md-2 pb-2">
 						<span class="d-md-none"><i class="far fa-calendar-alt mr-1"></i></span>
 						<strong><?php echo $dataConsulta." <small>(".$item['id_con'].")</small>"; ?></strong>
 					</div>
@@ -77,7 +77,7 @@
 						<span class="d-md-none"><i class="fas fa-prescription mr-1"></i></span>
 						<strong><?php echo $item['nome_exame']." <small>(".$item['id_requisicao'].")</small>"; ?></strong>
 					</div>
-					<div class="col-12 col-md-3 pb-2">
+					<div class="col-12 col-md-2 pb-2">
 						<span class="d-md-none"><i class="fas fa-file-signature mr-1"></i></span>
 						<?php if(!empty($item['observacao'])) { echo $item['observacao']; } else { echo "<em>Sem observação</em>"; } ?>
 					</div>

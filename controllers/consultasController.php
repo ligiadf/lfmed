@@ -569,7 +569,6 @@ class consultasController extends Controller {
 		$consultas = new Consultas();
 		$usuarios = new Usuarios();
 
-		$stats0 = $consultas->estatisticasConsultas(0);
 		$stats1 = $consultas->estatisticasConsultas(1);
 		$stats2 = $consultas->estatisticasConsultas(2);
 		$stats3 = $consultas->estatisticasConsultas(3);
@@ -582,7 +581,6 @@ class consultasController extends Controller {
 
 		$dados = array(
 			'titulo_pagina' => 'Estatísticas de atendimento',
-			'stats0' => $stats0,
 			'stats1' => $stats1,
 			'stats2' => $stats2,
 			'stats3' => $stats3,

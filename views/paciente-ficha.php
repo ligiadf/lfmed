@@ -57,7 +57,7 @@
 
 	<p class="mt-2">
 		<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
-			<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$id; ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
+			<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?id_pc='.$id; ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
 		<?php endif; ?>
 	</p>
 		<?php foreach($consulta as $item): ?>

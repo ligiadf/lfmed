@@ -16,6 +16,11 @@ class pacientesController extends Controller {
 			$pc = $_GET['pc'];
 		}
 
+		$id_pc = '';
+		if(isset($_GET['id_pc'])) {
+			$id_pc = $_GET['id_pc'];
+		}
+
 	// paginação
 		$offset = 0;
 		$limite = 10;
@@ -32,9 +37,9 @@ class pacientesController extends Controller {
 		}
 		$offset = ($dados['pagina_atual'] * $limite) - $limite;
 
-		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite, $pc);
+		$dados['pacientes'] = $pacientes->listarPacientes($offset, $limite, $pc, $id_pc);
 
-		if($pacientes->listarPacientes($offset, $limite, $pc) == false) {
+		if($pacientes->listarPacientes($offset, $limite, $pc, $id_pc) == false) {
 			$dados['msgSemResultado'] = 'Não há resultados. Deseja <a href="'.BASE_URL.'pacientes/cadastrar'.'">cadastrar um paciente</a>?';
 		} else {
 			$dados['msgSemResultado'] = '';

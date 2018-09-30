@@ -10,12 +10,15 @@ class Pacientes extends Model {
 	private $cpf;
 	private $plano_saude;
 
-	public function listarPacientes($offset, $limite, $pc) {
+	public function listarPacientes($offset, $limite, $pc, $id_pc) {
 
 		$array = array();
 
 		if(empty($_GET['pc'])) { $pc = ''; }
 			else { $pc = $_GET['pc']; }
+
+		if(empty($_GET['id_pc'])) { $id_pc = ''; }
+			else { $id_pc = $_GET['id_pc']; }
 
 		// array vazio dá erro no SQL, então 1=1
 		$filtroString = array('1=1');
@@ -24,18 +27,28 @@ class Pacientes extends Model {
 			$filtroString[] = 'nome LIKE :pc OR cpf LIKE :pc';
 		}
 
+		if(!empty($id_pc)){
+			$filtroString[] = 'id = :id_pc';
+		}
+
 		$sql = "SELECT *
 				FROM pacientes
 				WHERE ".implode(' AND ', $filtroString)."
 				ORDER BY nome
 				LIMIT $offset, $limite";
-		if(empty($pc)){
+		if(empty($pc) && empty($id_pc)){
 			$sql = $this->pdo->query($sql);
 		}
 
 		if(!empty($pc)) {
 			$sql = $this->pdo->prepare($sql);
 			$sql->bindValue(":pc", '%'.$pc.'%');
+			$sql->execute();
+		}
+
+		if(!empty($id_pc)) {
+			$sql = $this->pdo->prepare($sql);
+			$sql->bindValue(":id_pc", $id_pc);
 			$sql->execute();
 		}
 

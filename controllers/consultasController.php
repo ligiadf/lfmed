@@ -110,11 +110,15 @@ class consultasController extends Controller {
 	// filtro
 		$md = '';
 		$pc = '';
+		$id_pc = '';
 		if(isset($_GET['md'])) {
 			$md = $_GET['md'];
 		}
 		if(isset($_GET['pc'])) {
 			$pc = $_GET['pc'];
+		}
+		if(isset($_GET['id_pc'])) {
+			$id_pc = $_GET['id_pc'];
 		}
 
 		$dtConsulta_fim = '';
@@ -151,7 +155,7 @@ class consultasController extends Controller {
 		$dados = array(
 			'titulo_pagina' => 'Marcar consulta',
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
-			'pacientes' => $pacientes->listarPacientes($offset, $limite, $pc),
+			'pacientes' => $pacientes->listarPacientes($offset, $limite, $pc, $id_pc),
 			'id_medico' => $id_medico,
 			'paciente' => $paciente,
 			'statusConsulta' => $statusConsulta,
@@ -160,7 +164,8 @@ class consultasController extends Controller {
 			'msgIndisponibilidadeMedico' => $msgIndisponibilidadeMedico,
 			'msgConsultaMarcada' => $msgConsultaMarcada,
 			'md' => $md,
-			'pc' => $pc
+			'pc' => $pc,
+			'id_pc' => $id_pc
 		);
 
 		// se não está logado
@@ -268,11 +273,15 @@ class consultasController extends Controller {
 	// filtro
 		$md = '';
 		$pc = '';
+		$id_pc = '';
 		if(isset($_GET['md'])) {
 			$md = $_GET['md'];
 		}
 		if(isset($_GET['pc'])) {
 			$pc = $_GET['pc'];
+		}
+		if(isset($_GET['id_pc'])) {
+			$id_pc = $_GET['id_pc'];
 		}
 
 		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
@@ -343,7 +352,7 @@ class consultasController extends Controller {
 			'titulo_pagina' => 'Editar consulta n. '.$id,
 			'detalhe' => $detalhe,
 			'medicos' => $medicos->listarMedicosAtivos($offset, $limite),
-			'pacientes' => $pacientes->listarPacientes($offset, $limite, $pc),
+			'pacientes' => $pacientes->listarPacientes($offset, $limite, $pc, $id_pc),
 			'med_id' => $detalhe['med_id'],
 			'med_nome' => $detalhe['med_nome'],
 			'especialidade' => $detalhe['especialidade'],

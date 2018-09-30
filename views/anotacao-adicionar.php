@@ -32,7 +32,7 @@
 		<div class="form-group col-12">
 			<label for="anotacao"><i class="far fa-calendar-alt mr-1"></i> Descreva:</label>
 			<textarea class="form-control" id="anotacao" name="anotacao" maxlength="500" rows="4" required></textarea>
-			<small id="anotacaoHelp" class="form-text text-muted">Preencha com anotações referentes ao relato do paciente e à observação clínica.</small>
+			<small id="anotacaoHelp" class="form-text text-muted">Preencha com anotações referentes ao relato do paciente e à observação clínica. Tamanho máximo: 500 caracteres.</small>
 		</div>
 
 		<div class="row">

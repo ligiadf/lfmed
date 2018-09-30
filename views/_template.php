@@ -28,12 +28,9 @@
 <body>
 
 <?php
-	//DESABILITADO PARA DEV
-/*
 	if(!isset($_SESSION['uLogin']) && empty($_SESSION['uLogin'])) {
 		header('Location:'. BASE_URL.'login');
 	}
-*/
 ?>
 
 <nav class="navbar navbar-expand-md static-top navbar-dark pl-1" style="background-color: #008080;">
@@ -174,6 +171,5 @@
 	<script src="<?php echo BASE_URL?>assets/js/valida-filtro.js?v=<?php echo rand(1,99) ?>"></script>
 	<?php endif; ?>
 
-</script>
 </body>
 </html>

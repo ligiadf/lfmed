@@ -32,19 +32,19 @@
 		<div class="form-group col-12">
 			<label for="atestadoPeriodo"><i class="far fa-calendar-alt mr-1"></i> Período:</label>
 			<input type="text" class="form-control" id="atestadoPeriodo" name="atestadoPeriodo" maxlength="50" value="<?php echo $atestadoPeriodo; ?>" required>
-			<small id="atestadoPeriodoHelp" class="form-text text-muted">Preencha o período do atestado. Exemplos: <code>de 3 dias a partir de 15/07/2018</code> | <code>de 15 a 20/07/2018</code> | <code>por 7 dias a partir de hoje</code></small>
+			<small id="atestadoPeriodoHelp" class="form-text text-muted">Preencha o período do atestado. Tamanho máximo: 50 caracteres. Exemplos: <code>de 3 dias a partir de 15/07/2018</code> | <code>de 15 a 20/07/2018</code> | <code>por 7 dias a partir de hoje</code></small>
 		</div>
 
 		<div class="form-group col-12">
 			<label for="atestadoMotivo"><i class="fas fa-file-signature mr-1"></i> Motivo:</label>
 			<textarea class="form-control" id="atestadoMotivo" name="atestadoMotivo" maxlength="100" rows="2" required><?php echo $atestadoMotivo; ?></textarea>
-			<small id="atestadoMotivoHelp" class="form-text text-muted">Preencha o motivo do atestado. Exemplos: <code>suspeita de conjuntivite</code> | <code>glaucoma</code></small>
+			<small id="atestadoMotivoHelp" class="form-text text-muted">Preencha o motivo do atestado. Tamanho máximo: 100 caracteres. Exemplos: <code>suspeita de conjuntivite</code> | <code>glaucoma</code></small>
 		</div>
 
 		<div class="form-group col-12 col-md-6">
 			<label for="atestadoCID"><i class="fas fa-file-medical mr-1"></i> CID-10: <small>[<a href="http://www.datasus.gov.br/cid10/v2008/cid10.htm" target="_blank" title="Consulte CID-10">Consultar</a>]</small></label>
 			<input type="text" class="form-control" id="atestadoCID" name="atestadoCID" maxlength="10" value="<?php if(!empty($atestadoCID)) { echo $atestadoCID; } ?>">
-			<small id="atestadoCIDHelp" class="form-text text-muted">Preencha o CID-10 da doença (opcional). Exemplos: <code>H404</code> | <code>H10.1</code></small>
+			<small id="atestadoCIDHelp" class="form-text text-muted">Preencha o CID-10 da doença (opcional). Tamanho máximo: 10 caracteres. Exemplos: <code>H404</code> | <code>H10.1</code></small>
 		</div>
 
 		<div class="row">

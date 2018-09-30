@@ -31,7 +31,7 @@
 				<h5 class="mt-3 mb-3"><i class="fas fa-file-signature mr-1"></i> Anotação</h5>
 			</label>
 			<textarea class="form-control" id="anotacao" name="anotacao" maxlength="500" rows="4" required><?php echo $anotacao; ?></textarea>
-			<small id="anotacaoHelp" class="form-text text-muted">Preencha com anotações referentes ao relato do paciente e à observação clínica.</small>
+			<small id="anotacaoHelp" class="form-text text-muted">Preencha com anotações referentes ao relato do paciente e à observação clínica. Tamanho máximo: 500 caracteres.</small>
 		</div>
 
 		<div class="row">

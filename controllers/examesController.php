@@ -292,13 +292,13 @@ class examesController extends Controller {
 			$this->loadTemplate('404', $dados404);
 		}
 
-		// id de consulta sem atestado
-		elseif( empty($detalhe['atestado_periodo']) ) {
+		// id de consulta sem exames
+		elseif( empty($exames[0]['id_exa']) ) {
 			$dados404 = array (
 				'id' => $id,
-				'msg404' => 'Não há atestado para esta consulta.',
+				'msg404' => 'Não há requisição de exames para esta consulta.',
 				'msglink404' => 'Deseja adicionar?',
-				'link404' => BASE_URL.'atestados/adicionar/'.$id
+				'link404' => BASE_URL.'exames/adicionar/'.$id
 			);
 			$this->loadTemplate('404', $dados404);
 		}

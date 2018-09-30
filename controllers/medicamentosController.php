@@ -254,7 +254,7 @@ class medicamentosController extends Controller {
 		}
 
 		// id de consulta sem atestado
-		elseif( empty($detalhe['atestado_periodo']) ) {
+		elseif( empty($receita[0]['id_presc']) ) {
 			$dados404 = array (
 				'id' => $id,
 				'msg404' => 'Não há atestado para esta consulta.',

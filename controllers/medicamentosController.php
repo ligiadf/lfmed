@@ -56,7 +56,7 @@ class medicamentosController extends Controller {
 		$usuarios->verificarPermissoes($perfil);
 
 		// se tem permissão
-		if( strpos($_SESSION['uLogin']['permissoes'], 'M01') !== false ) {
+		if( strpos($_SESSION['uLogin']['permissoes'], 'R01') !== false ) {
 			$this->loadTemplate('medicamento-listar', $dados);
 		} else {
 			$dados403 = array (

@@ -45,22 +45,3 @@ footer.sticky-footer {
 	height: 130px;
 	width: 100%;
 }
-/*
-@media (min-width: 980px) {
-	footer.sticky-footer {
-		position: absolute;
-	}
-}*/
-
-/* Agenda: esconder domingo e sábado
--------------------------------------------------- */
-	#agenda_completa th:first-child,
-	#agenda_completa td:first-child,
-	#agenda_completa th:last-child,
-	#agenda_completa td:last-child {
-		display: none; 
-	}
-
-	#agenda_completa td {
-		width: 20%;
-	}

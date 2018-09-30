@@ -12,7 +12,7 @@
 </div>
 
 <div class="table-responsive">
-<table id="agenda_completo" class="table table-sm">
+<table id="agenda_completa" class="table table-sm">
 	<tr>
 		<th>Domingo</th>
 		<th>Segunda</th>
@@ -35,27 +35,60 @@
 					echo "<strong>". date('d/m', strtotime($d)) ."</strong><br>";
 
 					foreach ($agenda as $item) {
+						// consulta
 						$dt_con_inicio = date('Y-m-d', strtotime($item['con_inicio']));
-
 						$dh_con_inicio = date('Y-m-d H:i', strtotime($item['con_inicio']));
 						$dh_con_fim =    date('Y-m-d H:i', strtotime($item['con_fim']));
 
+						// exibição
+						$dthr_con_inicio = date('d/m H:i', strtotime($item['con_inicio']));
+						$dthr_con_fim =    date('d/m H:i', strtotime($item['con_fim']));
 						$hr_con_inicio = date('H:i', strtotime($item['con_inicio']));
 						$hr_con_fim =    date('H:i', strtotime($item['con_fim']));
 
-						$situacao =  $item['con_status'];
+						$id =  $item['id'];
 
 						$paciente = $item['nome'];
 						$medico =   $item['med_nome'];
 
+						$situacao =  $item['con_status'];
+
+						switch ($situacao) {
+							case "0": 
+								$situacao_nome = "Indisponibilidade";
+								$situacao_cor = "danger";
+								$situacao_icone = "<i class='fas fa-ban mr-1'></i>";
+								break;
+							case "1": 
+								$situacao_nome = "Marcada";
+								$situacao_cor = "info";
+								$situacao_icone = "<i class='far fa-calendar-check mr-1'></i>";
+								break;
+							case "2": 
+								$situacao_nome = "Realizada";
+								$situacao_cor = "success";
+								$situacao_icone = "<i class='fas fa-check mr-1'></i>";
+								break;
+							case "3": 
+								$situacao_nome = "Paciente ausente";
+								$situacao_cor = "secondary";
+								$situacao_icone = "<i class='far fa-user mr-1'></i>";
+								break;
+							case "4": 
+								$situacao_nome = "Cancelada";
+								$situacao_cor = "secondary";
+								$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
+								break;
+							}
+
 						if( $d == $dt_con_inicio || ($d >= $dh_con_inicio) && ($d <= $dh_con_fim) ) {
-							if($situacao != '0'){
-								echo "<p>".$hr_con_inicio."-".$hr_con_fim."<br>".
+							if($situacao != '0') {
+								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$hr_con_inicio." ".
 									 $paciente."<br>".
-									 "<small>".$medico."</small></p>";
+									 "<small><i class='fas fa-user-md mr-1'></i><strong>".$medico."</strong></small></a></p>";
 							} else {
-								echo "<p class='text-danger'>".$hr_con_inicio."-".$hr_con_fim."<br>".
-									 $medico." indisponível</p>";
+								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da indisponibilidade'>".$dthr_con_inicio." - ".$dthr_con_fim." ".
+									 "<br><small><i class='fas fa-user-md mr-1'></i><strong>".$medico."</strong></small></a></p>";
 							}
 						}
 					}

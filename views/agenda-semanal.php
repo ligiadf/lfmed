@@ -44,7 +44,7 @@
 				<a class="btn btn-secondary btn-sm" href="?d=<?php echo date("Y-m-d", strtotime($data. 'next week')); ?>
 				<?php if(!empty($md)) { echo '&md='.$md; } ?>
 				<?php if(!empty($st)) { echo '&st='.$st; } ?>"
-				>Próximo semana <i class="far fa-calendar-plus ml-1"></i></a>
+				>Próxima semana <i class="far fa-calendar-plus ml-1"></i></a>
 			</div>
 		</div>
 
@@ -90,49 +90,49 @@
 						$hr_con_inicio = date('H:i', strtotime($item['con_inicio']));
 						$hr_con_fim =    date('H:i', strtotime($item['con_fim']));
 
-						$situacao =  $item['con_status'];
-
-					switch ($situacao) {
-						case "0": 
-							$situacao_nome = "Indisponibilidade";
-							$situacao_cor = "danger";
-							$situacao_icone = "<i class='fas fa-ban mr-1'></i>";
-							break;
-						case "1": 
-							$situacao_nome = "Marcada";
-							$situacao_cor = "info";
-							$situacao_icone = "<i class='far fa-calendar-check mr-1'></i>";
-							break;
-						case "2": 
-							$situacao_nome = "Realizada";
-							$situacao_cor = "success";
-							$situacao_icone = "<i class='fas fa-check mr-1'></i>";
-							break;
-						case "3": 
-							$situacao_nome = "Paciente ausente";
-							$situacao_cor = "secondary";
-							$situacao_icone = "<i class='far fa-user mr-1'></i>";
-							break;
-						case "4": 
-							$situacao_nome = "Cancelada";
-							$situacao_cor = "secondary";
-							$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
-							break;
-						}
-
 						$id =  $item['id'];
 
 						$paciente = $item['nome'];
 						$medico =   $item['med_nome'];
 
+						$situacao =  $item['con_status'];
+
+						switch ($situacao) {
+							case "0": 
+								$situacao_nome = "Indisponibilidade";
+								$situacao_cor = "danger";
+								$situacao_icone = "<i class='fas fa-ban mr-1'></i>";
+								break;
+							case "1": 
+								$situacao_nome = "Marcada";
+								$situacao_cor = "info";
+								$situacao_icone = "<i class='far fa-calendar-check mr-1'></i>";
+								break;
+							case "2": 
+								$situacao_nome = "Realizada";
+								$situacao_cor = "success";
+								$situacao_icone = "<i class='fas fa-check mr-1'></i>";
+								break;
+							case "3": 
+								$situacao_nome = "Paciente ausente";
+								$situacao_cor = "secondary";
+								$situacao_icone = "<i class='far fa-user mr-1'></i>";
+								break;
+							case "4": 
+								$situacao_nome = "Cancelada";
+								$situacao_cor = "secondary";
+								$situacao_icone = "<i class='far fa-calendar-times mr-1'></i>";
+								break;
+							}
+
 						if( $d == $dt_con_inicio || ($d >= $dh_con_inicio) && ($d <= $dh_con_fim) ) {
 							if($situacao != '0') {
 								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$hr_con_inicio." ".
 									 $paciente."<br>".
-									 "<small><strong>".$medico."</strong></small></a></p>";
+									 "<small><i class='fas fa-user-md mr-1'></i><strong>".$medico."</strong></small></a></p>";
 							} else {
-								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da consulta'>".$dthr_con_inicio." - ".$dthr_con_fim." ".
-									 "<small><strong>".$medico."</strong></small></a></p>";
+								echo "<p><a class='text-".$situacao_cor."' href=".BASE_URL."consultas/detalhe/".$id." title='Ver detalhes da indisponibilidade'>".$dthr_con_inicio." - ".$dthr_con_fim." ".
+									 "<small><i class='fas fa-user-md mr-1'></i><strong>".$medico."</strong></small></a></p>";
 							}
 						}
 					} // foreach

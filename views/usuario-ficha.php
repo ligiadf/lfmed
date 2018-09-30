@@ -1,7 +1,14 @@
+<?php if($perfil == 'MED'):?>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'medicos'; ?>">Médicos</a></li>
+	<li class="breadcrumb-item active">Ficha do médico</li>
+</ol>
+<?php else: ?>
 <ol class="breadcrumb">
 	<li class="breadcrumb-item"><a href="<?php echo BASE_URL.'usuarios'; ?>">Usuários</a></li>
 	<li class="breadcrumb-item active">Ficha do usuário</li>
 </ol>
+<?php endif; ?>
 <div class="row justify-content-center">
 	<div class="col-md-6 col-lg-5">
 
@@ -49,7 +56,7 @@
 		<p class="mt-2 text-right">
 			<?php if( strpos($_SESSION['uLogin']['permissoes'], 'U02') !== false ): ?>
 			<a class="btn btn-warning" href="<?php echo BASE_URL ?>usuarios/editar/<?php echo $id; ?>">
-				<i class="fas fa-user-edit mr-1"></i> Editar usuário</a>
+				<i class="fas fa-user-edit mr-1"></i> Editar</a>
 			<?php endif; ?>
 		</p>
 	</div><!-- col-md-6 -->

@@ -152,7 +152,7 @@ class Exames extends Model {
 				LEFT JOIN exames ON exames.id = requisicoes.id_exa
 				LEFT JOIN pacientes ON pacientes.id = requisicoes.id_pac
 				WHERE requisicoes.id_pac = :id
-				ORDER BY con_inicio, requisicoes.id";
+				ORDER BY con_inicio DESC, requisicoes.id";
 		$sql = $this->pdo->prepare($sql);
 		$sql->bindValue(":id", $pac_id);
 		$sql->execute();

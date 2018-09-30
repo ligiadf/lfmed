@@ -33,7 +33,7 @@
 			<div class="col-12 mt-2 mb-2 pt-2 pb-2">
 				<form method="GET" class="form-inline">
 					<div class="form-group col-12 col-md-8 pl-0">
-						<input type="text" class="form-control col-12" id="busca_exame" name="ex" placeholder="Filtre por nome comercial ou princípio ativo" value="<?php if(!empty($_GET['ex'])) { echo $_GET['ex']; } ?>">
+						<input type="text" class="form-control col-12" id="busca_exame" name="ex" placeholder="Filtre por nome do exame" value="<?php if(!empty($_GET['ex'])) { echo $_GET['ex']; } ?>">
 					</div>
 					<div class="form-group col-12 col-md-4 pl-0">
 						<button type="submit" id="filtro" class="btn btn-primary btn-sm ml-md-3"><i class="fas fa-filter"></i> Filtrar</button>

@@ -7,7 +7,11 @@
 	<div class="col-md-10">
 
 		<header class="mt-4 mb-4">
-			<h1>Consultas <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a></small></h1>
+			<h1>Consultas
+				<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
+					<small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>consultas/marcar"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a></small>
+				<?php endif; ?>
+			</h1>
 		</header>
 
 		<div class="row">

@@ -27,7 +27,7 @@
 
 <div class="mt-4">
 	<p><span class="mr-2"><i class="fas fa-phone mr-1"></i> Telefone: <?php echo $ficha['telefone']; ?></span>
-	<span><i class="fas fa-id-card mr-1"></i> CPF <?php echo $ficha['cpf']; ?></p>
+	<span><i class="fas fa-id-card mr-1"></i> CPF: <?php echo $ficha['cpf']; ?></p>
 	
 	<p><i class="fas fa-briefcase-medical mr-1"></i> Plano de saúde: <?php echo $ficha['plano_saude']; ?></p>
 </div>
@@ -86,13 +86,26 @@
 						<?php if(!empty($item['cid'])) { echo $item['cid']; } else { echo "<em>Sem CID</em>"; } ?>
 					</div>
 					<div class="col-12 col-md-2 pb-2">
-						<?php if(empty($item['resultado'])): ?>
-							<a class="btn btn-success btn-sm mr-2" href="<?php echo BASE_URL.'exames/resultado_adicionar/'.$item['pac_id'].'/'.$item['id_requisicao']; ?>" role="button" title="Adicionar resultado de exame <?php echo $item['nome_exame'] ?>"><i class="fas fa-plus"></i></a>
-						<?php else: ?>
-							<a class="btn btn-primary btn-sm mr-2" href="<?php echo BASE_URL.'uploads/resultado-exame-'.$item['pac_id'].'-'.$item['id_requisicao'].'-'.substr($item['con_inicio'], 0, 10).'.pdf'; ?>" role="button" title="Ver resultado do exame <?php echo $item['nome_exame'] ?>"><i class="fas fa-file-pdf"></i></a>
+						<?php if (empty($item['resultado'])): ?>
 
-							<a class="btn btn-danger btn-sm" href="<?php echo BASE_URL.'exames/resultado_deletar/'.$item['pac_id'].'/'.$item['id_requisicao']; ?>" role="button" title="Excluir resultado do exame <?php echo $item['nome_exame'] ?>"><i class="far fa-trash-alt"></i></a>
+							<?php if( strpos($_SESSION['uLogin']['permissoes'], 'E03') !== false): ?>
+								<a class="btn btn-success btn-sm mr-2" href="<?php echo BASE_URL.'exames/resultado_adicionar/'.$item['pac_id'].'/'.$item['id_requisicao']; ?>" role="button" title="Adicionar resultado de exame <?php echo $item['nome_exame'] ?>"><i class="fas fa-plus"></i></a>
+							<?php else: ?>
+								<em>Sem resultados</em>
+							<?php endif; ?>
+
+						<?php elseif (!empty($item['resultado'])): ?>
+
+							<?php if( strpos($_SESSION['uLogin']['permissoes'], 'E04') !== false): ?>
+								<a class="btn btn-primary btn-sm mr-2" href="<?php echo BASE_URL.'uploads/resultado-exame-'.$item['pac_id'].'-'.$item['id_requisicao'].'-'.substr($item['con_inicio'], 0, 10).'.pdf'; ?>" target="_blank" role="button" title="Ver resultado do exame <?php echo $item['nome_exame'] ?>"><i class="fas fa-file-pdf"></i></a>
+							<?php endif; ?>
+
+							<?php if( strpos($_SESSION['uLogin']['permissoes'], 'E03') !== false): ?>
+								<a class="btn btn-danger btn-sm" href="<?php echo BASE_URL.'exames/resultado_deletar/'.$item['pac_id'].'/'.$item['id_requisicao']; ?>" role="button" title="Excluir resultado do exame <?php echo $item['nome_exame'] ?>"><i class="far fa-trash-alt"></i></a>
+							<?php endif; ?>
+
 						<?php endif; ?>
+
 					</div>
 				</div>
 			<?php endforeach; ?>

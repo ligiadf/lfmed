@@ -47,8 +47,10 @@
 		<p><i class="fas fa-envelope mr-1"></i> <a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></p>
 
 		<p class="mt-2 text-right">
+			<?php if( strpos($_SESSION['uLogin']['permissoes'], 'U02') !== false ): ?>
 			<a class="btn btn-warning" href="<?php echo BASE_URL ?>usuarios/editar/<?php echo $id; ?>">
 				<i class="fas fa-user-edit mr-1"></i> Editar usuário</a>
+			<?php endif; ?>
 		</p>
 	</div><!-- col-md-6 -->
 

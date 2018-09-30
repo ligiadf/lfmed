@@ -31,11 +31,15 @@
 	<p><i class="fas fa-briefcase-medical mr-1"></i> <?php echo $plano_saude; ?></p>
 
 	<p class="mt-2">
-		<a class="btn btn-warning" href="<?php echo BASE_URL ?>pacientes/editar/<?php echo $id; ?>"><i class="fas fa-user-edit mr-1"></i> Editar paciente</a>
+		<?php if( strpos($_SESSION['uLogin']['permissoes'], 'P02') !== false ): ?>
+			<a class="btn btn-warning" href="<?php echo BASE_URL ?>pacientes/editar/<?php echo $id; ?>"><i class="fas fa-user-edit mr-1"></i> Editar paciente</a>
+		<?php endif; ?>
 	</p>
 	</div><!-- col-md-10 -->
 
 	<div class="col-md-10">
+
+<?php if( strpos($_SESSION['uLogin']['permissoes'], 'E01') !== false ): ?>
 
 	<header class="mt-4 mb-4">
 		<h2>Exames</h2>
@@ -45,12 +49,16 @@
 		<a class="btn btn-primary" href="<?php echo BASE_URL ?>exames/paciente/<?php echo $id; ?>"><i class="fas fa-prescription mr-1"></i> Ver exames</a>
 	</p>
 
+<?php endif; ?>
+
 	<header class="mt-4 mb-4">
 		<h2>Consultas</h2>
 	</header>
 
 	<p class="mt-2">
-		<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$id; ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
+		<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
+			<a class="btn btn-primary btn-sm" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$id; ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
+		<?php endif; ?>
 	</p>
 		<?php foreach($consulta as $item): ?>
 			<div class="list-group list-group-flush">

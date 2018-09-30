@@ -6,7 +6,11 @@
 	<div class="col-md-10">
 
 		<header class="mt-4 mb-4">
-			<h1>Médicos <small><a class="btn btn-primary btn-sm" href="<?php echo BASE_URL ?>usuarios/adicionar"><i class="fas fa-user-plus mr-1"></i> Adicionar médico</a></small></h1>
+			<h1>Médicos
+				<?php if( strpos($_SESSION['uLogin']['permissoes'], 'M02') !== false ): ?>
+					<small><a class="btn btn-primary btn-sm" href="<?php echo BASE_URL ?>usuarios/adicionar"><i class="fas fa-user-plus mr-1"></i> Adicionar médico</a></small>
+				<?php endif; ?>
+			</h1>
 		</header>
 
 		<div class="list-group list-group-flush">

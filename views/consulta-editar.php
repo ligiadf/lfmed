@@ -89,14 +89,10 @@
 
 	<?php if($con_status == "0"): ?>
 				<div class="form-check">
-					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta1" value="0" <?php if($con_status == '0') { echo "checked"; }; ?>>
-					<label class="form-check-label text-danger" for="statusConsulta1"><i class='fas fa-ban mr-1'></i> Indisponibilidade (0)</label>
+					<input type="hidden" id="statusConsulta0" name="statusConsulta" value="0">
+					<strong class="text-danger"><i class='fas fa-ban mr-1'></i> Indisponibilidade (0)</strong>
 				</div>
 	<?php else :?>
-				<!--<div class="form-check">
-					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta1" value="1" <?php //if($con_status == '1') { echo "checked"; }; ?>>
-					<label class="form-check-label text-primary" for="statusConsulta1"><i class='far fa-calendar-check mr-1'></i> Marcada (1)</label>
-				</div>-->
 			<?php if($con_status == "1"): ?>
 				<div class="form-check">
 					<input type="hidden" id="statusConsulta1" name="statusConsulta" value="1">
@@ -116,8 +112,8 @@
 					<input class="form-check-input" type="radio" name="statusConsulta" id="statusConsulta4" value="4" <?php if($con_status == '4') { echo "checked"; }; ?>>
 					<label class="form-check-label text-secondary" for="statusConsulta4"><i class='far fa-calendar-times mr-1'></i> Cancelada (4)</label>
 				</div>
-			</div>
 	<?php endif; ?>
+			</div>
 		</div><!--form-row -->
 
 		<div class="row">

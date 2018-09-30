@@ -60,11 +60,17 @@
 	<?php if($detalhe['con_status'] != '0'): ?>
 		<h4 class="mt-4">
 			<i class="fas fa-user mr-1"></i> <a href="<?php echo BASE_URL ?>pacientes/ficha/<?php echo $detalhe['pac_id']; ?>" title="Ver ficha do paciente"><?php echo $detalhe['pac_nome']; ?></a>
+			<small class="text-secondary">(CPF: <?php echo $detalhe['cpf']; ?>)</small>
 		</h4>
 	<?php endif; ?>
 
 	<h5 class="mt-4">
-		<i class="fas fa-user-md mr-1"></i> <a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $detalhe['med_id']; ?>" title="Ver ficha do médico"><?php echo $detalhe['med_nome']; ?></a>
+		<i class="fas fa-user-md mr-1"></i>
+			<?php if( strpos($_SESSION['uLogin']['permissoes'], 'M03') !== false ) :?>
+			<a href="<?php echo BASE_URL ?>usuarios/ficha/<?php echo $detalhe['med_id']; ?>" title="Ver ficha do médico"><?php echo $detalhe['med_nome']; ?></a>
+			<?php else: ?>
+				<?php echo $detalhe['med_nome']; ?>
+			<?php endif; ?>
 		<span class="d-sm-none"><br></span>
 		<small class="h6">
 		<?php
@@ -74,9 +80,13 @@
 		</small>
 	</h5>
 
+
 	<p class="mt-2 text-right">
-		<a class="btn btn-warning" href="<?php echo BASE_URL ?>consultas/editar/<?php echo $id; ?>"><i class="far fa-calendar-check mr-1"></i> Editar</a>
+		<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
+			<a class="btn btn-warning" href="<?php echo BASE_URL ?>consultas/editar/<?php echo $id; ?>"><i class="far fa-calendar-check mr-1"></i> Editar</a>
+		<?php endif; ?>
 	</p>
+
 
 <?php if($detalhe['con_status'] == '2'): ?>
 	<p><a class="btn btn-info" href="<?php echo BASE_URL ?>consultas/comprovante/<?php echo $id; ?>" target="_blank"><i class="fas fa-file-contract mr-1"></i> Comprovante</a></p>

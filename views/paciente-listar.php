@@ -5,7 +5,11 @@
 <div class="row justify-content-center">
 	<div class="col-md-10">
 		<header class="mt-4 mb-4">
-			<h1>Pacientes <small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a></small></h1>
+			<h1>Pacientes 
+				<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
+					<small><a class="btn btn-sm btn-primary" href="<?php echo BASE_URL ?>pacientes/cadastrar"><i class="fas fa-user-plus mr-1"></i> Cadastrar paciente</a></small>
+				<?php endif; ?>
+				</h1>
 		</header>
 
 		<div class="row">
@@ -30,13 +34,17 @@
 
 			<?php foreach($pacientes as $item): ?>
 					<div class="row mb-2 mt-2">
-						<div class="col-12 col-md-3"><strong><?php echo $item['nome']; ?></strong> (<?php echo $item['cpf']; ?>)</div>
-						<div class="col-12 col-md-2"><i class="fas fa-phone mr-1"></i> <?php echo $item['telefone']; ?></div>
-						<div class="col-12 col-md-3"><i class="fas fa-briefcase-medical mr-1"></i> <?php echo $item['plano_saude']; ?></div>
-						<div class="col-12 col-md-4 mt-2 mb-4 mt-md-1 mb-md-1">
-							<a class="btn btn-info" role="button" title="Ver ficha para paciente <?php echo $item['nome']; ?>" href="<?php echo BASE_URL.'pacientes/ficha/'.$item['id']; ?>"><i class="fas fa-user mr-1"></i> Ficha</a>
-							<a class="btn btn-info ml-3 mr-3" role="button" title="Marcar consulta para paciente <?php echo $item['nome']; ?>" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$item['id'] ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
-							<a class="btn btn-info" role="button" title="Ver exames para paciente <?php echo $item['nome']; ?>" href="<?php echo BASE_URL.'exames/paciente/'.$item['id']; ?>"><i class="fas fa-prescription mr-1"></i>  Exames</a>
+						<div class="col-12 col-lg-3"><strong><?php echo $item['nome']; ?></strong> (<?php echo $item['cpf']; ?>)</div>
+						<div class="col-12 col-lg-2"><i class="fas fa-phone mr-1"></i> <?php echo $item['telefone']; ?></div>
+						<div class="col-12 col-lg-2"><i class="fas fa-briefcase-medical mr-1"></i> <?php echo $item['plano_saude']; ?></div>
+						<div class="col-12 col-lg-5 mt-2 mb-4 mt-md-1 mb-md-1">
+							<a class="btn btn-info mr-3" role="button" title="Ver ficha para paciente <?php echo $item['nome']; ?>" href="<?php echo BASE_URL.'pacientes/ficha/'.$item['id']; ?>"><i class="fas fa-user mr-1"></i> Ficha</a>
+							<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
+								<a class="btn btn-info mr-3" role="button" title="Marcar consulta para paciente <?php echo $item['nome']; ?>" href="<?php echo BASE_URL.'consultas/marcar/?pc='.$item['id'] ?>"><i class="far fa-calendar-plus mr-1"></i> Marcar consulta</a>
+							<?php endif;?>
+							<?php if( strpos($_SESSION['uLogin']['permissoes'], 'E02') !== false ): ?>
+								<a class="btn btn-info ml-3" role="button" title="Ver exames para paciente <?php echo $item['nome']; ?>" href="<?php echo BASE_URL.'exames/paciente/'.$item['id']; ?>"><i class="fas fa-prescription mr-1"></i> Exames</a>
+							<?php endif;?>
 						</div>
 					</div>
 			<?php endforeach; ?>

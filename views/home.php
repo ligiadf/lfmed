@@ -36,11 +36,37 @@
 			<div class="card-header">
 				<i class="far fa-calendar-check mr-1"></i> Consultas
 			</div>
-			<div class="card-body d-flex justify-content-center">
-				<a class="btn btn-info" href="<?php echo BASE_URL.'consultas/listar'; ?>">Todas</a>
-				<a class="btn btn-info ml-2" href="<?php echo BASE_URL.'consultas/listar/?di='.date('d-m-Y'); ?>">Próximas</a>
-				<a class="btn btn-info ml-2" href="<?php echo BASE_URL.'consultas/marcar'; ?>">Marcar</a>
-				<a class="btn btn-info ml-2" href="<?php echo BASE_URL.'consultas/estatisticas'; ?>">Estatísticas</a>
+			<div class="card-body justify-content-center text-center">
+				<div class="btn-group" role="group" aria-label="Consultas">
+					<a class="btn btn-info text-white rounded" href="
+						<?php
+							if($_SESSION['uLogin']['perfil'] == 'MED') {
+								echo BASE_URL.'consultas/listar?md='.$_SESSION['uLogin']['id'];
+							} else {
+								echo BASE_URL.'consultas/listar';
+							}
+						?>
+						">Todas</a>
+					<a class="btn btn-info text-white ml-2 rounded" href="
+						<?php
+							if($_SESSION['uLogin']['perfil'] == 'MED') {
+								echo BASE_URL.'consultas/listar?di='.date('d-m-Y').'&md='.$_SESSION['uLogin']['id'];
+							} else {
+								echo BASE_URL.'consultas/listar?di='.date('d-m-Y');
+							}
+						?>
+						">Próximas</a>
+				</div>
+			<?php if( strpos($_SESSION['uLogin']['permissoes'], 'C02') !== false ): ?>
+				<div class="btn-group mt-2 mb-2" role="group" aria-label="Marcação">
+					<a class="btn btn-info text-white rounded" href="<?php echo BASE_URL.'consultas/marcar'; ?>">Marcar consulta</a>
+					<a class="btn btn-info text-white ml-2 rounded" href="<?php echo BASE_URL.'consultas/indisponibilidade'; ?>">Marcar indisponibilidade</a>
+				</div>
+			<?php endif; ?>
+				<div class="btn-group" role="group" aria-label="Estatísticas">
+					<a class="btn btn-info text-white rounded" href="<?php echo BASE_URL.'consultas/estatisticas'; ?>">Estatísticas</a>
+				</div>
+
 			</div>
 		</div>
 	</div>
@@ -54,7 +80,9 @@
 			</div>
 			<div class="card-body d-flex justify-content-center">
 				<a class="btn btn-info" href="<?php echo BASE_URL.'pacientes'; ?>">Todos</a>
+			<?php if( strpos($_SESSION['uLogin']['permissoes'], 'P02') !== false ): ?>
 				<a class="btn btn-info ml-2" href="<?php echo BASE_URL.'pacientes/cadastrar'; ?>">Cadastrar</a>
+			<?php endif; ?>
 			</div>
 		</div>
 	</div>
@@ -72,7 +100,9 @@
 			</div>
 			<div class="card-body d-flex justify-content-center">
 				<a class="btn btn-info" href="<?php echo BASE_URL.'medicos'; ?>">Ativos</a>
+			<?php if( strpos($_SESSION['uLogin']['permissoes'], 'M02') !== false ): ?>
 				<a class="btn btn-info ml-2" href="<?php echo BASE_URL.'usuarios/adicionar?pf=md'; ?>">Adicionar</a>
+			<?php endif; ?>
 			</div>
 		</div>
 	</div>

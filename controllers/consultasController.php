@@ -274,7 +274,7 @@ class consultasController extends Controller {
 		if(isset($_GET['pc'])) {
 			$pc = $_GET['pc'];
 		}
-		
+
 		$diaMesConsulta = substr($detalhe['con_inicio'], 0, 10); // AAAA-MM-DD
 		$horaConsulta = substr($detalhe['con_inicio'], 11, 5); // HH:ii
 
@@ -320,8 +320,8 @@ class consultasController extends Controller {
 
 			}
 
-			// não se a consulta por "realizada", "ausente" ou "cancelada"
-			if($statusConsulta == "2" || $statusConsulta == "3"  || $statusConsulta == "4") {
+			// não se a consulta for "realizada", "ausente" ou "cancelada"
+			if($statusConsulta == "0" || $statusConsulta == "2" || $statusConsulta == "3"  || $statusConsulta == "4") {
 				$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
 				$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
 				header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
@@ -330,7 +330,7 @@ class consultasController extends Controller {
 					$consulta->editarConsulta($id, $id_medico, $dtConsulta_inicio, $dtConsulta_fim, $paciente, $statusConsulta);
 					$msgMarcarConsultaOK = "Consulta alterada com sucesso!";
 					header('Location:'. BASE_URL.'consultas/detalhe/'.$id.'?msgOK='.urlencode($msgEditarConsultaOK));
-				}  else {
+				} else {
 					$msgMarcarConsultaNOTOK = "O médico não está disponível nesta data. Favor escolher outra!";
 					header('Location:'. BASE_URL.'consultas/editar/'.$id.'?msgError='.urlencode($msgMarcarConsultaNOTOK));
 				}
@@ -523,7 +523,7 @@ class consultasController extends Controller {
 
 			if($consultas->verificarAgenda($id_medico, $dtConsulta_inicio, $dtConsulta_fim)) {
 				$consultas->marcarIndisponibilidade($id_medico, $dtConsulta_inicio, $dtConsulta_fim, $statusConsulta);
-				$msgMarcarConsultaOK = "Indisponibilidade marcada com sucesso: em ".$dtConsulta_inicio;
+				$msgMarcarConsultaOK = "Indisponibilidade marcada com sucesso.";
 				header('Location:'. BASE_URL.'usuarios/ficha/'.$id_medico.'?msgOK='.urlencode($msgMarcarConsultaOK));
 			} else {
 				$msgMarcarConsultaNOTOK = "Não é possível marcar indisponibilidade: o(a) médico(a) já possui consulta neste horário.";
